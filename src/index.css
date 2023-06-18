@@ -1,0 +1,32 @@
+@font-face {
+  font-family: "Chillax";
+  src: url('./assets/fonts/Chillax-Regular.otf');
+}
+
+@font-face {
+  font-family: "Steppe";
+  src: url('./assets/fonts/Steppe-Light.ttf');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Steppe';
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
