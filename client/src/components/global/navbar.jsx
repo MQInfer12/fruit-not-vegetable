@@ -55,7 +55,7 @@ const Nav = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  z-index: 5;
+  z-index: 6;
   display: flex;
   flex-direction: row;
   height: 85px;

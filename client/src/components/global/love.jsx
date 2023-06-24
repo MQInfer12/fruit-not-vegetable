@@ -5,14 +5,14 @@ import colors from '../../styles/colors';
 const Love = () => {
   return (
     <LoveContainer>
-      <p>Desarrollado con ❤ para una mejor alimentación | TecnóPolis.Ai Deep Learning Projects</p>
+      <p>Desarrollado con ❤ para una mejor alimentación<span> | TecnóPolis.Ai Deep Learning Projects</span></p>
     </LoveContainer>
   )
 }
 
 export default Love
 
-const LoveContainer = styled.p`
+const LoveContainer = styled.div`
   height: 32px !important;
   display: flex;
   align-items: center;
@@ -23,4 +23,10 @@ const LoveContainer = styled.p`
   bottom: 0;
   background-color: ${colors.primary600};
   color: ${colors.white};
+
+  @media screen and (max-width: 670px) {
+    & span {
+      display: none;
+    }
+  }
 `;
