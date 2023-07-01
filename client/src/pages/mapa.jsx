@@ -40,10 +40,14 @@ const Container = styled.section`
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  @media screen and (max-width: 750px) {
+    padding: 85px 0 0;
+  }
 `;
 
 const MapDiv = styled.div`
-  width: 90%;
+  width: 100%;
   height: 90%;
   overflow: hidden;
   position: relative;
@@ -78,6 +82,10 @@ const OverlappingModal = styled.div`
   transform: translateX(${props => props.open ? "0" : "100%"});
   transition: all 0.5s ease;
   position: relative;
+  
+  @media screen and (max-width: 470px) {
+    width: calc(100% - 50px);
+  }
 `;
 
 const OpenCloseButton = styled.button`

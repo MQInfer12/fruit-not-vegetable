@@ -2,14 +2,16 @@ import React from 'react'
 import { styled } from 'styled-components'
 import colors from '../../styles/colors'
 import Button from './button'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Footer = () => {
+  const navigate = useNavigate();
+
   return (
     <StyledFooter>
       <FloatingContainer>
         <h2>Tenemos la <span>solución</span> para tu <span>huerto</span></h2>
-        <Button type="primary">Analiza ahora</Button>
+        <Button onClick={() => navigate('/analizar')} type="primary">Analiza ahora</Button>
       </FloatingContainer>
       <ColumnsContainer>
         <div>
@@ -35,15 +37,15 @@ const Footer = () => {
           <h4>Enlaces útiles</h4>
           <div className='util-links'>
             <div>
-              <div><StyledLink><i className="fa-solid fa-chevron-right"></i>Inicio</StyledLink></div>
-              <div><StyledLink><i className="fa-solid fa-chevron-right"></i>Analizar Imagen</StyledLink></div>
-              <div><StyledLink><i className="fa-solid fa-chevron-right"></i>Mapa</StyledLink></div>
-              <div><StyledLink><i className="fa-solid fa-chevron-right"></i>Objetivo</StyledLink></div>
+              <div><StyledLink onClick={() => navigate("/")}><i className="fa-solid fa-chevron-right"></i>Inicio</StyledLink></div>
+              <div><StyledLink onClick={() => navigate("/analizar")}><i className="fa-solid fa-chevron-right"></i>Analizar Imagen</StyledLink></div>
+              <div><StyledLink onClick={() => navigate("/mapa")}><i className="fa-solid fa-chevron-right"></i>Mapa</StyledLink></div>
+              <div><StyledLink onClick={() => navigate("/objetivo")}><i className="fa-solid fa-chevron-right"></i>Objetivo</StyledLink></div>
             </div>
             <div>
-              <div><StyledLink><i className="fa-solid fa-chevron-right"></i>Crédito</StyledLink></div>
-              <div><StyledLink><i className="fa-solid fa-chevron-right"></i>Instrucciones</StyledLink></div>
-              <div><StyledLink><i className="fa-solid fa-chevron-right"></i>Contacto</StyledLink></div>
+              <div><StyledLink onClick={() => navigate("/credito")}><i className="fa-solid fa-chevron-right"></i>Crédito</StyledLink></div>
+              <div><StyledLink onClick={() => navigate("/instrucciones")}><i className="fa-solid fa-chevron-right"></i>Instrucciones</StyledLink></div>
+              <div><StyledLink onClick={() => navigate("/contacto")}><i className="fa-solid fa-chevron-right"></i>Contacto</StyledLink></div>
             </div>
           </div>
         </div>
@@ -163,7 +165,7 @@ const ColumnsContainer = styled.div`
   }
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.button`
   font-size: .8rem;
   line-height: 28px;
   text-align: justify;
@@ -173,6 +175,13 @@ const StyledLink = styled(Link)`
   gap: 10px;
   color: ${colors.white};
   text-decoration: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 const IconsContainer = styled.div`
@@ -192,4 +201,5 @@ const IconsContainer = styled.div`
 
 const CopyContainer = styled.div`
   padding: 20px;
+  text-align: center;
 `;

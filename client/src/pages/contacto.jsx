@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled } from 'styled-components';
 import colors from '../styles/colors';
 import { useInterval } from '../hooks/useInterval';
@@ -9,26 +9,68 @@ const Contacto = () => {
   const active = useInterval(4000, 3);
   useChangeBackground(colors.primary300);
 
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+  const [asunto, setAsunto] = useState("");
+  const [mensaje, setMensaje] = useState("");
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    const res = await fetch("http://127.0.0.1:8000/correo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        subject: asunto,
+        name: nombre,
+        mail: email,
+        message: mensaje
+      })
+    });
+    if(res.ok) {
+      const resJson = await res.json();
+      alert(resJson.message);
+      setNombre("");
+      setEmail("");
+      setAsunto("");
+      setMensaje("");
+    }
+  }
+
   return (
     <Container>
       <Form>
         <div>
-          <input required id="nombre" type="text" />
+          <input required id="nombre" type="text" 
+            value={nombre} 
+            onChange={e => setNombre(e.target.value)} 
+          />
           <label htmlFor="nombre">Nombre</label>
         </div>
         <div>
-          <input required id="email" type="text" />
+          <input required id="email" type="text" 
+            value={email} 
+            onChange={e => setEmail(e.target.value)} 
+          />
           <label htmlFor="email">Email</label>
         </div>
         <div>
-          <input required id="asunto" type="text" />
+          <input required id="asunto" type="text"
+            value={asunto} 
+            onChange={e => setAsunto(e.target.value)} 
+          />
           <label htmlFor="asunto">Asunto</label>
         </div>
         <div>
-          <textarea required id="mensaje" />
+          <textarea required id="mensaje" 
+            value={mensaje} 
+            onChange={e => setMensaje(e.target.value)} 
+          />
           <label htmlFor="mensaje">Mensaje</label>
         </div>
-        <Button type="primary" max>Enviar</Button>
+        <Button onClick={handleClick} type="primary" max>Enviar</Button>
       </Form>
       <RightContainer>
         <RightInfo>
@@ -59,6 +101,21 @@ const Container = styled.section`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 80px;
+
+  @media screen and (max-width: 1680px) {
+    padding: 85px 60px 0;
+  }
+
+  @media screen and (max-width: 1520px) {
+    padding: 140px 60px 85px;
+    gap: 40px;
+    flex-direction: column-reverse;
+  }
+
+  @media screen and (max-width: 550px) {
+    padding: 140px 0 85px;
+  }
 `;
 
 const Form = styled.form`
@@ -67,6 +124,10 @@ const Form = styled.form`
   gap: 32px;
   background-color: ${colors.white};
   padding: 40px;
+
+  @media screen and (max-width: 700px) {
+    width: 100%;
+  }
 
   & > div {
     position: relative;
@@ -88,6 +149,10 @@ const Form = styled.form`
       border: 1px solid ${colors.gray200};
       width: 500px;
 
+      @media screen and (max-width: 700px) {
+        width: 100%;
+      }
+
       &:focus ~ label, &:valid ~ label {
         font-size: .8rem;
         top: -14px;
@@ -108,6 +173,10 @@ const RightContainer = styled.div`
   background-color: ${colors.primary200};
   padding: 32px;
   gap: 40px;
+
+  @media screen and (max-width: 550px) {
+    width: 100%;
+  }
 `;
 
 const RightInfo = styled.div`
@@ -115,11 +184,20 @@ const RightInfo = styled.div`
   gap: 64px;
   align-items: center;
 
+  @media screen and (max-width: 860px) {
+    flex-direction: column;
+    gap: 40px;
+  }
+
   & > .text-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 360px;
+
+    @media screen and (max-width: 550px) {
+      width: 100%;
+    }
 
     & > h3 {
       font-size: 1.2rem;

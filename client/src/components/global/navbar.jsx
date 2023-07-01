@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createGlobalStyle, styled } from 'styled-components'
 import Logo from '../../assets/logo.png'
 import colors from '../../styles/colors'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useLocation } from 'react-router-dom'
 import { useBackground } from '../../context/background'
 import { useState } from 'react'
 
 const Navbar = () => {
   const { color } = useBackground();
   const [openLinks, setOpenLinks] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setOpenLinks(false);
+  }, [location]);
 
   return (
     <Relative>
@@ -31,7 +37,9 @@ const Navbar = () => {
           <a><IconLink className="fa-solid fa-magnifying-glass"></IconLink></a>
           <a><IconLink className="fa-regular fa-user"></IconLink></a>
           <a><IconLink className="fa-solid fa-cart-shopping"></IconLink></a>
-          <BurgerButton onClick={() => setOpenLinks(!openLinks)}><i className="fa-solid fa-bars"></i></BurgerButton>
+          <BurgerButton onClick={() => setOpenLinks(!openLinks)}>
+            {openLinks ? <i className="fa-solid fa-xmark"></i> : <i className="fa-solid fa-bars"></i>}
+          </BurgerButton>
         </IconContainer>
       </Nav>
     </Relative>
@@ -55,7 +63,7 @@ const Nav = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  z-index: 6;
+  z-index: 1001;
   display: flex;
   flex-direction: row;
   height: 85px;
