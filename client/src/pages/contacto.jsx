@@ -59,6 +59,21 @@ const Container = styled.section`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 80px;
+
+  @media screen and (max-width: 1680px) {
+    padding: 85px 60px 0;
+  }
+
+  @media screen and (max-width: 1520px) {
+    padding: 140px 60px 85px;
+    gap: 40px;
+    flex-direction: column-reverse;
+  }
+
+  @media screen and (max-width: 550px) {
+    padding: 140px 0 85px;
+  }
 `;
 
 const Form = styled.form`
@@ -67,6 +82,10 @@ const Form = styled.form`
   gap: 32px;
   background-color: ${colors.white};
   padding: 40px;
+
+  @media screen and (max-width: 700px) {
+    width: 100%;
+  }
 
   & > div {
     position: relative;
@@ -88,6 +107,10 @@ const Form = styled.form`
       border: 1px solid ${colors.gray200};
       width: 500px;
 
+      @media screen and (max-width: 700px) {
+        width: 100%;
+      }
+
       &:focus ~ label, &:valid ~ label {
         font-size: .8rem;
         top: -14px;
@@ -108,6 +131,10 @@ const RightContainer = styled.div`
   background-color: ${colors.primary200};
   padding: 32px;
   gap: 40px;
+
+  @media screen and (max-width: 550px) {
+    width: 100%;
+  }
 `;
 
 const RightInfo = styled.div`
@@ -115,11 +142,20 @@ const RightInfo = styled.div`
   gap: 64px;
   align-items: center;
 
+  @media screen and (max-width: 860px) {
+    flex-direction: column;
+    gap: 40px;
+  }
+
   & > .text-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 360px;
+
+    @media screen and (max-width: 550px) {
+      width: 100%;
+    }
 
     & > h3 {
       font-size: 1.2rem;

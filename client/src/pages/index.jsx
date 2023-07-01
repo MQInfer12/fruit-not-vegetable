@@ -6,19 +6,23 @@ import Plant1 from '../assets/plant1.png'
 import Plant2 from '../assets/plant2.png'
 import Plant3 from '../assets/plant3.png'
 import Dots from '../assets/dots.png'
+import DoctorTomatto from '../assets/logo.png'
 import { useChangeBackground } from '../hooks/changeBackground'
+import { useNavigate } from 'react-router-dom'
 
 const Index = () => {
+  const navigate = useNavigate();
   useChangeBackground(colors.primary500);
 
   return (
     <Container>
       <LeftInfoContainer>
-        <Title>Detecta y clasifica enfermedades en el tomate.</Title>
-        <Description>¡Únete a nosotros y protege la salud de tus cultivos de tomate! Explora nuestra plataforma ahora y descubre cómo la inteligencia artificial puede marcar la diferencia en el diagnóstico y clasificación de enfermedades en los tomates.</Description>
+        <Logo src={DoctorTomatto} />
+        <Title>Detecta y clasifica enfermedades en el tomate</Title>
+        {/* <Description>¡Únete a nosotros y protege la salud de tus cultivos de tomate! Explora nuestra plataforma ahora y descubre cómo la inteligencia artificial puede marcar la diferencia en el diagnóstico y clasificación de enfermedades en los tomates.</Description> */}
         <div className='buttons'>
-          <Button>Analiza ahora</Button>
-          <Button type="primary">Mira el mapa de enfermedades</Button>
+          <Button onClick={() => navigate('/analizar')}>Analizar Imagen</Button>
+          <Button onClick={() => navigate('/mapa')} type="primary">Mirar el mapa de enfermedades</Button>
         </div>
       </LeftInfoContainer>
       <div className='bug-solver'> {/* POR ALGUN MOTIVO ESTE DIV SOLUCIONA UN BUG DE RESPONSIVE */}
@@ -41,7 +45,7 @@ const Index = () => {
                 <h2>Detalles</h2>
                 <p>Recibirás informes detallados con el diagnóstico de la enfermedad, su gravedad y recomendaciones específicas para el tratamiento.</p>
               </div>
-              <Button medium>INSTRUCCIONES</Button>
+              <Button onClick={() => navigate('/instrucciones')} medium>INSTRUCCIONES</Button>
             </PlantTextContainer>
           </RightPlantContainer>
           <AnimatedDots src={Dots} />
@@ -64,7 +68,7 @@ const Container = styled.section`
     width: 100%;
     flex-direction: column;
     gap: 80px;
-    padding: 140px 40px;
+    padding: 140px 40px 65px;
   }
 
   & > .bug-solver {
@@ -78,18 +82,24 @@ const LeftInfoContainer = styled.div`
   width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  align-items: center;
 
   @media screen and (max-width: 700px) {
     width: 100%;
   }
 
   & > .buttons {
-    @media screen and (max-width: 525px) {
+    margin-top: 40px;
+
+    @media screen and (max-width: 536px) {
       display: flex;
       flex-direction: column;
     }
   }
+`;
+
+const Logo = styled.img`
+  width: 250px;
 `;
 
 const Title = styled.h1`
@@ -98,6 +108,7 @@ const Title = styled.h1`
   font-weight: 600;
   font-family: 'Chillax';
   line-height: 72px;
+  text-align: center;
 
   @media screen and (max-width: 700px) {
     font-size: 2.5rem;

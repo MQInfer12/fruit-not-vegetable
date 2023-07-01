@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { styled } from 'styled-components';
-import { useChangeBackground } from '../hooks/changeBackground';
 import colors from '../styles/colors';
 import Button from '../components/global/button';
 import Placeholder from '../assets/placeholder.png';
+import useWidth from '../hooks/useWidth';
+import { useBackground } from '../context/background';
 
 const Analizar = () => {
-  useChangeBackground(colors.primary200);
+  const width = useWidth();
+  const { changeColor } = useBackground();
+  
+  useEffect(() => {
+    changeColor(width > 560 ? colors.primary200 : colors.secondary500)
+  }, [width]);
 
   return (
     <Container>
@@ -41,6 +47,10 @@ const Container = styled.section`
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  @media screen and (max-width: 560px) {
+    padding: 85px 0 0;
+  }
 `;
 
 const Box = styled.div`
@@ -51,14 +61,25 @@ const Box = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 60px;
-  height: 400px;
+  min-height: 400px;
+
+  @media screen and (max-width: 1100px) {
+    flex-direction: column;
+    align-items: center;
+  }
+  @media screen and (max-width: 560px) {
+    width: 100%;
+    padding: 60px 40px 80px;
+    border-bottom: none;
+  }
 `;
 
 const LeftContainer = styled.div`
-  height: 100%;
+  min-height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 20px;
 `;
 
 const HeaderContainer = styled.div`
@@ -77,6 +98,16 @@ const FormContainer = styled.div`
   display: flex;
   gap: 100px;
   align-items: end;
+
+  @media screen and (max-width: 780px) {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+
+    & > button {
+      width: 100%;
+    }
+  }
 `;
 
 const InputContainer = styled.div`
@@ -84,6 +115,10 @@ const InputContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   width: 400px;
+
+  @media screen and (max-width: 560px) {
+    width: auto;
+  }
 
   & > p {
     line-height: 28px;
@@ -117,6 +152,8 @@ const InputContainer = styled.div`
 
 const PreviewImage = styled.img`
   min-width: 250px;
+  max-width: 250px;
+  max-height: 250px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border: 1px solid ${colors.secondary300};

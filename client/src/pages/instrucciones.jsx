@@ -16,28 +16,28 @@ const Instrucciones = () => {
       <LeftContainer>
         <TextContainer>
           <h3>¿Cómo empezar?</h3>
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis ex incidunt necessitatibus omnis eius, neque doloribus tenetur aspernatur ipsum esse quia deleniti cum nemo, provident doloremque assumenda, molestiae enim eaque.</p>
+          <p>Antes de utilizar nuestra aplicación de detección y clasificación de enfermedades en el tomate, necesitarás una foto de la planta del tomate en formato JPG.</p>
         </TextContainer>
         <NumbersContainer>
           <NumberContainer>
             <b>01.</b>
             <div>
-              <h4>Socculents</h4>
-              <p>At in proin consequat ut cursus venenatis sapien.</p>
+              <h4>Prepara la foto</h4>
+              <p>Ingresa a Analizar Imagen y carga la foto.</p>
             </div>
           </NumberContainer>
           <NumberContainer>
             <b>02.</b>
             <div>
-              <h4>Air purifiers</h4>
-              <p>At in proin consequat ut cursus venenatis sapien.</p>
+              <h4>Analiza la foto</h4>
+              <p>Haz click en Subir foto y se la analizará automaticamente.</p>
             </div>
           </NumberContainer>
           <NumberContainer>
             <b>03.</b>
             <div>
-              <h4>Decorative</h4>
-              <p>At in proin consequat ut cursus venenatis sapien.</p>
+              <h4>Mira información</h4>
+              <p>Se dará un diagnóstico detallado del estado de salud de tu planta de tomate.</p>
             </div>
           </NumberContainer>
         </NumbersContainer>
@@ -56,6 +56,19 @@ const Container = styled.section`
   justify-content: space-between;
   gap: 270px;
   align-items: center;
+
+  @media screen and (max-width: 1510px) {
+    gap: 100px;
+    padding: 85px 80px 0;
+  }
+
+  @media screen and (max-width: 1050px) {
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 700px) {
+    padding: 140px 40px 65px;
+  }
 `;
 
 const LeftContainer = styled.div`
@@ -76,6 +89,11 @@ const TextContainer = styled.div`
     font-weight: 600;
     font-family: 'Chillax';
     line-height: 72px;
+
+    @media screen and (max-width: 1220px) {
+      font-size: 2.5rem;
+      line-height: 46px;
+    }
   }
 
   & > p {
@@ -104,7 +122,11 @@ const NumberContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 6px;
-    width: 267px;
+    width: 500px;
+
+    @media screen and (max-width: 700px) {
+      width: 225px;
+    }
 
     & > h4 {
       font-size: 1.2rem;
@@ -131,6 +153,10 @@ const RightContainer = styled.div`
     left: -12%;
     top: -8%;
     z-index: -1;
+  }
+
+  @media screen and (max-width: 1050px) {
+    display: none;
   }
 `;
 
