@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { styled } from 'styled-components';
 import colors from '../styles/colors';
 import Button from '../components/global/button';
-import Placeholder from '../assets/placeholder.png';
+import Placeholder from '../assets/incognita.jpg';
 import useWidth from '../hooks/useWidth';
 import { useBackground } from '../context/background';
 
