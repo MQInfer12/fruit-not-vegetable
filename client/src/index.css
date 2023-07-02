@@ -1,11 +1,13 @@
 @font-face {
   font-family: "Chillax";
   src: url('./assets/fonts/Chillax-Regular.otf');
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Steppe";
   src: url('./assets/fonts/Steppe-Light.ttf');
+  font-display: swap;
 }
 
 * {

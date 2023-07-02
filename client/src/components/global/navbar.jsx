@@ -22,7 +22,7 @@ const Navbar = () => {
         <GlobalStyle bg={color} />
         <LogoContainer to="/">
           <Img src={Logo} />
-          <LogoText>Doctor <span>Tomatto</span></LogoText>
+          <LogoText>Doctor Tomatto</LogoText>
         </LogoContainer>
         <Ul bg={color} open={openLinks}>
           <li><StyledLink to="/">Inicio</StyledLink></li>
