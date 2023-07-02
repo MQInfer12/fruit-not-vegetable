@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled } from 'styled-components';
 import colors from '../styles/colors';
 import { useInterval } from '../hooks/useInterval';
@@ -9,26 +9,68 @@ const Contacto = () => {
   const active = useInterval(4000, 3);
   useChangeBackground(colors.primary300);
 
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+  const [asunto, setAsunto] = useState("");
+  const [mensaje, setMensaje] = useState("");
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    const res = await fetch("http://127.0.0.1:8000/correo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        subject: asunto,
+        name: nombre,
+        mail: email,
+        message: mensaje
+      })
+    });
+    if(res.ok) {
+      const resJson = await res.json();
+      alert(resJson.message);
+      setNombre("");
+      setEmail("");
+      setAsunto("");
+      setMensaje("");
+    }
+  }
+
   return (
     <Container>
       <Form>
         <div>
-          <input required id="nombre" type="text" />
+          <input required id="nombre" type="text" 
+            value={nombre} 
+            onChange={e => setNombre(e.target.value)} 
+          />
           <label htmlFor="nombre">Nombre</label>
         </div>
         <div>
-          <input required id="email" type="text" />
+          <input required id="email" type="text" 
+            value={email} 
+            onChange={e => setEmail(e.target.value)} 
+          />
           <label htmlFor="email">Email</label>
         </div>
         <div>
-          <input required id="asunto" type="text" />
+          <input required id="asunto" type="text"
+            value={asunto} 
+            onChange={e => setAsunto(e.target.value)} 
+          />
           <label htmlFor="asunto">Asunto</label>
         </div>
         <div>
-          <textarea required id="mensaje" />
+          <textarea required id="mensaje" 
+            value={mensaje} 
+            onChange={e => setMensaje(e.target.value)} 
+          />
           <label htmlFor="mensaje">Mensaje</label>
         </div>
-        <Button type="primary" max>Enviar</Button>
+        <Button onClick={handleClick} type="primary" max>Enviar</Button>
       </Form>
       <RightContainer>
         <RightInfo>

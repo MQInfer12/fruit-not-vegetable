@@ -18,11 +18,12 @@ const Index = () => {
     <Container>
       <LeftInfoContainer>
         <Logo src={DoctorTomatto} />
-        <Title>Detecta y clasifica enfermedades en el tomate</Title>
-        {/* <Description>¡Únete a nosotros y protege la salud de tus cultivos de tomate! Explora nuestra plataforma ahora y descubre cómo la inteligencia artificial puede marcar la diferencia en el diagnóstico y clasificación de enfermedades en los tomates.</Description> */}
+        <Title>Doctor Tomatto</Title>
+        {/* ¡Únete a nosotros y protege la salud de tus cultivos de tomate! Explora nuestra plataforma ahora y descubre cómo la inteligencia artificial puede marcar la diferencia en el diagnóstico y clasificación de enfermedades en los tomates. */}
+        {/*  */}
+        <Description>Detecta y clasifica enfermedades en el tomate</Description>
         <div className='buttons'>
           <Button onClick={() => navigate('/analizar')}>Analizar Imagen</Button>
-          <Button onClick={() => navigate('/mapa')} type="primary">Mirar el mapa de enfermedades</Button>
         </div>
       </LeftInfoContainer>
       <div className='bug-solver'> {/* POR ALGUN MOTIVO ESTE DIV SOLUCIONA UN BUG DE RESPONSIVE */}
@@ -68,7 +69,7 @@ const Container = styled.section`
     width: 100%;
     flex-direction: column;
     gap: 80px;
-    padding: 140px 40px 65px;
+    padding: 100px 40px 65px;
   }
 
   & > .bug-solver {
@@ -118,7 +119,10 @@ const Title = styled.h1`
 
 const Description = styled.p`
   color: ${colors.white};
-  line-height: 28px;
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-top: 32px;
+  text-align: center;
 
   @media screen and (max-width: 700px) {
     font-size: .8rem;
