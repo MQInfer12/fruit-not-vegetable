@@ -1,0 +1,31 @@
+[{
+  "pais": "Argentina",
+  "localidades": [{
+    "nombre": "Gral. Roca - Río Negro",
+    "coordenadas": [-39.01969747263837, -67.58263558097283]
+  }, {
+    "nombre": "Neuquén",
+    "coordenadas": [-38.94977188070348, -68.10836326129004]
+  }]
+}, {
+  "pais": "Bolivia",
+  "localidades": [{
+    "nombre": "Saipina - Santa Cruz",
+    "coordenadas": [-18.093521642681107, -64.58317281260253]
+  }]
+}, {
+  "pais": "Chile",
+  "localidades": [{
+    "nombre": "Valle de Azapa - Arica",
+    "coordenadas": [-33.356869590906136, -70.7446756946603]
+  }, {
+    "nombre": "Valle de Lluta - Arica",
+    "coordenadas": [-18.40575724686709, -69.99229568684748]
+  }]
+}, {
+  "pais": "Colombia",
+  "localidades": [{
+    "nombre": "Cali",
+    "coordenadas": [3.449417732493167, -76.53201430368944]
+  }]
+}]
