@@ -11,22 +11,22 @@ const Mapa = () => {
   const [open, setOpen] = useState(true);
   const [country, setCountry] = useState(null);
   const [localidad, setLocalidad] = useState(null);
+  const [selected, setSelected] = useState(false);
   useChangeBackground(colors.primary200);
 
   const changePais = (e) => {
-    setCountry(data.find(value => value.pais === e.target.value))
+    setCountry(data.find(value => value.pais === e.target.value));
+    setLocalidad(null);
   }
   const changeLocalidad = (e) => {
-    setLocalidad(country.localidades.find(value => value.nombre === e.target.value))
+    setLocalidad(country.localidades.find(value => value.nombre === e.target.value));
   }
-
-  console.log(localidad);
 
   return (
     <Container>
       <MapDiv>
         {
-          localidad &&
+          selected &&
           <MapContainer center={localidad.coordenadas} zoom={14} scrollWheelZoom={true}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -37,12 +37,12 @@ const Mapa = () => {
         }
         <OverlappingContainer open={open}>
           <OverlappingBG onClick={() => setOpen(false)} open={open} />
-          <OverlappingModal selected={localidad} open={open}>
+          <OverlappingModal selected={selected} open={open}>
             <OpenCloseButton 
               onClick={() => setOpen(!open)}
             ><i className={`fa-solid fa-chevron-${open ? "right" : "left"}`}></i></OpenCloseButton>
             {
-              localidad ? 
+              selected ? 
               <></> 
               :
               <SelectsContainer>
@@ -55,14 +55,14 @@ const Mapa = () => {
                       <option key={i} value={v.pais}>{v.pais}</option>
                     ))}
                   </Select>
-                  <Select value={localidad?.nombre} onChange={changeLocalidad}>
+                  <Select key={country?.pais} value={localidad?.nombre} onChange={changeLocalidad}>
                     <option>Seleccione localidad...</option>
                     {country && country.localidades.map((v, i) => (
                       <option key={i} value={v.nombre}>{v.nombre}</option>
                     ))}
                   </Select>
                 </div>
-                <Button type="primary">Ver mapa</Button>
+                <Button disabled={!localidad} onClick={() => setSelected(true)} type="primary">Ver mapa</Button>
               </SelectsContainer>
             }
           </OverlappingModal>

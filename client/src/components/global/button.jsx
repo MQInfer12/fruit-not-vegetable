@@ -2,9 +2,9 @@ import React from 'react'
 import { styled } from 'styled-components'
 import colors from '../../styles/colors'
 
-const Button = ({ children, onClick, type, max }) => {
+const Button = ({ children, onClick, type, max, disabled }) => {
   return (
-    <StyledButton type={type} max={max} onClick={onClick}>{ children }</StyledButton>
+    <StyledButton disabled={disabled} type={type} max={max} onClick={onClick}>{ children }</StyledButton>
   )
 }
 
@@ -25,5 +25,10 @@ const StyledButton = styled.button`
 
   &:hover {
     opacity: 0.7;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    background-color: ${colors.gray300};
   }
 `;
