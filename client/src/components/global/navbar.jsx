@@ -51,7 +51,7 @@ export default Navbar
 const GlobalStyle = createGlobalStyle`
   body {
     background-color: ${props => props.bg};
-    transition: all 0.3s;
+    transition: background-color 0.3s;
   }
 `;
 

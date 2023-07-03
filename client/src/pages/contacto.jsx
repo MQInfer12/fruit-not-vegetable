@@ -6,6 +6,7 @@ import Button from '../components/global/button';
 import { useChangeBackground } from '../hooks/changeBackground';
 import { sendRequest } from '../utilities/sendRequest';
 import InputText from '../components/contact/inputText';
+import Swal from 'sweetalert2';
 
 const Contacto = () => {
   const active = useInterval(4000, 3);
@@ -41,8 +42,12 @@ const Contacto = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     if(Object.keys(errors).length) {
-      alert("Comprueba que no existan errores en el formulario");
       setSended(true);
+      Swal.fire({
+        title: "Error al enviar",
+        text: "Comprueba que no existan errores en el formulario",
+        icon: "error"
+      })
       return;
     }
     const res = await sendRequest(`correo`, {
@@ -51,7 +56,11 @@ const Contacto = () => {
       mail: email,
       message: mensaje
     });
-    alert(res.message);
+    Swal.fire({
+      title: "Petición correcta",
+      text: res.message,
+      icon: "success"
+    })
     setNombre("");
     setEmail("");
     setAsunto("");

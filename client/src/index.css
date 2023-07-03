@@ -36,3 +36,41 @@ html {
 *::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.swal2-success-line-tip, .swal2-success-line-long {
+  background-color: #004F44 !important;
+}
+
+.swal2-success-ring {
+  border: 0.25em solid #A6B0A5 !important;
+}
+
+.swal2-confirm {
+  background-color: #004F44 !important;
+  transition: all 0.3s;
+}
+
+.swal2-confirm:focus {
+  box-shadow: 0 0 0 3px #A6B0A5 !important;
+}
+
+.swal2-styled:hover {
+  background-image: none !important;
+  background-color: #234A45 !important;
+}
+
+.swal2-title {
+  color: #234A45 !important;
+}
+
+.swal2-html-container {
+  color: #A6B0A5 !important;
+}
+
+.swal2-error {
+  border-color: #d1534f !important;
+}
+
+.swal2-error [class^=swal2-x-mark-line] {
+  background-color: #d1534f !important;
+}
