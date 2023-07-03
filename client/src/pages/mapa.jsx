@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { styled } from 'styled-components';
 import { useChangeBackground } from '../hooks/changeBackground';
 import colors from '../styles/colors';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 import "leaflet/dist/leaflet.css";
-import data from "../utilities/mapData.json";
-import Button from '../components/global/button';
+import DataContainer from '../components/mapa/dataContainer';
+import SelectsContainer from '../components/mapa/selectsContainer';
+import Map from '../components/mapa/mapa';
 
 const Mapa = () => {
   const [open, setOpen] = useState(true);
@@ -14,26 +14,12 @@ const Mapa = () => {
   const [selected, setSelected] = useState(false);
   useChangeBackground(colors.primary200);
 
-  const changePais = (e) => {
-    setCountry(data.find(value => value.pais === e.target.value));
-    setLocalidad(null);
-  }
-  const changeLocalidad = (e) => {
-    setLocalidad(country.localidades.find(value => value.nombre === e.target.value));
-  }
-
   return (
     <Container>
       <MapDiv>
         {
           selected &&
-          <MapContainer center={localidad.coordenadas} zoom={14} scrollWheelZoom={true}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={localidad.coordenadas} />
-          </MapContainer>
+          <Map localidad={localidad} />
         }
         <OverlappingContainer open={open}>
           <OverlappingBG onClick={() => setOpen(false)} open={open} />
@@ -43,27 +29,19 @@ const Mapa = () => {
             ><i className={`fa-solid fa-chevron-${open ? "right" : "left"}`}></i></OpenCloseButton>
             {
               selected ? 
-              <></> 
+              <DataContainer 
+                country={country} 
+                localidad={localidad}
+                handleBack={() => setSelected(false)} 
+              />
               :
-              <SelectsContainer>
-                <h2>Mapa geo-referenciado de enfermedades</h2>
-                <p>Seleccione un país y una localidad para ver el mapa</p>
-                <div>
-                  <Select value={country?.pais} onChange={changePais}>
-                    <option>Seleccione país...</option>
-                    {data.map((v, i) => (
-                      <option key={i} value={v.pais}>{v.pais}</option>
-                    ))}
-                  </Select>
-                  <Select key={country?.pais} value={localidad?.nombre} onChange={changeLocalidad}>
-                    <option>Seleccione localidad...</option>
-                    {country && country.localidades.map((v, i) => (
-                      <option key={i} value={v.nombre}>{v.nombre}</option>
-                    ))}
-                  </Select>
-                </div>
-                <Button disabled={!localidad} onClick={() => setSelected(true)} type="primary">Ver mapa</Button>
-              </SelectsContainer>
+              <SelectsContainer 
+                country={country} 
+                localidad={localidad} 
+                setCountry={setCountry} 
+                setLocalidad={setLocalidad} 
+                handleViewMap={() => setSelected(true)}
+              />
             }
           </OverlappingModal>
         </OverlappingContainer>
@@ -116,15 +94,18 @@ const OverlappingBG = styled.div`
 `;
 
 const OverlappingModal = styled.div`
-  width: ${props => props.selected ? "400px" : "100%"};
-  border-left: ${props => props.selected && `4px solid ${colors.primary500}`};
+  width: 100%;
+  border-left: 4px solid ${colors.primary500};
   background-color: ${colors.primary200};
-  transform: translateX(${props => props.open ? "0" : "100%"});
-  transition: all 0.5s ease;
+  transform: translateX(${props => !props.selected ? "-4px" : props.open ? "calc(100% - 400px)" : "100%"});
+  transition: transform 0.5s ease;
   position: relative;
+  padding-right: ${props => props.selected && "calc(100% - 400px)"};
   
   @media screen and (max-width: 470px) {
-    width: ${props => props.selected ? "calc(100% - 50px)" : "100%"};
+    width: 100%;
+    transform: translateX(${props => !props.selected ? "-4px" : props.open ? "50px" : "100%"});
+    padding-right: ${props => props.selected && "50px"};
   }
 `;
 
@@ -144,37 +125,3 @@ const OpenCloseButton = styled.button`
   color: ${colors.primary200};
   pointer-events: all;
 `;
-
-const SelectsContainer = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  gap: 20px;
-  padding: 40px;
-
-  & > h2 {
-    font-size: 2rem;
-    color: ${colors.primary500};
-    font-weight: 600;
-    font-family: 'Chillax';
-  }
-
-  & > div {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-`;
-
-const Select = styled.select`
-  width: 300px;
-  padding: 10px 15px;
-  outline: none;
-  border: 1px solid ${colors.primary500};
-`

@@ -22,7 +22,7 @@ def index():
 
 @app.route('/correo', methods=["POST"])
 def correo():
-  msg = Message(request.json["subject"], sender='serginho61@gmail.com', recipients=['maummq@gmail.com'])
+  msg = Message(request.json["subject"], sender='serginho61@gmail.com', recipients=['serginho61@gmail.com'])
   msg.body = """ 
     From: %s &lt;%s&gt; 
     %s 
