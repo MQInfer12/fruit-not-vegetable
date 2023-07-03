@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components';
 import colors from '../styles/colors';
 import { useInterval } from '../hooks/useInterval';
 import Button from '../components/global/button';
 import { useChangeBackground } from '../hooks/changeBackground';
+import { sendRequest } from '../utilities/sendRequest';
+import InputText from '../components/contact/inputText';
 
 const Contacto = () => {
   const active = useInterval(4000, 3);
@@ -13,63 +15,76 @@ const Contacto = () => {
   const [email, setEmail] = useState("");
   const [asunto, setAsunto] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const [errors, setErrors] = useState({});
+  const [sended, setSended] = useState(false);
+
+  useEffect(() => {
+    const newErrors = {};
+    if(!nombre.trim()) {
+      newErrors.nombre = "Este campo es requerido";
+    }
+    const regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
+    if(!email.trim()) {
+      newErrors.email = "Este campo es requerido";
+    } else if (!regexEmail.test(email.trim())) {
+      newErrors.email = "Esta dirección de correo no es válida";
+    }
+    if(!asunto.trim()) {
+      newErrors.asunto = "Este campo es requerido";
+    }
+    if(!mensaje.trim()) {
+      newErrors.mensaje = "Este campo es requerido";
+    }
+    setErrors(newErrors);
+  }, [nombre, email, asunto, mensaje])
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://127.0.0.1:8000/correo", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        subject: asunto,
-        name: nombre,
-        mail: email,
-        message: mensaje
-      })
-    });
-    if(res.ok) {
-      const resJson = await res.json();
-      alert(resJson.message);
-      setNombre("");
-      setEmail("");
-      setAsunto("");
-      setMensaje("");
+    if(Object.keys(errors).length) {
+      alert("Comprueba que no existan errores en el formulario");
+      setSended(true);
+      return;
     }
+    const res = await sendRequest(`correo`, {
+      subject: asunto,
+      name: nombre,
+      mail: email,
+      message: mensaje
+    });
+    alert(res.message);
+    setNombre("");
+    setEmail("");
+    setAsunto("");
+    setMensaje("");
   }
 
   return (
     <Container>
       <Form>
-        <div>
-          <input required id="nombre" type="text" 
-            value={nombre} 
-            onChange={e => setNombre(e.target.value)} 
-          />
-          <label htmlFor="nombre">Nombre</label>
-        </div>
-        <div>
-          <input required id="email" type="text" 
-            value={email} 
-            onChange={e => setEmail(e.target.value)} 
-          />
-          <label htmlFor="email">Email</label>
-        </div>
-        <div>
-          <input required id="asunto" type="text"
-            value={asunto} 
-            onChange={e => setAsunto(e.target.value)} 
-          />
-          <label htmlFor="asunto">Asunto</label>
-        </div>
-        <div>
-          <textarea required id="mensaje" 
-            value={mensaje} 
-            onChange={e => setMensaje(e.target.value)} 
-          />
-          <label htmlFor="mensaje">Mensaje</label>
-        </div>
+        <InputText text="Nombre" 
+          value={nombre} 
+          onChange={e => setNombre(e.target.value)} 
+          error={errors.nombre}
+          trigger={sended}
+        />
+        <InputText text="Email" 
+          value={email} 
+          onChange={e => setEmail(e.target.value)} 
+          error={errors.email}
+          trigger={sended}
+        />
+        <InputText text="Asunto" 
+          value={asunto} 
+          onChange={e => setAsunto(e.target.value)} 
+          error={errors.asunto}
+          trigger={sended}
+        />
+        <InputText textarea text="Mensaje" 
+          value={mensaje} 
+          onChange={e => setMensaje(e.target.value)} 
+          error={errors.mensaje}
+          trigger={sended}
+        />
         <Button onClick={handleClick} type="primary" max>Enviar</Button>
       </Form>
       <RightContainer>
@@ -128,39 +143,6 @@ const Form = styled.form`
   @media screen and (max-width: 700px) {
     width: 100%;
   }
-
-  & > div {
-    position: relative;
-
-    & > label {
-      position: absolute;
-      pointer-events: none;
-      left: 12px;
-      top: 12px;
-      transition: all 0.5s;
-      padding: 2px 6px;
-    }
-
-    & > input, textarea {
-      padding: 12px;
-      font-size: 1rem;
-      outline: none;
-      resize: none;
-      border: 1px solid ${colors.gray200};
-      width: 500px;
-
-      @media screen and (max-width: 700px) {
-        width: 100%;
-      }
-
-      &:focus ~ label, &:valid ~ label {
-        font-size: .8rem;
-        top: -14px;
-        color: ${colors.white};
-        background-color: ${colors.primary500};
-      }
-    }
-  } 
 
   & > button {
     align-self: end;

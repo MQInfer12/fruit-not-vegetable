@@ -4,14 +4,11 @@ import Plant5 from '../assets/plant5.png'
 import Plant6 from '../assets/plant6.png'
 import Plant7 from '../assets/plant7.png'
 import { useInterval } from '../hooks/useInterval'
-import Button from '../components/global/button'
 import { styled } from 'styled-components'
 import colors from '../styles/colors'
 import { useChangeBackground } from '../hooks/changeBackground'
-import { useNavigate } from 'react-router-dom'
 
 const Objetivo = () => {
-  const navigate = useNavigate();
   const carouselData = [Plant5, Plant6, Plant7];
   const carouselIndex = useInterval(4000, carouselData.length);
   useChangeBackground(colors.primary100);
@@ -36,7 +33,6 @@ const Objetivo = () => {
           <p>Es una aplicación de Inteligencia Artificial (basada en Aprendizaje Profundo y Visión por Computadora) que detecta y clasifica enfermedades que se dan en la hoja, recibe fotos de las HOJAS DE LA PLANTA del tomate en formato JPG.</p>
           <p>Las enfermedades que detecta y clasifica son: 1).- Mancha bacteriana 2).-Tizón temprano 3).- Hoja sana. Proporciona recomendaciones para la prevención y/o tratamiento de las enfermedades detectadas. Se recomienda solo subir fotos de hojas de tomate que estén en el formato JPG.</p>
         </div>
-        <Button onClick={() => navigate('/analizar')} type="primary" max>Inténtalo</Button>
       </RightContainer>
     </Container>
   )

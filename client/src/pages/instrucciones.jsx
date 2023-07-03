@@ -51,7 +51,7 @@ export default Instrucciones
 
 const Container = styled.section`
   min-height: calc(100dvh - 32px);
-  padding: 85px 140px 0;
+  padding: 145px 140px 60px;
   display: flex;
   justify-content: space-between;
   gap: 270px;
@@ -59,7 +59,7 @@ const Container = styled.section`
 
   @media screen and (max-width: 1510px) {
     gap: 100px;
-    padding: 85px 80px 0;
+    padding: 145px 80px 60px;
   }
 
   @media screen and (max-width: 1050px) {

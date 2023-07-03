@@ -22,17 +22,13 @@ def index():
 
 @app.route('/correo', methods=["POST"])
 def correo():
-  """ if form.validate() == False:
-    flash('Todos los campos son requeridos.')
-    return render_template('contacto.html', form=form)
-  else: """
-  msg = Message(request.json["subject"], sender='serginho61@gmail.com', recipients=['serginho61@gmail.com'])
+  msg = Message(request.json["subject"], sender='serginho61@gmail.com', recipients=['maummq@gmail.com'])
   msg.body = """ 
     From: %s &lt;%s&gt; 
     %s 
-    """ % (request.json["name"], request.json["mail"], request.json["message"])
+  """ % (request.json["name"], request.json["mail"], request.json["message"])
   mail.send(msg)
-  return jsonify({"message": "Se envio el correo correctamente"})
+  return jsonify({"message": "Se envió el correo correctamente"})
 
 if __name__ == "__main__":
   app.run(debug=True, port=8000)

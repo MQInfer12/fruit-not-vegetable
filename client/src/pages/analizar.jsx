@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { styled } from 'styled-components';
 import colors from '../styles/colors';
 import Button from '../components/global/button';
-import Placeholder from '../assets/placeholder.png';
+import Placeholder from '../assets/incognita.jpg';
 import useWidth from '../hooks/useWidth';
 import { useBackground } from '../context/background';
 
@@ -43,7 +43,7 @@ export default Analizar
 
 const Container = styled.section`
   min-height: calc(100dvh - 32px);
-  padding: 85px 140px 0;
+  padding: 145px 140px 60px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -153,8 +153,8 @@ const InputContainer = styled.div`
 const PreviewImage = styled.img`
   min-width: 250px;
   max-width: 250px;
-  max-height: 250px;
+  max-height: 260px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border: 1px solid ${colors.secondary300};
+  border: 4px solid ${colors.secondary300};
 `;

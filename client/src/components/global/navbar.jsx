@@ -68,7 +68,7 @@ const Nav = styled.div`
   flex-direction: row;
   height: 85px;
   justify-content: space-between;
-  padding: 20px 140px;
+  padding: 10px 140px;
   align-items: center;
   background-color: ${props => props.bg};
   transition: all 0.3s;
@@ -97,7 +97,7 @@ const LogoContainer = styled(Link)`
 `;
 
 const Img = styled.img`
-  height: 80%;
+  height: 100%;
 `;
 
 const LogoText = styled.p`
