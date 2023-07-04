@@ -5,7 +5,7 @@ import Yoyo from '../assets/yoyo1.jpg'
 import { useChangeBackground } from '../hooks/changeBackground';
 
 const Credito = () => {
-  useChangeBackground(colors.primary100);
+  useChangeBackground(colors.primary200);
 
   return (
     <Container>
@@ -43,7 +43,7 @@ const CircleImage = styled.img`
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 50%;
-  border: 30px solid ${colors.primary200};
+  border: 30px solid ${colors.primary100};
 `;
 
 const TextContainer = styled.div`

@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 
 const Contacto = () => {
   const active = useInterval(4000, 3);
-  useChangeBackground(colors.primary300);
+  useChangeBackground(colors.primary200);
 
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
@@ -161,7 +161,7 @@ const Form = styled.form`
 const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${colors.primary200};
+  background-color: ${colors.primary300};
   padding: 32px;
   gap: 40px;
 

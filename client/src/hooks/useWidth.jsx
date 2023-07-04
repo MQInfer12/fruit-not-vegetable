@@ -10,7 +10,6 @@ const useWidth = () => {
     })
   }, []);
 
-  console.log(width);
   return width
 }
 

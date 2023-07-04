@@ -1,23 +1,52 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components';
 import colors from '../styles/colors';
 import Button from '../components/global/button';
 import Placeholder from '../assets/incognita.jpg';
 import useWidth from '../hooks/useWidth';
 import { useBackground } from '../context/background';
+import Loader from '../components/global/loader';
+import Resultado from '../components/analizar/resultado';
+import data from '../utilities/result.json';
 
 const Analizar = () => {
   const width = useWidth();
   const { changeColor } = useBackground();
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
   
   useEffect(() => {
     changeColor(width > 560 ? colors.primary200 : colors.secondary500)
   }, [width]);
 
+  useEffect(() => {
+    if(image) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(image);
+      fileReader.addEventListener("load", () => {
+        setPreview(fileReader.result);
+      })
+    }
+  }, [image]);
+
+  const handleClick = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setResult(data);
+      setLoading(false);
+    }, 3000)
+  }
+
+  if(result) {
+    return <Resultado data={result} preview={preview} />
+  }
+
   return (
     <Container>
       <Box>
-        <PreviewImage src={Placeholder} />
+        <PreviewImage src={image ? preview : Placeholder} />
         <LeftContainer>
           <HeaderContainer>
             <h2>Analizar imagen</h2>
@@ -27,11 +56,13 @@ const Analizar = () => {
             <InputContainer>
               <p>Seleccionar foto de hojas de la planta de tomate para detectar y clasificar enfermedad.</p>
               <div className='inputContainer'>
-                <label htmlFor="inputfile">Seleccionar un archivo</label>
-                <input id="inputfile" type='file' />
+                <label htmlFor="inputfile">{image ? "Seleccionar otra foto" : "Seleccionar una foto"}</label>
+                <input onChange={e => setImage(e.target.files[0])} accept='.jpg' id="inputfile" type='file' />
               </div>
             </InputContainer>
-            <Button type="primary">Subir foto</Button>
+            <Button onClick={handleClick} disabled={!image || loading} type="primary" width="147px">
+              {loading ? <Loader /> : "Subir foto"}
+            </Button>
           </FormContainer>
         </LeftContainer>
       </Box>

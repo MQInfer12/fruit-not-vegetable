@@ -1,0 +1,21 @@
+{
+  "prediccion": "Mancha bacteriana",
+  "porcentaje": "58.0%",
+  "sintomas": [
+    "Los síntomas de la Mancha Bacteriana pueden aparecer en todas las partes superficiales de la planta. Los primeros síntomas observados en las hojas son manchas oscuras, acuosas y circulares que miden menos de 3 mm de diámetro.",
+    "Estas manchas se vuelven angulares y la superficie puede parecer grasienta, con el centro traslúcido y el borde negro. Los centros de estas lesiones se secan y agrietan pronto y una aureola amarilla podría aparecer alrededor de la lesión. Las lesiones tienden a ser más numerosas en el follaje joven.",
+    "Durante periodos de abundante humedad (lluvias fuertes, neblina o rocío) las hojas tendrán una apariencia marchita en vez de las típicas manchas en las hojas. Las infecciones en el fruto comienzan como pequeños puntos realzados de color negro, que pueden estar rodeados con una aureola blanca de apariencia grasienta. Estas lesiones pueden alcanzar entre 4 y 5 mm de diámetro y tornarse cafés, estar ligeramente realzadas y tener una apariencia costrosa. Pueden también tener los bordes realzados y estar hundidas al centro."
+  ],
+  "prevencion": [
+    "Los pasos para evitar el ataque de la mancha bacteriana deben de iniciar de la mano al inicio de la temporada. Ya que este patógeno puede ser transmitido por las semillas, por lo que pueden aparecer manchas tempranas en las plántulas mientras se encuentran en el invernadero.",
+    "Las bacterias se propagan de una planta a otra planta mediante el agua, la mayoría de las veces a través de gotas de salpicaduras del riego superior, lluvia, aplicaciones sin relizar el metodod correcto. Dado que las bacterias prefieren los ambientes cálidos y húmedos, los trasplantes que crecen en un invernadero ofrecen un hogar perfecto para las manchas bacterianas.",
+    "Es importante el uso de semillas y trasplantes sin enfermedades para el control temprano de la mancha bacteriana. Rociar cobre puede brindar niveles moderados de protección. Cuando se presenten manchas bacterianas, evitar el uso de riego desde arriba. La rotación de cultivos no hospederos y el control de las hierbas y plantas silvestres son buenas medidas preventivas. Buenas prácticas de saneamiento, que incluyen limpiar el equipo usado en campos enfermos y arar los restos de las plantas inmediatamente después de la cosecha, pueden ayudar a reducir las pérdidas por esta enfermedad."
+  ],
+  "tratamiento": [
+    "1. Control químico",
+    "El control químico de esta enfermedad es complejo. La existencia de numerosas especies y razas favorece la rápida aparición de resistencias a las materias activas utilizadas. Por esta razón, se recomienda prevenir la enfermedad con tratamientos regulares a base de cobre.",
+    "Una vez instalado en el cultivo el patógeno, se puede optar por realizar 2 tratamientos semanales de cobre y en uno de ellos, aplicar además Mancozeb y Maneb alternativamente para reforzar la función fungicida-bactericida del cobre y evitar la aparición de resistencias.",
+    "2. Control biológico",
+    "A nivel de semilleros, la utilización de bacteriófagos para controlar la enfermedad en trasplantes ha resultado un éxito."
+  ]
+}

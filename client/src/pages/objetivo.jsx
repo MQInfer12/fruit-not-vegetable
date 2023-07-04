@@ -11,7 +11,7 @@ import { useChangeBackground } from '../hooks/changeBackground'
 const Objetivo = () => {
   const carouselData = [Plant5, Plant6, Plant7];
   const carouselIndex = useInterval(4000, carouselData.length);
-  useChangeBackground(colors.primary100);
+  useChangeBackground(colors.primary200);
 
   return (
     <Container>
