@@ -82,8 +82,8 @@ const Nav = styled.div`
     }
   }
 
-  @media screen and (max-width: 1400px) {
-    padding: 20px 40px;
+  @media screen and (max-width: 1640px) {
+    padding: 10px 40px;
   }
 `;
 
@@ -102,6 +102,7 @@ const Img = styled.img`
 
 const LogoText = styled.p`
   transition: all 0.3s;
+  white-space: nowrap;
 
   & > span {
     font-weight: 700;
@@ -140,6 +141,7 @@ const StyledLink = styled(NavLink)`
   transition: all 0.3s;
   text-decoration: none;
   position: relative;
+  white-space: nowrap;
 
   &::after {
     position: absolute;

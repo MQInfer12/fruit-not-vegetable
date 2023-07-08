@@ -18,7 +18,7 @@ const Mapa = () => {
     <Container>
       <MapDiv>
         {
-          selected &&
+          localidad &&
           <Map localidad={localidad} />
         }
         <OverlappingContainer open={open}>
