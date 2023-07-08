@@ -14,10 +14,13 @@ const Contacto = () => {
 
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
-  const [asunto, setAsunto] = useState("");
+  const [prefix, setPrefix] = useState("+591");
+  const [telefono, setTelefono] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [errors, setErrors] = useState({});
   const [sended, setSended] = useState(false);
+  const [responses, setResponses] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const newErrors = {};
@@ -25,19 +28,22 @@ const Contacto = () => {
       newErrors.nombre = "Este campo es requerido";
     }
     const regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
+    const regexPhone = /^[+][0-9]{3}[0-9]{4,9}$/
     if(!email.trim()) {
       newErrors.email = "Este campo es requerido";
     } else if (!regexEmail.test(email.trim())) {
       newErrors.email = "Esta dirección de correo no es válida";
     }
-    if(!asunto.trim()) {
-      newErrors.asunto = "Este campo es requerido";
+    if(!telefono.trim()) {
+      newErrors.telefono = "Este campo es requerido";
+    } else if (!regexPhone.test(prefix + telefono.trim())) {
+      newErrors.telefono = "Este número de teléfono no es válido";
     }
     if(!mensaje.trim()) {
       newErrors.mensaje = "Este campo es requerido";
     }
     setErrors(newErrors);
-  }, [nombre, email, asunto, mensaje])
+  }, [nombre, email, telefono, mensaje])
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -50,8 +56,9 @@ const Contacto = () => {
       })
       return;
     }
+    setLoading(true);
     const res = await sendRequest(`correo`, {
-      subject: asunto,
+      telefono: prefix + telefono,
       name: nombre,
       mail: email,
       message: mensaje
@@ -63,13 +70,15 @@ const Contacto = () => {
     })
     setNombre("");
     setEmail("");
-    setAsunto("");
+    setTelefono("");
     setMensaje("");
+    setResponses(old => old + 1);
+    setLoading(false);
   }
 
   return (
     <Container>
-      <Form>
+      <Form key={responses}>
         <InputText text="Nombre" 
           value={nombre} 
           onChange={e => setNombre(e.target.value)} 
@@ -82,19 +91,27 @@ const Contacto = () => {
           error={errors.email}
           trigger={sended}
         />
-        <InputText text="Asunto" 
-          value={asunto} 
-          onChange={e => setAsunto(e.target.value)} 
-          error={errors.asunto}
-          trigger={sended}
-        />
+        <div>
+          <select>
+            <option value="+591">+591 (Bolivia)</option>
+            <option value="+591">+54 (Argentina)</option>
+            <option value="+591">+56 (Chile)</option>
+            <option value="+591">+57 (Colombia)</option>
+          </select>
+          <InputText text="Whatsapp/Telegram" 
+            value={telefono} 
+            onChange={e => setTelefono(e.target.value)} 
+            error={errors.telefono}
+            trigger={sended}
+          />
+        </div>
         <InputText textarea text="Mensaje" 
           value={mensaje} 
           onChange={e => setMensaje(e.target.value)} 
           error={errors.mensaje}
           trigger={sended}
         />
-        <Button onClick={handleClick} type="primary" max>Enviar</Button>
+        <Button disabled={loading} onClick={handleClick} type="primary" max>{loading ? "Enviando..." : "Enviar"}</Button>
       </Form>
       <RightContainer>
         <RightInfo>
@@ -148,9 +165,27 @@ const Form = styled.form`
   gap: 32px;
   background-color: ${colors.white};
   padding: 40px;
+  width: 580px;
 
   @media screen and (max-width: 700px) {
     width: 100%;
+  }
+
+  & select {
+    padding: 0 12px;
+    background-color: ${colors.primary500};
+    border: none;
+    color: ${colors.white};
+    height: 47px;
+  }
+
+  & > div {
+    display: flex;
+    width: 100%;
+
+    @media screen and (max-width: 600px) {
+      flex-direction: column-reverse;
+    }
   }
 
   & > button {

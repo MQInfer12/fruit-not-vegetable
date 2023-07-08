@@ -22,11 +22,16 @@ def index():
 
 @app.route('/correo', methods=["POST"])
 def correo():
-  msg = Message(request.json["subject"], sender='serginho61@gmail.com', recipients=['serginho61@gmail.com'])
-  msg.body = """ 
-    From: %s &lt;%s&gt; 
-    %s 
-  """ % (request.json["name"], request.json["mail"], request.json["message"])
+  msg = Message("Mensaje desde Doctor Tomatto", sender='serginho61@gmail.com', recipients=['serginho61@gmail.com'])
+  content = """ 
+  <html>
+    <b>Nombre:</b> {0} <br> 
+    <b>Email:</b> {1} <br>
+    <b>Whatsapp/Telegram:</b> {2} <br>
+    <b>Mensaje:</b> {3}
+  </html>
+  """
+  msg.html =  content.format(request.json["name"], request.json["mail"], request.json["telefono"], request.json["message"])
   mail.send(msg)
   return jsonify({"message": "Se envió el correo correctamente"})
 

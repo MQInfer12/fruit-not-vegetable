@@ -86,13 +86,13 @@ const Container = styled.section`
 
 const Box = styled.div`
   background-color: ${colors.secondary500};
-  padding: 60px 60px 20px;
-  border-bottom: 60px solid ${colors.secondary300};
+  padding: 60px 60px 60px;
   color: ${colors.secondary600};
   display: flex;
   justify-content: space-between;
   gap: 60px;
   min-height: 400px;
+  max-width: 1077px;
 
   @media screen and (max-width: 1100px) {
     flex-direction: column;
@@ -127,7 +127,7 @@ const HeaderContainer = styled.div`
 
 const FormContainer = styled.div`
   display: flex;
-  gap: 100px;
+  gap: 60px;
   align-items: end;
 
   @media screen and (max-width: 780px) {
@@ -145,7 +145,7 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 400px;
+  width: 340px;
 
   @media screen and (max-width: 560px) {
     width: auto;
@@ -182,10 +182,11 @@ const InputContainer = styled.div`
 `;
 
 const PreviewImage = styled.img`
-  min-width: 250px;
-  max-width: 250px;
-  max-height: 260px;
+  min-width: 340px;
+  max-width: 340px;
+  max-height: 280px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
+  object-position: center;
   border: 4px solid ${colors.secondary300};
 `;

@@ -121,7 +121,7 @@ const Ul = styled.ul`
   background-color: ${props => props.bg};
   transition: all 0.3s;
 
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1260px) {
     opacity: ${props => props.open ? "1" : "0"};
     pointer-events: ${props => !props.open && "none"};
     position: absolute;
@@ -199,7 +199,7 @@ const BurgerButton = styled.button`
     opacity: 0.7;
   }
 
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1260px) {
     display: flex;
   }
 `;  

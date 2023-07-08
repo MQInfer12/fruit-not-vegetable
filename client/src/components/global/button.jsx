@@ -13,12 +13,12 @@ export default Button
 const StyledButton = styled.button`
   height: 58px;
   white-space: nowrap;
-  padding: 0 41px;
+  padding: ${props => !props.width && "0 41px"};
   background-color: ${props => props.type === "primary" ? colors.primary500 : colors.white};
   color: ${props => props.type === "primary" ? colors.white : colors.primary500};
   border: none;
   font-family: 'DM Sans';
-  font-size: .9rem;
+  font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;

@@ -38,6 +38,7 @@ export default InputText
 
 const InputContainer = styled.div`
   position: relative;
+  width: 100%;
 
   & > label {
     position: absolute;
@@ -54,7 +55,7 @@ const InputContainer = styled.div`
     outline: none;
     resize: none;
     border: 1px solid ${colors.gray200};
-    width: 500px;
+    width: 100%;
 
     @media screen and (max-width: 700px) {
       width: 100%;
