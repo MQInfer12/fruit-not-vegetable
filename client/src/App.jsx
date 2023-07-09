@@ -9,6 +9,7 @@ import Contacto from "./pages/contacto"
 import Analizar from "./pages/analizar"
 import Mapa from "./pages/mapa"
 import Love from "./components/global/love"
+import NewInstrucciones from "./pages/newInstrucciones"
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <Route path="mapa" element={<Mapa />} />
         <Route path="objetivo" element={<Objetivo />} />
         <Route path="credito" element={<Credito />} />
-        <Route path="instrucciones" element={<Instrucciones />} />
+        <Route path="instrucciones" element={<NewInstrucciones />} />
         <Route path="contacto" element={<Contacto />} />
       </Routes>
       <Love />

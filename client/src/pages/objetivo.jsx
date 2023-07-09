@@ -9,23 +9,33 @@ import colors from '../styles/colors'
 import { useChangeBackground } from '../hooks/changeBackground'
 
 const Objetivo = () => {
-  const carouselData = [Plant5, Plant6, Plant7];
-  const carouselIndex = useInterval(4000, carouselData.length);
+  const carouselData = [{
+    text: "Precisión diagnóstica",
+    img: Plant5
+  }, {
+    text: "Fácil de usar",
+    img: Plant6
+  }, {
+    text: "Actualizaciones continuas",
+    img: Plant7
+  }];
+  const { active } = useInterval(4000, carouselData.length);
   useChangeBackground(colors.primary200);
 
   return (
     <Container>
       <ImagesContainer>
-        <FirstImage src={Plant4} />
         <CarouselContainer>
-          <div>
-            {
-              carouselData.map((value, i) => (
-                <SecondImage key={i} active={carouselIndex === i} src={value} />
-              ))
-            }
-          </div>
+          {
+            carouselData.map((value, i) => (
+              <SecondImage key={i} active={active === i}>
+                <PlantLabel>{value.text}</PlantLabel>
+                <img src={value.img} />
+              </SecondImage>
+            ))
+          }
         </CarouselContainer>
+        <FirstImage src={Plant4} />
       </ImagesContainer>
       <RightContainer>
         <h3>Nuestro objetivo</h3>
@@ -62,67 +72,59 @@ const Container = styled.section`
 
 const ImagesContainer = styled.div`
   height: 70vh;
+  aspect-ratio: 0.72 / 1;
   position: relative;
 
   @media screen and (max-width: 1380px) {
     height: 50vh;
   }
   @media screen and (max-width: 960px) {
-    display: flex;
     width: 100%;
-    gap: 8px;
-
-    & > * {
-      width: 50%;
-    }
   }
   @media screen and (max-width: 500px) {
     flex-direction: column;
 
     & > * {
-      height: 50% !important;
-      width: 100% !important;
+      height: 20vh;
     }
   }
 `;
 
 const FirstImage = styled.img`
-  height: 100%;
+  height: 50%;
+  width: 50%;
   object-fit: cover;
+  position: absolute;
+  left:75%;
+  bottom: 10%;
+  border: 8px solid ${colors.white};
+
+  @media screen and (max-width: 960px) {
+    display: none;
+  }
 `;
 
 const CarouselContainer = styled.div`
-  height: 50%;
-  width: 50%;
-  position: absolute;
-  left: 80%;
-  bottom: 10%;
-  border: 8px solid ${colors.white};
+  height: 100%;
+  width: 100%;
   background-color: ${colors.white};
-  display: flex;
   gap: 8px;
-
-  & > div {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  @media screen and (max-width: 960px) {
-    position: static;
-    border: none;
-    height: 100%;
-  }
 `;
 
-const SecondImage = styled.img`
-  object-fit: cover;
+const SecondImage = styled.div`
   opacity: ${props => props.active ? "1" : "0"};
   transition: all 1s;
   position: absolute;
+  border: 8px solid ${colors.white};
   inset: 0;
   width: 100%;
   height: 100%;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const RightContainer = styled.div`
@@ -151,5 +153,20 @@ const RightContainer = styled.div`
   & p {
     line-height: 28px;
     text-align: justify;
+  }
+`;
+
+const PlantLabel = styled.p`
+  position: absolute;
+  background-color: ${colors.primary500};
+  color: ${colors.white};
+  padding: 7px 15px;
+  top: 12px;
+  left: 15px;
+  font-size: 12px;
+  transition: all 1s;
+
+  @media screen and (max-width: 700px) {
+    font-size: .6rem;
   }
 `;

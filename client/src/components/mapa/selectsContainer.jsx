@@ -56,6 +56,10 @@ const Container = styled.div`
     font-family: 'Chillax';
   }
 
+  & > p {
+    opacity: 0.7;
+  }
+
   & > div {
     margin-top: 20px;
     display: flex;

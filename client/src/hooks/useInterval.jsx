@@ -10,7 +10,17 @@ export const useInterval = (milliseconds, max) => {
     return () => {
       clearInterval(interval);
     }
-  }, []);
+  }, [active]);
 
-  return active
+  const changeActive = (i) => {
+    if(i >= max || i < 0) {
+      throw new Error("active index out of bounds");
+    }
+    setActive(i);
+  }
+
+  return {
+    active,
+    changeActive
+  }
 }

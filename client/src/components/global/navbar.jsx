@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { createGlobalStyle, styled } from 'styled-components'
 import Logo from '../../assets/logo.png'
+import TextWhite from '../../assets/text-white.png'
+import TextGreen from '../../assets/text-green.png'
 import colors from '../../styles/colors'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import { useBackground } from '../../context/background'
@@ -22,7 +24,7 @@ const Navbar = () => {
         <GlobalStyle bg={color} />
         <LogoContainer to="/">
           <Img src={Logo} />
-          <LogoText>Doctor Tomatto</LogoText>
+          <LogoText src={location.pathname === "/" ? TextWhite : TextGreen} />
         </LogoContainer>
         <Ul bg={color} open={openLinks}>
           <li><StyledLink to="/">Inicio</StyledLink></li>
@@ -100,14 +102,9 @@ const Img = styled.img`
   height: 100%;
 `;
 
-const LogoText = styled.p`
+const LogoText = styled.img`
   transition: all 0.3s;
-  white-space: nowrap;
-
-  & > span {
-    font-weight: 700;
-    transition: all 0.3s;
-  }
+  width: 100px;
 
   @media screen and (max-width: 480px) {
     display: none;
@@ -120,7 +117,7 @@ const Ul = styled.ul`
   list-style: none;
   gap: 40px;
   background-color: ${props => props.bg};
-  transition: all 0.3s;
+  transition: background-color 0.3s;
 
   @media screen and (max-width: 1260px) {
     opacity: ${props => props.open ? "1" : "0"};
@@ -132,6 +129,7 @@ const Ul = styled.ul`
     justify-content: center;
     padding: 0 40px 20px;
     flex-wrap: wrap;
+    transition: all 0.3s;
   }
 `;
 

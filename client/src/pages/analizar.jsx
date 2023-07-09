@@ -123,6 +123,9 @@ const HeaderContainer = styled.div`
     font-weight: 600;
     font-family: 'Chillax';
   }
+  & > p {
+    opacity: 0.7;
+  }
 `;
 
 const FormContainer = styled.div`

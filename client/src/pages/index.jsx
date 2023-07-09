@@ -2,10 +2,9 @@ import React from 'react'
 import { styled } from 'styled-components'
 import colors from '../styles/colors'
 import Button from '../components/global/button'
-import DoctorTomatto from '../assets/logo.png'
+import DoctorTomatto from '../assets/logotext-white.png'
 import { useChangeBackground } from '../hooks/changeBackground'
 import { useNavigate } from 'react-router-dom'
-import Right from '../components/index/right.unused'
 
 const Index = () => {
   const navigate = useNavigate();
@@ -15,7 +14,7 @@ const Index = () => {
     <Container>
       <LeftInfoContainer>
         <Logo src={DoctorTomatto} />
-        <Title>Doctor Tomatto</Title>
+        {/* <Title>Doctor Tomatto</Title> */}
         {/* ¡Únete a nosotros y protege la salud de tus cultivos de tomate! Explora nuestra plataforma ahora y descubre cómo la inteligencia artificial puede marcar la diferencia en el diagnóstico y clasificación de enfermedades en los tomates. */}
         <Description>Detecta y clasifica enfermedades en el tomate</Description>
         <div className='buttons'>
@@ -61,7 +60,7 @@ const LeftInfoContainer = styled.div`
   }
 
   & > .buttons {
-    margin-top: 40px;
+    margin-top: 32px;
 
     @media screen and (max-width: 536px) {
       display: flex;
@@ -71,7 +70,7 @@ const LeftInfoContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 250px;
+  width: 375px;
 `;
 
 const Title = styled.h1`
@@ -90,10 +89,10 @@ const Title = styled.h1`
 
 const Description = styled.p`
   color: ${colors.white};
-  font-size: 2.4rem;
+  font-size: 1.8rem;
   font-weight: 600;
-  margin-top: 32px;
   text-align: center;
+  opacity: 0.7;
 
   @media screen and (max-width: 700px) {
     font-size: 1.2rem;

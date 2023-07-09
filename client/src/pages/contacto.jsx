@@ -9,7 +9,7 @@ import InputText from '../components/contact/inputText';
 import Swal from 'sweetalert2';
 
 const Contacto = () => {
-  const active = useInterval(4000, 3);
+  const { active } = useInterval(4000, 3);
   useChangeBackground(colors.primary200);
 
   const [nombre, setNombre] = useState("");
