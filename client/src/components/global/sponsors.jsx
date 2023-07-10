@@ -5,7 +5,6 @@ import Sponsor3 from '../../assets/sponsor3.png'
 import Sponsor4 from '../../assets/sponsor4.png'
 import Sponsor5 from '../../assets/sponsor5.png'
 import { styled } from 'styled-components'
-import colors from '../../styles/colors'
 
 const Sponsors = () => {
   return (

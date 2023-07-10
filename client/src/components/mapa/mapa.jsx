@@ -4,20 +4,24 @@ import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
 const MyMap = ({ localidad }) => {
   const map = useMap();
   useEffect(() => {
-    map.setView(localidad.coordenadas)
+    const bounds = localidad.pines.map(pin => pin.coordenadas);
+    map.fitBounds(bounds);
+    map.setZoom(14);
   }, [localidad]);
   return null;
 }
 
 const Mapa = ({ localidad }) => {
   return (
-    <MapContainer center={localidad.coordenadas} zoom={14} scrollWheelZoom={true}>
+    <MapContainer zoom={14} scrollWheelZoom={true}>
       <MyMap localidad={localidad} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={localidad.coordenadas} />
+      {localidad.pines.map((pin, i) => (
+        <Marker key={i} position={pin.coordenadas} />
+      ))}
     </MapContainer>
   )
 }

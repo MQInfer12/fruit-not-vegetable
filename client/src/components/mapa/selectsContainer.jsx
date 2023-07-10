@@ -1,10 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components';
 import colors from '../../styles/colors';
-import data from "../../utilities/mapData.json";
 import Button from '../global/button';
+/* import data from '../../utilities/mapData.json' */
 
 const SelectsContainer = ({ country, setCountry, localidad, setLocalidad, handleViewMap }) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getDatosMapa = async () => {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND}mapa`);
+      if(res.ok) {
+        const resJson = await res.json();
+        setData(resJson);
+        setLoading(false);
+      }
+    }
+    getDatosMapa();
+  }, [])
+
   const changePais = (e) => {
     setCountry(data.find(value => value.pais === e.target.value));
     setLocalidad(null);
@@ -19,13 +34,13 @@ const SelectsContainer = ({ country, setCountry, localidad, setLocalidad, handle
       <p>Seleccione un país y una localidad para ver el mapa</p>
       <div>
         <Select value={country?.pais} onChange={changePais}>
-          <option>Seleccione país...</option>
+          <option>{loading ? "Cargando..." : "Seleccione país..."}</option>
           {data.map((v, i) => (
             <option key={i} value={v.pais}>{v.pais}</option>
           ))}
         </Select>
         <Select key={country?.pais} value={localidad?.nombre} onChange={changeLocalidad}>
-          <option>Seleccione localidad...</option>
+          <option>{loading ? "Cargando..." : "Seleccione localidad..."}</option>
           {country && country.localidades.map((v, i) => (
             <option key={i} value={v.nombre}>{v.nombre}</option>
           ))}
