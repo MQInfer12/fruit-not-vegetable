@@ -30,7 +30,7 @@ export default Index
 
 const Container = styled.section`
   min-height: calc(100dvh - 32px);
-  padding: 125px 40px 40px;
+  padding: 100px 40px 65px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -50,7 +50,6 @@ const Container = styled.section`
 `;
 
 const LeftInfoContainer = styled.div`
-  width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -93,6 +92,8 @@ const Description = styled.p`
   font-weight: 600;
   text-align: center;
   opacity: 0.7;
+  font-family: 'Chillax';
+  margin-top: 12px;
 
   @media screen and (max-width: 700px) {
     font-size: 1.2rem;

@@ -72,8 +72,8 @@ const InputContainer = styled.div`
   & > .error-container {
     animation: appear .5s;
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 14px;
+    right: 13px;
 
     & > i {
       font-size: 1.2rem;

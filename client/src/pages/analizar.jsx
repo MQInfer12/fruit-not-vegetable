@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components';
 import colors from '../styles/colors';
 import Button from '../components/global/button';
-import Placeholder from '../assets/incognita.jpg';
+import Placeholder from '../assets/incognita.png';
 import useWidth from '../hooks/useWidth';
 import { useBackground } from '../context/background';
 import Loader from '../components/global/loader';
@@ -46,7 +46,9 @@ const Analizar = () => {
   return (
     <Container>
       <Box>
-        <PreviewImage src={image ? preview : Placeholder} />
+        <PreviewImage>
+          <img src={image ? preview : Placeholder} />
+        </PreviewImage>
         <LeftContainer>
           <HeaderContainer>
             <h2>Analizar imagen</h2>
@@ -148,13 +150,14 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 340px;
+  width: 270px;
 
   @media screen and (max-width: 560px) {
     width: auto;
   }
 
   & > p {
+    text-align: justify;
     line-height: 28px;
   }
 
@@ -184,12 +187,17 @@ const InputContainer = styled.div`
   }
 `;
 
-const PreviewImage = styled.img`
-  min-width: 340px;
-  max-width: 340px;
-  max-height: 280px;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  object-position: center;
-  border: 4px solid ${colors.secondary300};
+const PreviewImage = styled.div`
+  width: 410px;
+  height: 280px;
+  display: flex;
+  justify-content: center;
+
+  & > img {
+    max-width: 100%;
+    max-height: 100%;
+    border: 4px solid ${colors.secondary300};
+    object-fit: contain;
+    object-position: center;
+  }
 `;

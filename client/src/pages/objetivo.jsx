@@ -54,7 +54,7 @@ const Container = styled.section`
   min-height: calc(100dvh - 32px);
   padding: 85px 140px 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   gap: 270px;
   align-items: center;
 

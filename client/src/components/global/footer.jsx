@@ -3,6 +3,7 @@ import { styled } from 'styled-components'
 import colors from '../../styles/colors'
 import Button from './button'
 import { useNavigate } from 'react-router-dom'
+import Sponsors from './sponsors'
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -10,8 +11,8 @@ const Footer = () => {
   return (
     <StyledFooter>
       <FloatingContainer>
-        <h2>Tenemos la <span>solución</span> para tu <span>huerto</span></h2>
-        <Button onClick={() => navigate('/analizar')} type="primary">Analiza ahora</Button>
+        <h2>Tenemos la <span>solución</span> para tu <span>cultivo</span></h2>
+        <Sponsors />
       </FloatingContainer>
       <ColumnsContainer>
         <div>
@@ -71,13 +72,41 @@ const StyledFooter = styled.footer`
 `;
 
 const FloatingContainer = styled.div`
+  width: 80%;
   display: flex;
-  gap: 100px;
+  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 10px 40px;
+  padding: 10px 0;
   background-color: ${colors.primary200};
   margin-bottom: 40px;
   margin-top: 40px;
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    position: absolute;
+    height: 100%;
+    width: 100px;
+    left: 0;
+    top: 0;
+    content: "";
+    z-index: 1;
+    background: linear-gradient(to right, ${colors.primary600}, transparent);
+    pointer-events: none;
+  }
+
+  &::after {
+    position: absolute;
+    height: 100%;
+    width: 100px;
+    right: 0;
+    top: 0;
+    content: "";
+    z-index: 1;
+    background: linear-gradient(to left, ${colors.primary600}, transparent);
+    pointer-events: none;
+  }
 
   & > h2 {
     font-weight: 600;

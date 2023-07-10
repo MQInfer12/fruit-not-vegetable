@@ -14,7 +14,6 @@ const Contacto = () => {
 
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
-  const [prefix, setPrefix] = useState("+591");
   const [telefono, setTelefono] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [errors, setErrors] = useState({});
@@ -36,7 +35,7 @@ const Contacto = () => {
     }
     if(!telefono.trim()) {
       newErrors.telefono = "Este campo es requerido";
-    } else if (!regexPhone.test(prefix + telefono.trim())) {
+    } else if (!regexPhone.test(telefono.trim())) {
       newErrors.telefono = "Este número de teléfono no es válido";
     }
     if(!mensaje.trim()) {
@@ -58,7 +57,7 @@ const Contacto = () => {
     }
     setLoading(true);
     const res = await sendRequest(`correo`, {
-      telefono: prefix + telefono,
+      telefono: telefono,
       name: nombre,
       mail: email,
       message: mensaje
@@ -91,20 +90,12 @@ const Contacto = () => {
           error={errors.email}
           trigger={sended}
         />
-        <div>
-          <select>
-            <option value="+591">+591 (Bolivia)</option>
-            <option value="+591">+54 (Argentina)</option>
-            <option value="+591">+56 (Chile)</option>
-            <option value="+591">+57 (Colombia)</option>
-          </select>
-          <InputText text="Whatsapp/Telegram" 
-            value={telefono} 
-            onChange={e => setTelefono(e.target.value)} 
-            error={errors.telefono}
-            trigger={sended}
-          />
-        </div>
+        <InputText text="Whatsapp/Telegram" 
+          value={telefono} 
+          onChange={e => setTelefono(e.target.value)} 
+          error={errors.telefono}
+          trigger={sended}
+        />
         <InputText textarea text="Mensaje" 
           value={mensaje} 
           onChange={e => setMensaje(e.target.value)} 
@@ -171,23 +162,6 @@ const Form = styled.form`
     width: 100%;
   }
 
-  & select {
-    padding: 0 12px;
-    background-color: ${colors.primary500};
-    border: none;
-    color: ${colors.white};
-    height: 47px;
-  }
-
-  & > div {
-    display: flex;
-    width: 100%;
-
-    @media screen and (max-width: 600px) {
-      flex-direction: column-reverse;
-    }
-  }
-
   & > button {
     align-self: end;
   }
@@ -219,14 +193,18 @@ const RightInfo = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 360px;
+    width: 380px;
 
     @media screen and (max-width: 550px) {
       width: 100%;
+
+      & > h3 {
+        text-align: center;
+      }
     }
 
     & > h3 {
-      font-size: 1.2rem;
+      font-size: 2rem;
       color: ${colors.primary500};
       font-weight: 600;
       font-family: 'Chillax';
