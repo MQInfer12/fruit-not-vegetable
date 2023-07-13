@@ -70,6 +70,7 @@ const MapDiv = styled.div`
   overflow: hidden;
   position: relative;
   border: 8px solid ${colors.primary500};
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
 
   & > div:first-child {
     height: 100%;

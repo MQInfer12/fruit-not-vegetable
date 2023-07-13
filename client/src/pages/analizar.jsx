@@ -95,6 +95,7 @@ const Box = styled.div`
   gap: 60px;
   min-height: 400px;
   max-width: 1077px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
 
   @media screen and (max-width: 1100px) {
     flex-direction: column;

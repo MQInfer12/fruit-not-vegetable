@@ -2,6 +2,7 @@ import React from 'react'
 import { styled } from 'styled-components';
 import usePortal from 'react-useportal';
 import colors from '../../../styles/colors';
+import Pin from '../../../assets/pin.png';
 
 const PaperSquare = ({ color, inclinacion, children, onClick, active }) => {
   const { Portal } = usePortal();
@@ -11,13 +12,14 @@ const PaperSquare = ({ color, inclinacion, children, onClick, active }) => {
       {
         active ? 
         <Portal>
-          <ModalContainer onClick={onClick}>
+          <ModalContainer>
+            <Background onClick={onClick} />
             <Paper 
-              className={active ? "active" : ""} 
-              onClick={onClick} 
+              className={active ? "active" : ""}
               bg={color} 
               inclinacion={inclinacion}
             >
+              <img className='alfiler' src={Pin} />
               { children }
             </Paper>
           </ModalContainer>
@@ -27,6 +29,7 @@ const PaperSquare = ({ color, inclinacion, children, onClick, active }) => {
           bg={color} 
           inclinacion={inclinacion}
         >
+          <img className='alfiler' src={Pin} />
           { children }
         </Paper>
       }
@@ -35,6 +38,22 @@ const PaperSquare = ({ color, inclinacion, children, onClick, active }) => {
 }
 
 export default PaperSquare
+
+const ModalContainer = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 1002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Background = styled.div`
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  background-color: ${colors.primary500opacity};
+`;
 
 const PaperContainer = styled.div`
   width: 160px;
@@ -57,6 +76,14 @@ const Paper = styled.div`
   align-items: center;
   justify-content: center;
   box-shadow: 5px 6px 5px -4px rgba(0,0,0,0.5);
+  position: relative;
+
+  & > .alfiler {
+    position: absolute;
+    top: -10px;
+    width: 25px;
+    transform: rotate(-25deg);
+  }
 
   &:hover {
     scale: 1.2;
@@ -67,6 +94,12 @@ const Paper = styled.div`
     height: 500px;
     transform: rotate(0);
     animation: grow .3s;
+    cursor: auto;
+
+    & > .alfiler {
+      width: 50px;
+      top: -30px;
+    }
 
     &:hover {
       scale: 1;
@@ -81,14 +114,4 @@ const Paper = styled.div`
       }
     }
   }
-`;
-
-const ModalContainer = styled.div`
-  position: fixed;
-  inset: 0;
-  z-index: 1002;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: ${colors.primary500opacity};
 `;

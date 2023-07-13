@@ -55,6 +55,7 @@ const Contacto = () => {
       })
       return;
     }
+    setSended(false);
     setLoading(true);
     const res = await sendRequest(`correo`, {
       telefono: telefono,
@@ -63,7 +64,7 @@ const Contacto = () => {
       message: mensaje
     });
     Swal.fire({
-      title: "Petición correcta",
+      title: "Correo enviado",
       text: res.message,
       icon: "success"
     })

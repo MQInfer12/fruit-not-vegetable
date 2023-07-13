@@ -71,6 +71,7 @@ const CarouselContainer = styled.div`
   max-width: 916px;
   position: relative;
   isolation: isolate;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
 
   @media screen and (max-width: 700px) {
     margin-bottom: 160px;

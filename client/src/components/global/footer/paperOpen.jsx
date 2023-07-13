@@ -8,18 +8,23 @@ const PaperOpen = ({ img }) => {
       <div className='img-container'>
         <Img src={img} />
       </div>
+      <h3>Visita nuestra <a href="https://www.youtube.com/" target='_blank'>página web</a></h3>
       <div className='data'>
         <div className='data-row'>
           <h4>Teléfono</h4>
-          <p>+59192739418</p>
+          <p>+59176439418</p>
         </div>
         <div className='data-row'>
           <h4>Email</h4>
           <p>test@example.com</p>
         </div>
         <div className='data-row'>
-          <h4>Ubicación</h4>
+          <h4>Dirección</h4>
           <p>Calle Los Ángeles, esq. América y Libertadores</p>
+        </div>
+        <div className='data-row'>
+          <h4>Ciudad</h4>
+          <p>Cochabamba - Bolivia</p>
         </div>
       </div>
     </Container>
@@ -40,7 +45,8 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: 220px;
+    min-height: 220px;
     width: 100%;
   }
 
@@ -48,8 +54,10 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 12px;
-    height: 120%;
-    padding: 0 20px 20px;
+    height: 100%;
+    overflow: auto;
+    padding: 8px 40px 24px;
+    width: 100%;
   }
 
   & .data-row {
@@ -60,11 +68,47 @@ const Container = styled.div`
 
   & h4 {
     font-family: "Chillax";
-    color: ${colors.primary500};
+    color: rgba(0, 0, 0, .8);
+    opacity: 0.6;
   }
   & p {
+    opacity: 0.8;
     line-height: 28px;
     text-align: justify;
+    font-size: 1.1rem;
+  }
+
+  h3 {
+    font-family: "Chillax";
+    align-self: center;
+    font-size: 1.3rem;
+    color: rgba(0, 0, 0, .8);
+    opacity: 0.6;
+    padding: 8px 0 16px;
+
+    & > a {
+      text-decoration: none;
+      color: ${colors.primary600};
+      position: relative;
+
+      &::after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 1px;
+        background-color: ${colors.primary600};
+        left: 0;
+        bottom: 0;
+        transform-origin: right;
+        transform: scale(0);
+        transition: transform 0.3s;
+      }
+
+      &:hover::after {
+        transform-origin: left;
+        transform: scale(1);
+      }
+    }
   }
 `;
 
