@@ -17,7 +17,12 @@ const colors = {
   gray300: "#A5ACB5",
   gray400: "#87909D",
   gray500: "#697484",
-  danger: "#d1534f"
+  danger: "#d1534f",
+  pastel1: "#f08080",
+  pastel2: "#f4978e",
+  pastel3: "#f8ad9d",
+  pastel4: "#fbc4ab",
+  pastel5: "#ffdab9"
 }
 
 export default colors

@@ -3,7 +3,7 @@ import { styled } from 'styled-components'
 import colors from '../../styles/colors'
 import Button from './button'
 import { useNavigate } from 'react-router-dom'
-import Sponsors from './sponsors'
+import Sponsors from './footer/sponsors'
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -84,28 +84,8 @@ const FloatingContainer = styled.div`
   position: relative;
   isolation: isolate;
 
-  &::before {
-    position: absolute;
-    height: 100%;
-    width: 100px;
-    left: 0;
-    top: 0;
-    content: "";
-    z-index: 1;
-    background: linear-gradient(to right, ${colors.primary600}, transparent);
-    pointer-events: none;
-  }
-
-  &::after {
-    position: absolute;
-    height: 100%;
-    width: 100px;
-    right: 0;
-    top: 0;
-    content: "";
-    z-index: 1;
-    background: linear-gradient(to left, ${colors.primary600}, transparent);
-    pointer-events: none;
+  @media screen and (max-width: 600px) {
+    width: 100%;
   }
 
   & > h2 {
