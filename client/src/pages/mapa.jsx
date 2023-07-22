@@ -12,14 +12,17 @@ const Mapa = () => {
   const [country, setCountry] = useState(null);
   const [localidad, setLocalidad] = useState(null);
   const [selected, setSelected] = useState(false);
-  useChangeBackground(colors.primary200);
+  useChangeBackground(colors.primary500);
 
   return (
     <Container>
       <MapDiv>
         {
           localidad &&
-          <Map localidad={localidad} />
+          <Map 
+            country={country.pais}
+            localidad={localidad} 
+          />
         }
         <OverlappingContainer open={open}>
           <OverlappingBG onClick={() => setOpen(false)} open={open} />

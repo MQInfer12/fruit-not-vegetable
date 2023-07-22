@@ -6,16 +6,11 @@ import Sponsor4 from '../../../assets/sponsor4.png'
 import Sponsor5 from '../../../assets/sponsor5.png'
 import { styled } from 'styled-components'
 import colors from '../../../styles/colors'
-import PaperSquare from './paperSquare'
-import PaperOpen from './paperOpen'
+import SponsorPaper from './sponsorPaper'
+import { getRandomInt } from '../../../utilities/getRandomInt'
 
 const Sponsors = () => {
-  const getRandomInt = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-  }
-  const [data, setData] = useState([{
+  const [data] = useState([{
     img: Sponsor1,
     inclinacion: getRandomInt(-6, 7),
     color: colors.pastel1
@@ -45,34 +40,22 @@ const Sponsors = () => {
     <Container active={active} width={data.length * 360}>
       <div id='sponsors-animation'>
         {data.map((value, i) => (
-          <PaperSquare 
-            key={i} 
+          <SponsorPaper 
+            key={i}
             onClick={() => changeActive(i)}
             active={active === i}
-            color={value.color} 
-            inclinacion={value.inclinacion}
-          >
-            {active === i ?
-              <PaperOpen img={value.img}></PaperOpen> :
-              <Img src={value.img} />
-            }
-          </PaperSquare>
+            value={value}
+          />
         ))}
       </div>
       <div>
         {data.map((value, i) => (
-          <PaperSquare 
-            key={data.length + i} 
+          <SponsorPaper 
+            key={data.length + i}
             onClick={() => changeActive(data.length + i)}
             active={active === (data.length + i)}
-            color={value.color} 
-            inclinacion={value.inclinacion}
-          >
-            {active === (data.length + i) ?
-              <PaperOpen img={value.img}></PaperOpen> :
-              <Img src={value.img} />
-            }
-          </PaperSquare>
+            value={value}
+          />
         ))}
       </div>
     </Container>
@@ -104,10 +87,4 @@ const Container = styled.div`
       }
     }
   }
-`;
-
-const Img = styled.img`
-  max-width: 80%;
-  max-height: 80%;
-  object-fit: cover;
 `;

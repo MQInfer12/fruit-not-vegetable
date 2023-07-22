@@ -11,7 +11,7 @@ const Button = ({ children, onClick, type, max, disabled, width }) => {
 export default Button
 
 const StyledButton = styled.button`
-  height: 58px;
+  min-height: 58px;
   white-space: nowrap;
   padding: ${props => !props.width && "0 41px"};
   background-color: ${props => props.type === "primary" ? colors.primary500 : colors.white};

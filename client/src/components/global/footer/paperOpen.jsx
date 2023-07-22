@@ -11,19 +11,19 @@ const PaperOpen = ({ img }) => {
       <h3>Visita nuestra <a href="https://www.youtube.com/" target='_blank'>página web</a></h3>
       <div className='data'>
         <div className='data-row'>
-          <h4>Teléfono</h4>
+          <i className="fa-solid fa-phone"></i>
           <p>+59176439418</p>
         </div>
         <div className='data-row'>
-          <h4>Email</h4>
+          <i className="fa-solid fa-envelope"></i>
           <p>test@example.com</p>
         </div>
         <div className='data-row'>
-          <h4>Dirección</h4>
+          <i className="fa-solid fa-map-pin"></i>
           <p>Calle Los Ángeles, esq. América y Libertadores</p>
         </div>
         <div className='data-row'>
-          <h4>Ciudad</h4>
+          <i className="fa-solid fa-map-location-dot"></i>
           <p>Cochabamba - Bolivia</p>
         </div>
       </div>
@@ -53,7 +53,7 @@ const Container = styled.div`
   & .data {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
     height: 100%;
     overflow: auto;
     padding: 8px 40px 24px;
@@ -62,26 +62,26 @@ const Container = styled.div`
 
   & .data-row {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
+    gap: 24px;
+    align-items: center;
   }
 
-  & h4 {
-    font-family: "Chillax";
+  & i {
     color: rgba(0, 0, 0, .8);
     opacity: 0.6;
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
   }
   & p {
     opacity: 0.8;
-    line-height: 28px;
     text-align: justify;
     font-size: 1.1rem;
   }
 
   h3 {
-    font-family: "Chillax";
     align-self: center;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: rgba(0, 0, 0, .8);
     opacity: 0.6;
     padding: 8px 0 16px;

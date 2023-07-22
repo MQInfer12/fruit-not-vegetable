@@ -24,7 +24,7 @@ const Navbar = () => {
         <GlobalStyle bg={color} />
         <LogoContainer to="/">
           <Img src={Logo} />
-          <LogoText src={location.pathname === "/" ? TextWhite : TextGreen} />
+          <LogoText src={color === colors.primary500 ? TextWhite : TextGreen} />
         </LogoContainer>
         <Ul bg={color} open={openLinks}>
           <li><StyledLink to="/">Inicio</StyledLink></li>
@@ -104,9 +104,12 @@ const Img = styled.img`
 
 const LogoText = styled.img`
   transition: all 0.3s;
-  width: 100px;
+  width: 160px;
 
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 530px) {
+    width: 100px;
+  }
+  @media screen and (max-width: 460px) {
     display: none;
   }
 `;

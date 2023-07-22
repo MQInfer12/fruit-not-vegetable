@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { styled } from 'styled-components';
 import colors from '../styles/colors';
 import Paso1 from '../assets/paso1.png'
 import Paso2 from '../assets/paso2.png'
 import Paso3 from '../assets/paso3.png'
 import { useChangeBackground } from '../hooks/changeBackground';
-import { useInterval } from '../hooks/useInterval';
+import Carousel from '../components/global/carousel';
 
 const NewInstrucciones = () => {
-  useChangeBackground(colors.primary200);
+  useChangeBackground(colors.primary500);
 
   const carouselData = [{
     text: "Ingresar a Analizar Imagen",
@@ -20,29 +20,23 @@ const NewInstrucciones = () => {
     text: "Click al botón Subir Foto",
     img: Paso3
   }];
-  const { active, changeActive } = useInterval(6000, carouselData.length);
 
   return (
     <Container>
       <CarouselContainer>
-        {
-          carouselData.map((value, i) => (
-            <CarouselItem active={i === active}>
+        <Carousel 
+          data={carouselData}
+          component={(value, i) => (
+            <CarouselItem>
               <img src={value.img} />
               <div className='paso'>
                 <h3>Paso {i + 1}</h3>
                 <p>{value.text}</p>
               </div>
             </CarouselItem>
-          ))
-        }
-        <CarouselControls>
-          {
-            carouselData.map((value, i) => (
-              <CarouselButton active={i === active} onClick={() => changeActive(i)} />
-            ))
-          }
-        </CarouselControls>
+          )}
+          borderWidth={8}
+        />
       </CarouselContainer>
     </Container>
   )
@@ -64,14 +58,9 @@ const Container = styled.section`
 `;
 
 const CarouselContainer = styled.div`
-  border: 8px solid ${colors.primary500};
   width: 100%;
   aspect-ratio: 1.573 / 1; /* 1290 820 */
-  max-height: 100%;
   max-width: 916px;
-  position: relative;
-  isolation: isolate;
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
 
   @media screen and (max-width: 700px) {
     margin-bottom: 160px;
@@ -79,11 +68,6 @@ const CarouselContainer = styled.div`
 `;
 
 const CarouselItem = styled.div`
-  position: absolute;
-  inset: 0;
-  opacity: ${props => props.active ? 1 : 0};
-  transition: opacity 1s;
-
   & > img {
     width: 100%;
     height: 100%;

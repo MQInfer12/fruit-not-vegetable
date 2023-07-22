@@ -2,33 +2,48 @@ import React, { useState } from 'react'
 import { styled } from 'styled-components';
 import colors from '../../styles/colors';
 import ManchaBacteriana from '../../assets/fotoManchaBacteriana.jpg'
+import Button from '../global/button';
+import EnfermedadModal from './enfermedadModal';
+import ZoomImage from './zoomImage';
+import Carousel from '../global/carousel';
+
 const Resultado = ({ data, preview }) => {
-  const [page, setPage] = useState("sintomas");
+  const enfermedad = "manchaBacteriana";
+  const [page, setPage] = useState(null);
   
+  const carouselData = [preview, preview, preview]
+
   return (
     <Container>
-      <Shadow>
-        <DiagnosticoContainer>
-          <img src={ManchaBacteriana} />
+      <DiagnosticoContainer>
+        <h2>Predicción</h2>
+        <p>Predicción: {data.prediccion} {data.porcentaje}</p>
+        <div className='images-container'>
+          <ZoomImage src={ManchaBacteriana} />
           <div>
-            <h2>Mancha bacteriana</h2>
-            <h3>58.0%</h3>
+            <Carousel 
+              data={carouselData}
+              borderWidth={4}
+              component={src => (
+                <ZoomImage src={src} />
+              )}
+            />
           </div>
-          <CarouselContainer>
-            <img src={preview} alt="car1" />
-          </CarouselContainer>
-        </DiagnosticoContainer>
-        <PageContainer>
-          <PageButtons>
-            <PageButton onClick={() => setPage("sintomas")} active={page === "sintomas"}>Síntomas</PageButton>
-            <PageButton onClick={() => setPage("prevencion")} active={page === "prevencion"}>Prevención</PageButton>
-            <PageButton onClick={() => setPage("tratamiento")} active={page === "tratamiento"}>Tratamiento</PageButton>
-          </PageButtons>
-          <InfoContainer>
-            {data[page].map((v, i) => <p key={i}>{v}</p>)}
-          </InfoContainer>
-        </PageContainer>
-      </Shadow>
+        </div>
+        <div className='buttons-container'>
+          <Button width="200px" type="primary" onClick={() => setPage("sintomas")}>Síntomas</Button>
+          <Button width="200px" type="primary" onClick={() => setPage("prevencion")}>Prevención</Button>
+          <Button width="200px" type="primary" onClick={() => setPage("tratamiento")}>Tratamiento</Button>
+        </div>
+      </DiagnosticoContainer>
+      {
+        page &&
+        <EnfermedadModal 
+          close={() => setPage(null)}
+          enfermedad={enfermedad}
+          page={page}
+        />
+      }
     </Container>
   )
 }
@@ -37,12 +52,17 @@ export default Resultado
 
 const Container = styled.section`
   min-height: calc(100dvh - 32px);
-  padding: 145px 240px 60px;
+  padding: 85px 240px 0px;
   display: flex;
   flex-direction: column;
   animation: appearResult 2s;
+  justify-content: center;
 
-  @media screen and (max-width: 560px) {
+  @media screen and (max-width: 1420px) {
+    padding: 85px 100px 0px;
+  }
+
+  @media screen and (max-width: 700px) {
     padding: 85px 0 0;
   }
 
@@ -56,92 +76,68 @@ const Container = styled.section`
   }
 `;
 
-const Shadow = styled.div`
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
-`;
-
 const DiagnosticoContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   min-width: 400px;
-  padding: 40px;
+  padding: 32px;
   background-color: ${colors.primary300};
-  gap: 40px;
+  gap: 16px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+
+  @media screen and (max-width: 500px) {
+    padding: 32px 8px;
+    width: 100%;
+  }
 
   & h2 {
-    font-size: 1.2rem;
-    color: ${colors.primary500};
-    margin-top: 30px;
-  }
-
-  & h3 {
     font-size: 2rem;
-    color: ${colors.primary600};
-    margin-top: 10px;
+    color: ${colors.primary500};
+    font-weight: 600;
+    font-family: 'Chillax';
+    line-height: 72px;
   }
 
-  & > img {
+  & .images-container {
+    margin: 12px 0;
+    display: flex;
+    gap: 24px;
     width: 100%;
-    height: 400px;
-    margin-top: auto;
-    object-fit: cover;
-    border: 4px solid ${colors.primary400};
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    
+    & > * {
+      height: 250px;
+      width: 400px;
+
+      @media screen and (max-width: 500px) {
+        width: 300px;
+        height: 200px;
+      }
+    }
+
+    & > img {
+      border: 4px solid ${colors.primary500};
+    }
+
+    @media screen and (max-width: 1090px) {
+      flex-direction: column;
+    }
+
+    @media screen and (max-width: 500px) {
+      width: 320px;
+    }
   }
-`;
 
-const CarouselContainer = styled.div`
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  position: relative;
-  border: 4px solid ${colors.primary400};
+  & .buttons-container {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
 
-  & > img {
-    height: 100%;
-    width: 100%;
-    position: absolute;
+    @media screen and (max-width: 930px) {
+      flex-direction: column;
+    }
   }
-`;
-
-const PageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: ${colors.primary400};
-  padding: 40px;
-`;
-
-const PageButtons = styled.div`
-  display: flex;
-  width: 100%;
-`;
-
-const PageButton = styled.button`
-  width: 100%;
-  height: 40px;
-  background-color: transparent;
-  border: none;
-  color: ${colors.white};
-  transition: opacity 0.3s;
-  cursor: pointer;
-  border-bottom: ${props => props.active && `4px solid ${colors.primary500}`};
-  font-size: 1rem;
-
-  &:hover {
-    opacity: 0.7;
-  }
-`;
-
-const InfoContainer = styled.div`
-  padding: 60px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background-color: ${colors.primary200};
-  line-height: 28px;
-  text-align: justify;
-  height: 100%;
-  max-height: calc(100dvh - 355px);
-  overflow-y: auto;
 `;

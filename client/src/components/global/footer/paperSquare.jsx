@@ -1,29 +1,24 @@
 import React from 'react'
 import { styled } from 'styled-components';
-import usePortal from 'react-useportal';
-import colors from '../../../styles/colors';
 import Pin from '../../../assets/pin.png';
+import ModalContainer from '../modalContainer';
 
-const PaperSquare = ({ color, inclinacion, children, onClick, active }) => {
-  const { Portal } = usePortal();
-
+const PaperSquare = ({ color, inclinacion, children, onClick, active, size = 160 }) => {
   return (
-    <PaperContainer>
+    <PaperContainer size={size}>
       {
         active ? 
-        <Portal>
-          <ModalContainer>
-            <Background onClick={onClick} />
-            <Paper 
-              className={active ? "active" : ""}
-              bg={color} 
-              inclinacion={inclinacion}
-            >
-              <img className='alfiler' src={Pin} />
-              { children }
-            </Paper>
-          </ModalContainer>
-        </Portal> :
+        <ModalContainer close={onClick}>
+          <Paper 
+            className={active ? "active" : ""}
+            bg={color} 
+            inclinacion={inclinacion}
+            onClick={onClick}
+          >
+            <img className='alfiler' src={Pin} />
+            { children }
+          </Paper>
+        </ModalContainer> :
         <Paper 
           onClick={onClick} 
           bg={color} 
@@ -39,25 +34,13 @@ const PaperSquare = ({ color, inclinacion, children, onClick, active }) => {
 
 export default PaperSquare
 
-const ModalContainer = styled.div`
-  position: fixed;
-  inset: 0;
-  z-index: 1002;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Background = styled.div`
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  background-color: ${colors.primary500opacity};
-`;
-
 const PaperContainer = styled.div`
-  width: 160px;
-  height: 160px;
+  min-width: ${props => props.size}px;
+  min-height: ${props => props.size}px;
+  max-width: ${props => props.size}px;
+  max-height: ${props => props.size}px;
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
   margin: 0 60px;
 
   @media screen and (max-width: 600px) {
@@ -93,8 +76,8 @@ const Paper = styled.div`
     width: 500px;
     height: 500px;
     transform: rotate(0);
-    animation: grow .3s;
-    cursor: auto;
+    animation: grow .5s;
+    transition: none;
 
     & > .alfiler {
       width: 50px;

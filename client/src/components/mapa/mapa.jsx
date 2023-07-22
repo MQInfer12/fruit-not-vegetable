@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
+import CustomMarker from './customMarker';
 
 const MyMap = ({ localidad }) => {
   const map = useMap();
@@ -11,7 +12,7 @@ const MyMap = ({ localidad }) => {
   return null;
 }
 
-const Mapa = ({ localidad }) => {
+const Mapa = ({ localidad, country }) => {
   return (
     <MapContainer zoom={14} scrollWheelZoom={true}>
       <MyMap localidad={localidad} />
@@ -20,7 +21,7 @@ const Mapa = ({ localidad }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {localidad.pines.map((pin, i) => (
-        <Marker key={i} position={pin.coordenadas} />
+        <CustomMarker key={i} pin={pin} country={country} localidad={localidad.nombre} />
       ))}
     </MapContainer>
   )
