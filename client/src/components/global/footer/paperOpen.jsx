@@ -81,7 +81,7 @@ const Container = styled.div`
 
   h3 {
     align-self: center;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: rgba(0, 0, 0, .8);
     opacity: 0.6;
     padding: 8px 0 16px;

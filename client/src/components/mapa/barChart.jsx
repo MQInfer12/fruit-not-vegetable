@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { 
   Chart as ChartJS,
   BarElement,
@@ -10,12 +10,22 @@ import {
 import { Bar } from 'react-chartjs-2'
 import { styled } from 'styled-components';
 import chartColors from '../../styles/chartColors';
+import { chartBGPlugin } from './chartBGPlugin';
+import colors from '../../styles/colors';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const BarChart = ({ pines }) => {
+const BarChart = forwardRef(({ pines }, chartRef) => {
   const options = {
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
+    animation: {
+      duration: 0
+    },
+    plugins: {
+      customCanvasBackgroundColor: {
+        color: colors.primary200,
+      }
+    }
   };
   const data = {
     labels: ['Enfermedad'],
@@ -40,16 +50,18 @@ const BarChart = ({ pines }) => {
       <Bar
         data={data}
         options={options}
+        ref={chartRef}
+        plugins={[chartBGPlugin]}
       ></Bar>
     </Container>
   )
-}
+})
 
 export default BarChart
 
 const Container = styled.div`
   margin-top: 20px;
-  min-height: 300px;
-  height: 300px;
-  width: 100%;
+  min-height: 180px;
+  height: 180px;
+  width: 90%;
 `;

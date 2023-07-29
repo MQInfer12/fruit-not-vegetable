@@ -2,17 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import Sombra from '../../assets/markershadow.png';
-import Marcador from '../../assets/selectMarker.png';
+import Marcador1 from '../../assets/marker1.png';
+import Marcador2 from '../../assets/marker2.png';
 import { styled } from 'styled-components';
 import colors from '../../styles/colors';
 
 const CustomMarker = ({ pin, country, localidad }) => {
+  const markers = {
+    "Mancha Bacteriana": Marcador1,
+    "Tizon Temprano": Marcador2 
+  };
+
   const [icon, setIcon] = useState(null);
 
   useEffect(() => {
     const divisor = 5;
     const customIcon = new L.icon({
-      iconUrl: Marcador,
+      iconUrl: markers[pin.enfermedad],
       iconSize: [132 / divisor, 179.718 / divisor],
       shadowUrl: Sombra,
       shadowSize: [170 / divisor, 175 / divisor],

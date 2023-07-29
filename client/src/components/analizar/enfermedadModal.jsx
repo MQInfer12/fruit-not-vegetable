@@ -39,6 +39,9 @@ const EnfermedadModal = ({ close, enfermedad, page }) => {
   return (
     <ModalContainer close={close}>
       <Container>
+        <button onClick={close}>
+          <i className="fa-solid fa-xmark"></i>
+        </button>
         <h3>
           {
             page === "sintomas" ? "Síntomas" :
@@ -49,9 +52,6 @@ const EnfermedadModal = ({ close, enfermedad, page }) => {
         <Info id="info">
           {data[enfermedad][page]}
         </Info>
-        <div className='button'>
-          <Button onClick={close} type="primary">Cerrar</Button>
-        </div>
         <SponsorsContainer>
           {sponsors.map((value, i) => (
             <SponsorPaper 
@@ -72,7 +72,7 @@ export default EnfermedadModal
 
 const Container = styled.div`
   width: 800px;
-  height: 700px;
+  height: 550px;
   background-color: ${colors.primary300};
   padding: 40px 40px;
   display: flex;
@@ -89,8 +89,30 @@ const Container = styled.div`
     line-height: 32px;
   }
 
-  .button {
-    align-self: flex-end;
+  & > button {
+    position: absolute;
+    right: 45px;
+    top: 45px;
+    border: none;
+    background-color: transparent;
+    color: ${colors.primary500};
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: scale 0.3s;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+
+    &:hover {
+      scale: 1.2;
+    }
+
+    @media screen and (max-width: 500px) {
+      right: 20px;
+    }
   }
 
   @media screen and (max-width: 820px) {

@@ -189,12 +189,13 @@ const InputContainer = styled.div`
 `;
 
 const PreviewImage = styled.div`
-  width: 410px;
+  width: 406px;
   height: 280px;
   display: flex;
   justify-content: center;
 
   & > img {
+    width: 100%;
     max-width: 100%;
     max-height: 100%;
     border: 4px solid ${colors.secondary300};

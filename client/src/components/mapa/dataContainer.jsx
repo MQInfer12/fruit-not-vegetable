@@ -1,17 +1,30 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { styled } from 'styled-components';
 import colors from '../../styles/colors';
 import BarChart from './barChart';
 import Button from '../global/button';
 
 const DataContainer = ({ country, localidad, handleBack }) => {
+  const chartRef = useRef(null);
+  const [downloadChart, setDownloadChart] = useState("");
+
+  useEffect(() => {
+    if(chartRef) {
+      setDownloadChart(chartRef.current.toBase64Image());
+    }
+  }, [chartRef]);
+
   return (
     <Container>
       <BackButton onClick={handleBack}><i className="fa-solid fa-xmark"></i></BackButton>
       <h2>{localidad.nombre}</h2>
       <p>{country.pais}</p>
-      <BarChart pines={localidad.pines} />
-      <Button disabled type="primary">Más reportes</Button>
+      <BarChart ref={chartRef} pines={localidad.pines} />
+      <div className='buttons'>
+        <Button size="little" disabled type="primary">Descargar mapa</Button>
+        <Button htmlElement="a" size="little" type="primary" download href={downloadChart}>Descargar gráfica</Button>
+        <Button size="little" disabled type="primary">Más reportes</Button>
+      </div>
     </Container> 
   )
 }
@@ -42,8 +55,12 @@ const Container = styled.div`
     opacity: 1;
   }
 
-  & > button {
+  & > .buttons {
     margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
   }
 `;
 

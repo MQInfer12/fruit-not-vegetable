@@ -38,6 +38,7 @@ const CarouselItem = styled.div`
   inset: 0;
   opacity: ${props => props.active ? 1 : 0};
   transition: opacity 1s;
+  pointer-events: ${props => !props.active && "none"};
 
   & > * {
     width: 100%;

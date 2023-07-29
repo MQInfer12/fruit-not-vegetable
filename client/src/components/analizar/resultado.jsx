@@ -11,29 +11,38 @@ const Resultado = ({ data, preview }) => {
   const enfermedad = "manchaBacteriana";
   const [page, setPage] = useState(null);
   
-  const carouselData = [preview, preview, preview]
+  const carouselData = [{
+    src: preview,
+    label: "Foto subida"
+  }, {
+    src: preview,
+    label: "Detección de la hoja"
+  }, {
+    src: preview,
+    label: "Área hoja detectada"
+  }]
 
   return (
     <Container>
       <DiagnosticoContainer>
         <h2>Predicción</h2>
-        <p>Predicción: {data.prediccion} {data.porcentaje}</p>
+        <p className='prediccion'>{data.prediccion} {data.porcentaje}</p>
         <div className='images-container'>
           <ZoomImage src={ManchaBacteriana} />
           <div>
             <Carousel 
               data={carouselData}
               borderWidth={4}
-              component={src => (
-                <ZoomImage src={src} />
+              component={value => (
+                <ZoomImage src={value.src} label={value.label} />
               )}
             />
           </div>
         </div>
         <div className='buttons-container'>
           <Button width="200px" type="primary" onClick={() => setPage("sintomas")}>Síntomas</Button>
-          <Button width="200px" type="primary" onClick={() => setPage("prevencion")}>Prevención</Button>
-          <Button width="200px" type="primary" onClick={() => setPage("tratamiento")}>Tratamiento</Button>
+          <Button bg={colors.tertiary300} width="200px" type="primary" onClick={() => setPage("prevencion")}>Prevención</Button>
+          <Button bg={colors.tertiary500} width="200px" type="primary" onClick={() => setPage("tratamiento")}>Tratamiento</Button>
         </div>
       </DiagnosticoContainer>
       {
@@ -81,13 +90,17 @@ const DiagnosticoContainer = styled.div`
   flex-direction: column;
   align-items: center;
   min-width: 400px;
-  padding: 32px;
+  padding: 8px 32px 20px;
   background-color: ${colors.primary300};
-  gap: 16px;
+  gap: 32px;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
 
+  @media screen and (max-height: 700px) {
+    gap: 8px
+  }
+
   @media screen and (max-width: 500px) {
-    padding: 32px 8px;
+    padding: 0px 8px 20px;
     width: 100%;
   }
 
@@ -96,7 +109,13 @@ const DiagnosticoContainer = styled.div`
     color: ${colors.primary500};
     font-weight: 600;
     font-family: 'Chillax';
-    line-height: 72px;
+  }
+
+  & .prediccion {
+    padding: 8px 16px;
+    background-color: ${colors.tertiary600};
+    color: ${colors.white};
+    font-weight: 600;
   }
 
   & .images-container {
@@ -109,8 +128,8 @@ const DiagnosticoContainer = styled.div`
     flex-direction: row;
     
     & > * {
-      height: 250px;
-      width: 400px;
+      height: 280px;
+      width: 440px;
 
       @media screen and (max-width: 500px) {
         width: 300px;
@@ -118,7 +137,7 @@ const DiagnosticoContainer = styled.div`
       }
     }
 
-    & > img {
+    & > div:first-child {
       border: 4px solid ${colors.primary500};
     }
 

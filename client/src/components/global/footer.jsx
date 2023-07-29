@@ -4,6 +4,7 @@ import colors from '../../styles/colors'
 import Button from './button'
 import { useNavigate } from 'react-router-dom'
 import Sponsors from './footer/sponsors'
+import Logo from '../../assets/logotext-white.png'
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -16,9 +17,10 @@ const Footer = () => {
       </FloatingContainer>
       <ColumnsContainer>
         <div>
-          <h4>Contacta con nosotros</h4>
+          <img src={Logo} />
           <div>
-            <p>Contáctenos para saber cómo utilizar los beneficios de Doctor Tomatto en su organización, visítanos en nuestras redes sociales.</p>
+            <p>info@tecnopolis.ai</p>
+            <p>+59176407344</p>
             <IconsContainer>
               <a><i className="fa-brands fa-linkedin"></i></a>
               <a><i className="fa-brands fa-instagram"></i></a>
@@ -26,11 +28,12 @@ const Footer = () => {
           </div>
         </div>
         <div>
-          <h4>Información</h4>
+          <h4>Ubicaciones</h4>
           <div>
-            <p>Somos una aplicación de Inteligencia Artificial (basada en Aprendizaje Profundo y Visión por Computadora) que detecta y clasifica enfermedades que se dan en la hoja de tomate.</p>
-            <p>+59176407344</p>
-            <p>info@tecnopolis.ai</p>
+            <p>Valle de Azapa, Arica, Chile</p>
+            <p>Valle de Lluta, Arica, Chile</p>
+            <p>Saipina, Santa Cruz, Bolivia</p>
+            <p>Neuquén, Argentina</p>
             <p>Cochabamba, Bolivia</p>
           </div>
         </div>
@@ -42,13 +45,12 @@ const Footer = () => {
               <div><StyledLink onClick={() => navigate("/analizar")}><i className="fa-solid fa-chevron-right"></i>Analizar Imagen</StyledLink></div>
               <div><StyledLink onClick={() => navigate("/mapa")}><i className="fa-solid fa-chevron-right"></i>Mapa</StyledLink></div>
               <div><StyledLink onClick={() => navigate("/objetivo")}><i className="fa-solid fa-chevron-right"></i>Objetivo</StyledLink></div>
-            </div>
-            <div>
-              <div><StyledLink onClick={() => navigate("/credito")}><i className="fa-solid fa-chevron-right"></i>Crédito</StyledLink></div>
               <div><StyledLink onClick={() => navigate("/instrucciones")}><i className="fa-solid fa-chevron-right"></i>Instrucciones</StyledLink></div>
-              <div><StyledLink onClick={() => navigate("/contacto")}><i className="fa-solid fa-chevron-right"></i>Contacto</StyledLink></div>
             </div>
           </div>
+        </div>
+        <div>
+          <Button type="secondary" onClick={() => navigate("/contacto")}>¡Entra en contacto!</Button>
         </div>
       </ColumnsContainer>
       <CopyContainer>
@@ -114,21 +116,32 @@ const ColumnsContainer = styled.div`
   padding: 0 40px 40px;
   gap: 80px;
   border-bottom: 1px solid ${colors.white};
+  flex-wrap: wrap;
 
-  @media screen and (max-width: 950px) {
-    flex-direction: column;
-    align-items: center;
+  @media screen and (max-width: 1460px) {
+    gap: 20px;
+  }
+
+  @media screen and (max-width: 1460px) {
     gap: 40px;
   }
 
   & > div {
-    width: 350px;
     display: flex;
+    flex: 1;
     flex-direction: column;
+    align-items: center;
     gap: 40px;
+    min-width: 250px;
 
     @media screen and (max-width: 500px) {
       width: 100%;
+    }
+
+    & img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
     }
 
     & > h4 {
@@ -187,6 +200,7 @@ const StyledLink = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  white-space: nowrap;
 
   &:hover {
     opacity: 0.7;
