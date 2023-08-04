@@ -8,6 +8,7 @@ import { useBackground } from '../context/background';
 import Loader from '../components/global/loader';
 import Resultado from '../components/analizar/resultado';
 import data from '../utilities/result.json';
+import ResultadoError from '../components/analizar/resultadoError';
 
 const Analizar = () => {
   const width = useWidth();
@@ -16,6 +17,7 @@ const Analizar = () => {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
+  const [tipo, setTipo] = useState("enfermedad");
   
   useEffect(() => {
     changeColor(width > 560 ? colors.primary200 : colors.secondary500)
@@ -39,8 +41,18 @@ const Analizar = () => {
     }, 3000)
   }
 
+  const reset = () => {
+    setImage(null);
+    setPreview(null);
+    setResult(null);
+  }
+
   if(result) {
-    return <Resultado data={result} preview={preview} />
+    if(result.prediccion != "error") {
+      return <Resultado data={result} preview={preview} />
+    } else {
+      return <ResultadoError reset={reset} preview={preview} />
+    }
   }
 
   return (
@@ -56,7 +68,11 @@ const Analizar = () => {
           </HeaderContainer>
           <FormContainer>
             <InputContainer>
-              <p>Seleccionar foto de hojas de la planta de tomate para detectar y clasificar enfermedad.</p>
+              <p>Seleccionar foto de hojas de la planta de tomate{/*  para detectar y clasificar enfermedad */}.</p>
+              <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
+                <option value="enfermedad">Enfermedad</option>
+                <option value="plaga">Plaga</option>
+              </select>
               <div className='inputContainer'>
                 <label htmlFor="inputfile">{image ? "Seleccionar otra foto" : "Seleccionar una foto"}</label>
                 <input onChange={e => setImage(e.target.files[0])} accept='.jpg' id="inputfile" type='file' />
@@ -150,7 +166,7 @@ const FormContainer = styled.div`
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   width: 270px;
 
   @media screen and (max-width: 560px) {
@@ -160,6 +176,13 @@ const InputContainer = styled.div`
   & > p {
     text-align: justify;
     line-height: 28px;
+  }
+
+  & > select {
+    background-color: ${colors.secondary400};
+    border: 2px solid ${colors.primary500};
+    padding: 4px 16px;
+    color: ${colors.primary500}
   }
 
   & > .inputContainer {

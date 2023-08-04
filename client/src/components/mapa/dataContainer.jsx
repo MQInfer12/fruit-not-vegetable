@@ -53,6 +53,7 @@ const Container = styled.div`
     font-family: 'Chillax';
     color: ${colors.primary500};
     opacity: 1;
+    font-weight: 600;
   }
 
   & > .buttons {

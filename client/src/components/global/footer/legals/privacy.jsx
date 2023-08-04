@@ -1,0 +1,9 @@
+import React from 'react'
+
+const Privacy = () => {
+  return (
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo a culpa distinctio sapiente, nihil dignissimos consequatur modi perferendis facere officia inventore asperiores adipisci ipsum mollitia unde pariatur quis quae. Fugit, nemo obcaecati quae architecto nostrum aliquid quis officiis laudantium quidem facere velit hic animi suscipit facilis perspiciatis, perferendis aspernatur provident porro optio accusantium alias, dicta amet saepe. Ipsa qui sed porro asperiores hic adipisci similique voluptas consequatur a. Quaerat quo, soluta tempora, similique, animi accusantium autem voluptatibus aliquid asperiores rem provident exercitationem est consequuntur facilis ad quas doloribus suscipit magni? Quidem inventore iste assumenda recusandae quisquam animi porro vel a repellendus, provident cupiditate repellat quo magni unde expedita amet aut dolor sapiente, libero vero soluta eaque id odio? At sed et accusantium distinctio hic soluta corporis eos aliquid maiores laborum necessitatibus ratione culpa quod, ad nihil nobis odio delectus consectetur? Iure ipsum deleniti earum numquam fugiat quas commodi, incidunt nostrum repellendus est sapiente quos veniam accusamus et ut minus maxime. Ipsam est molestiae a quos eveniet velit odit accusamus vero quod officia in perferendis, perspiciatis repellat eius reprehenderit dignissimos fuga atque. Fugiat optio saepe distinctio! Ea numquam voluptatibus sunt molestiae, ipsam saepe sint soluta repellendus eveniet maxime consectetur unde deleniti?</p>
+  )
+}
+
+export default Privacy

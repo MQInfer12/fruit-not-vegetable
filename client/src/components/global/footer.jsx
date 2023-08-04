@@ -5,6 +5,7 @@ import Button from './button'
 import { useNavigate } from 'react-router-dom'
 import Sponsors from './footer/sponsors'
 import Logo from '../../assets/logotext-white.png'
+import Legals from './footer/legals'
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -28,9 +29,9 @@ const Footer = () => {
           </div>
         </div>
         <div>
-          <h4>Ubicaciones</h4>
+          {/* <h4>Ubicaciones</h4> */}
           <div>
-            <p>Valle de Azapa, Arica, Chile</p>
+            <p>Av. Villarroel</p>
             <p>Valle de Lluta, Arica, Chile</p>
             <p>Saipina, Santa Cruz, Bolivia</p>
             <p>Neuquén, Argentina</p>
@@ -38,7 +39,7 @@ const Footer = () => {
           </div>
         </div>
         <div>
-          <h4>Enlaces útiles</h4>
+          {/* <h4>Enlaces útiles</h4> */}
           <div className='util-links'>
             <div>
               <div><StyledLink onClick={() => navigate("/")}><i className="fa-solid fa-chevron-right"></i>Inicio</StyledLink></div>
@@ -53,9 +54,7 @@ const Footer = () => {
           <Button type="secondary" onClick={() => navigate("/contacto")}>¡Entra en contacto!</Button>
         </div>
       </ColumnsContainer>
-      <CopyContainer>
-        <small>© Copyright Doctor Tomatto 2021 - 2023. Todos los derechos reservados.</small>
-      </CopyContainer>
+      <Legals />
     </StyledFooter>
   )
 }
@@ -220,9 +219,4 @@ const IconsContainer = styled.div`
       opacity: 0.7;
     }
   }
-`;
-
-const CopyContainer = styled.div`
-  padding: 20px;
-  text-align: center;
 `;

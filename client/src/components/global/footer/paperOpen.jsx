@@ -74,9 +74,10 @@ const Container = styled.div`
     font-size: 1.1rem;
   }
   & p {
-    opacity: 0.8;
+    opacity: 0.5;
     text-align: justify;
     font-size: 1.1rem;
+    font-weight: 600;
   }
 
   h3 {

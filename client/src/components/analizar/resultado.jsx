@@ -40,7 +40,7 @@ const Resultado = ({ data, preview }) => {
           </div>
         </div>
         <div className='buttons-container'>
-          <Button width="200px" type="primary" onClick={() => setPage("sintomas")}>Síntomas</Button>
+          <Button bg={colors.pastel3} width="200px" type="primary" onClick={() => setPage("sintomas")}>Síntomas</Button>
           <Button bg={colors.tertiary300} width="200px" type="primary" onClick={() => setPage("prevencion")}>Prevención</Button>
           <Button bg={colors.tertiary500} width="200px" type="primary" onClick={() => setPage("tratamiento")}>Tratamiento</Button>
         </div>
