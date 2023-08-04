@@ -1,24 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { styled } from 'styled-components';
 import colors from '../../styles/colors';
 import Button from '../global/button';
+import { useGet } from '../../hooks/useGet';
 /* import data from '../../utilities/mapData.json' */
 
 const SelectsContainer = ({ country, setCountry, localidad, setLocalidad, handleViewMap }) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const getDatosMapa = async () => {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND}mapa`);
-      if(res.ok) {
-        const resJson = await res.json();
-        setData(resJson);
-        setLoading(false);
-      }
-    }
-    getDatosMapa();
-  }, [])
+  const { data, loading } = useGet(`mapa`);
 
   const changePais = (e) => {
     setCountry(data.find(value => value.pais === e.target.value));

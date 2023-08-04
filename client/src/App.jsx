@@ -9,8 +9,11 @@ import Analizar from "./pages/analizar"
 import Mapa from "./pages/mapa"
 import Love from "./components/global/love"
 import NewInstrucciones from "./pages/newInstrucciones"
+import { useGet } from "./hooks/useGet"
 
 function App() {
+  const { data } = useGet('myip');
+
   return (
     <HashRouter>
       <Navbar />

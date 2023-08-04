@@ -5,6 +5,8 @@ from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from flask_mail import Mail, Message
 import pandas as pd
+import ipinfo
+from datetime import date
 
 app = Flask(__name__, static_folder='assets')
 CORS(app)
@@ -77,6 +79,38 @@ def mapa():
           "coordenadas": [row[5], row[6]]
         })
   return jsonify(data)
+
+@app.route('/myip')
+def myip():
+  ipinfo_access_token = '001c2d1b9002e8'
+  handler = ipinfo.getHandler(ipinfo_access_token)
+  ip_address = request.headers.get('X-Forwarded-For', request.remote_addr)
+  details = handler.getDetails(ip_address)
+  try:
+    print(f'Your city is: {details.city}')
+  except AttributeError:
+    print('Error: IP Privada, no se puede extraer datos GPS')
+  else:
+    fecha = date.today().strftime('%Y-%m-%d')
+    datos_nuevo_registro = {
+      "codigo_pais": details.country,
+      "pais": details.country_name,
+      "localidad": details.city,
+      "latitud": details.latitude,
+      "longitud": details.longitude,
+      "fecha": fecha
+    }
+
+    file_path = "static/texts/ips.txt"
+    with open(file_path, 'a') as file:
+      file.write("Ingreso desde: " + ip_address + ", " + datos_nuevo_registro["pais"] + ", " + datos_nuevo_registro["localidad"] + ", " + datos_nuevo_registro["fecha"] + "\n")
+    
+    return jsonify({
+      "message": "Se agrego un nuevo registro satisfactoriamente"
+    })
+  return jsonify({
+    "error": "No se pudo obtener tus datos de localidad"
+  })
 
 if __name__ == "__main__":
   app.run(debug=True, port=8000)
