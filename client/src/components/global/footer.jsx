@@ -19,23 +19,14 @@ const Footer = () => {
       <ColumnsContainer>
         <div>
           <img src={Logo} />
-          <div>
-            <p>info@tecnopolis.ai</p>
-            <p>+59176407344</p>
-            <IconsContainer>
-              <a><i className="fa-brands fa-linkedin"></i></a>
-              <a><i className="fa-brands fa-instagram"></i></a>
-            </IconsContainer>
-          </div>
         </div>
         <div>
           {/* <h4>Ubicaciones</h4> */}
           <div>
             <p>Av. Villarroel</p>
-            <p>Valle de Lluta, Arica, Chile</p>
-            <p>Saipina, Santa Cruz, Bolivia</p>
-            <p>Neuquén, Argentina</p>
             <p>Cochabamba, Bolivia</p>
+            <p>info@tecnopolis.ai</p>
+            <p>+59176407344</p>
           </div>
         </div>
         <div>
@@ -51,7 +42,13 @@ const Footer = () => {
           </div>
         </div>
         <div>
-          <Button type="secondary" onClick={() => navigate("/contacto")}>¡Entra en contacto!</Button>
+          <Button type="secondary" onClick={() => navigate("/contacto")}>¡Entre en contacto!</Button>
+          <div>
+            <IconsContainer>
+              <a><i className="fa-brands fa-linkedin"></i></a>
+              <a><i className="fa-brands fa-instagram"></i></a>
+            </IconsContainer>
+          </div>
         </div>
       </ColumnsContainer>
       <Legals />
@@ -130,7 +127,7 @@ const ColumnsContainer = styled.div`
     flex: 1;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 24px;
     min-width: 250px;
 
     @media screen and (max-width: 500px) {
@@ -150,7 +147,7 @@ const ColumnsContainer = styled.div`
     & > div {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 12px;
     }
 
     & p, a {
@@ -180,7 +177,7 @@ const ColumnsContainer = styled.div`
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 12px;
       }
     }
   }

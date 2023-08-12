@@ -63,17 +63,20 @@ const ModalImg = styled.div`
   flex-direction: column;
   animation: growImage .5s;
   cursor: pointer;
-  background-color: ${colors.primary500};
+  background-color: ${colors.primary200};
+  border: 4px solid ${colors.primary400};
+  max-width: 95%;
+  width: 620px;
 
   & > p {
     width: 100%;
     padding: 8px 16px 4px;
     font-weight: 600;
-    color: ${colors.white};
+    color: ${colors.primary500};
   }
 
   & > div {
-    width: 620px;
+    width: 100%;
     height: 450px;
     display: flex;
     align-items: center;
@@ -91,7 +94,6 @@ const ModalImg = styled.div`
 `;
 
 const BigImg = styled.img`
-  border: 4px solid ${colors.primary500};
   width: 100%;
   max-width: 100%;
   max-height: 100%;

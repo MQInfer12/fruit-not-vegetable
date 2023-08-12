@@ -9,6 +9,7 @@ import Loader from '../components/global/loader';
 import Resultado from '../components/analizar/resultado';
 import data from '../utilities/result.json';
 import ResultadoError from '../components/analizar/resultadoError';
+import { sendRequest } from '../utilities/sendRequest';
 
 const Analizar = () => {
   const width = useWidth();
@@ -33,12 +34,14 @@ const Analizar = () => {
     }
   }, [image]);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setLoading(true);
-    setTimeout(() => {
-      setResult(data);
-      setLoading(false);
-    }, 3000)
+    const form = new FormData();
+    form.append("file", image);
+    form.append("type", tipo);
+    const res = await sendRequest("analizar", form);
+    setResult(res);
+    setLoading(false);
   }
 
   const reset = () => {

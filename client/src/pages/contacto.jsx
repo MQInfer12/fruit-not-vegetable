@@ -108,7 +108,7 @@ const Contacto = () => {
       <RightContainer>
         <RightInfo>
           <div className='text-container'>
-            <h3>Contacta con nosotros</h3>
+            <h3>Contacte con nosotros</h3>
             <p>Contáctenos para saber cómo utilizar los beneficios de Doctor Tomatto en su organización, o si lo prefiere, envíenos un correo electrónico.</p>
           </div>
           <div className='icons-container'>
