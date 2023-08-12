@@ -7,8 +7,15 @@ from flask_mail import Mail, Message
 import pandas as pd
 import ipinfo
 from datetime import date
+import os
 
-app = Flask(__name__, static_folder='assets')
+#LIBRERIAS PARA DETECCION
+""" from skimage.io import imread
+from keras.models import load_model
+import numpy as np
+from mrcnn.config import Config """
+
+app = Flask(__name__, static_folder="assets")
 CORS(app)
 
 mail = Mail()
@@ -40,7 +47,7 @@ def correo():
 
 @app.route('/mapa')
 def mapa():
-  csv = pd.read_csv('static/data/data_enfermedades.csv')
+  csv = pd.read_csv(os.path.join(app.root_path, "static", "data", "data_enfermedades.csv"))
   data = []
   for index, row in csv.iterrows():
     if index == 0:
@@ -101,7 +108,7 @@ def myip():
       "fecha": fecha
     }
 
-    file_path = "static/texts/ips.txt"
+    file_path = os.path.join(app.root_path, "static", "texts", "ips.txt")
     with open(file_path, 'a') as file:
       file.write("Ingreso desde: " + ip_address + ", " + datos_nuevo_registro["pais"] + ", " + datos_nuevo_registro["localidad"] + ", " + datos_nuevo_registro["fecha"] + "\n")
     
@@ -110,6 +117,28 @@ def myip():
     })
   return jsonify({
     "error": "No se pudo obtener tus datos de localidad"
+  })
+
+@app.route('/analizar', methods = ["POST"])
+def analizar():
+  foto = request.files.get("file")
+  if not foto:
+    return jsonify({"message": "Error al encontrar el archivo"})
+  
+  filename = "foto_hoja.jpg"
+  foto.save(os.path.join(app.root_path, "static", "upload", filename))
+
+  """ imagen = imread(os.path.join(app.root_path, "static", "upload", filename))
+
+  model = load_model(os.path.join(app.root_path, "modelo", "modelo_deteccion", "modelo_deteccion.h5"))
+
+  result = model.predict(np.expand_dims(imagen, axis=0))
+
+  print(result) """
+
+  return jsonify({
+    "prediccion": "Mancha bacteriana",
+    "porcentaje": "58.0%"
   })
 
 if __name__ == "__main__":
