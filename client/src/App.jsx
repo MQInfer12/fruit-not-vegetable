@@ -10,6 +10,8 @@ import Mapa from "./pages/mapa"
 import Love from "./components/global/love"
 import NewInstrucciones from "./pages/newInstrucciones"
 import { useGet } from "./hooks/useGet"
+import Login from "./pages/login"
+import Register from "./pages/register"
 
 function App() {
   const { data } = useGet('myip');
@@ -25,6 +27,8 @@ function App() {
         <Route path="credito" element={<Credito />} />
         <Route path="instrucciones" element={<NewInstrucciones />} />
         <Route path="contacto" element={<Contacto />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
       </Routes>
       <Love />
       <Footer />

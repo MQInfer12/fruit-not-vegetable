@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { styled } from 'styled-components'
 import colors from '../../styles/colors'
 
-const InputText = ({ text, value, onChange, textarea, error, trigger }) => {
+const InputText = ({ text, value, onChange, textarea, error, trigger, type = "text" }) => {
   const renders = useRef(0);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const InputText = ({ text, value, onChange, textarea, error, trigger }) => {
     <InputContainer>
       {
         !textarea ?
-        <input required id={text} type="text" 
+        <input required id={text} type={type}
           value={value} 
           onChange={onChange} 
         /> :

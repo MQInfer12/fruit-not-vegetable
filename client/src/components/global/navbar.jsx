@@ -36,9 +36,9 @@ const Navbar = () => {
           <li><StyledLink to="/contacto">Contacto</StyledLink></li>
         </Ul>
         <IconContainer>
-          <a><IconLink className="fa-solid fa-magnifying-glass"></IconLink></a>
-          <a><IconLink className="fa-regular fa-user"></IconLink></a>
-          <a><IconLink className="fa-solid fa-cart-shopping"></IconLink></a>
+          <IconLink className="fa-solid fa-magnifying-glass" />
+          <IconLink className="fa-regular fa-user" to="/login" />
+          <IconLink className="fa-solid fa-cart-shopping" />
           <BurgerButton onClick={() => setOpenLinks(!openLinks)}>
             {openLinks ? <i className="fa-solid fa-xmark"></i> : <i className="fa-solid fa-bars"></i>}
           </BurgerButton>
@@ -172,7 +172,7 @@ const IconContainer = styled.div`
   align-items: center;
 `;
 
-const IconLink = styled.i`
+const IconLink = styled(Link)`
   height: 20px;
   width: 20px;
   cursor: pointer;
@@ -180,6 +180,7 @@ const IconLink = styled.i`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
 
   &:hover {
     opacity: 0.7;
