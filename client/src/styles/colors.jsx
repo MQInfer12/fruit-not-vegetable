@@ -12,6 +12,7 @@ const colors = {
   secondary400: "#EFE6E5",
   secondary300: "#79aca9",
   tertiary500: "#ed1c24",
+  tertiary500opacity: "rgba(237, 28, 36, 0.6)",
   tertiary600: "#bb141a",
   tertiary400: "#f48466",
   tertiary300: "#f58d42",

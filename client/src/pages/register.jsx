@@ -5,7 +5,6 @@ import { styled } from 'styled-components';
 import InputText from '../components/contact/inputText';
 import Button from '../components/global/button';
 import DTLogo from '../assets/logo.png';
-import DTText from '../assets/text-green.png';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
@@ -15,9 +14,8 @@ const Register = () => {
     <Container>
       <FormContainer>
         <div>
-          <Logo src={DTText} />
+          <Logo src={DTLogo} />
         </div>
-        <h2>Registro</h2>
         <InputText 
           error={false}
           text="Nombre"
@@ -34,7 +32,7 @@ const Register = () => {
           onChange={() => {}}
           type='password'
         />
-        <Button type="primary" onClick={() => {}} >Regístrate</Button>
+        <Button type="secondary" onClick={() => {}} >Regístrate</Button>
         <p>¿Ya tienes una cuenta? <StyledLink to="/login">Iniciar sesión</StyledLink></p>
       </FormContainer>
     </Container>

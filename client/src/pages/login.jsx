@@ -16,9 +16,7 @@ const Login = () => {
       <FormContainer>
         <div>
           <Logo src={DTLogo} />
-          <Logo src={DTText} />
         </div>
-        <h2>Iniciar sesión</h2>
         <InputText 
           error={false}
           text="Email"
@@ -30,7 +28,7 @@ const Login = () => {
           onChange={() => {}}
           type='password'
         />
-        <Button type="primary" onClick={() => {}} >Iniciar sesión</Button>
+        <Button type="secondary" onClick={() => {}} >Iniciar sesión</Button>
         <p>¿Aún no tienes cuenta? <StyledLink to="/register">Regístrate</StyledLink></p>
       </FormContainer>
     </Container>

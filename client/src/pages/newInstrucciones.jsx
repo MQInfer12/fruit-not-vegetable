@@ -79,7 +79,7 @@ const CarouselItem = styled.div`
     bottom: 10%;
     padding: 16px 24px;
     width: 250px;
-    background-color: ${colors.primary500opacity};
+    background-color: ${colors.tertiary500opacity};
     display: flex;
     flex-direction: column;
     gap: 8px;
