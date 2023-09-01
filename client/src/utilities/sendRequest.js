@@ -1,4 +1,4 @@
-export const sendRequest = async (route, body, method = "POST") => {
+export const sendRequest = async (route, body, method = "POST", returnRaw = false) => {
   try {
     const res = await fetch(`${import.meta.env.VITE_BACKEND}${route}`, {
       method: method,
@@ -9,6 +9,9 @@ export const sendRequest = async (route, body, method = "POST") => {
       body: body instanceof FormData ? body : JSON.stringify(body)
     });
     if(res.ok) {
+      if(returnRaw) {
+        return res;
+      }
       const resJson = await res.json();
       return resJson;
     }

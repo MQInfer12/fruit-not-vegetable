@@ -8,6 +8,7 @@ import pandas as pd
 import ipinfo
 from datetime import date
 import os
+import folium
 
 #LIBRERIAS PARA DETECCION
 """ from skimage.io import imread
@@ -140,6 +141,43 @@ def analizar():
     "prediccion": "Mancha bacteriana",
     "porcentaje": "58.0%"
   })
+
+@app.route('/descargarmapa', methods=['POST'])
+def descargarmapa():
+  nombre_pais = request.json["nombre_pais"]
+  nombre_localidad = request.json["nombre_localidad"]
+
+  datos =pd.read_csv(os.path.join(app.root_path, "static", "data", "data_enfermedades.csv"), index_col=0)
+  datos_ubicacion = datos.query('pais == @nombre_pais and localidad == @nombre_localidad')
+  datos_ubicacion = datos_ubicacion.sort_values(by=["pais", "localidad"], ascending=[True, True])
+  lista_gps = datos_ubicacion.values.tolist()
+
+  mapObj = folium.Map(location=[datos_ubicacion.latitud.mean(), datos_ubicacion.longitud.mean()], zoom_start=12)
+
+  for registro in lista_gps:
+    enfermedad = registro[2]
+    fecha = registro[3]
+    latitud = registro[4]
+    longitud = registro[5]
+
+    styles = """
+    <style>table { table-layout: fixed; border-collapse: collapse; } th, td { border: 1px solid #234A45 !important; padding: 2px 5px !important; } th { background-color: #A6B0A5 !important; color: #FFFFFF !important; } td { background-color: #DDE2D7 !important; }</style>
+    """
+
+    htmlcode = f"""{styles}<table>
+    <tr><th>País:</th><td>{ nombre_pais }</td></tr>
+    <tr><th>Localidad:</th><td>{ nombre_localidad }</td></tr>
+    <tr><th>Enfermedad:</th><td>{ enfermedad }</td></tr>
+    <tr><th>Fecha:</th><td>{ fecha }</td></tr>
+    </table>"""
+
+    if (enfermedad == 'Mancha Bacteriana'):
+      folium.Marker([ latitud , longitud ], popup=htmlcode, icon=folium.Icon(color="red", icon="cloud"), tooltip="Haga click").add_to(mapObj)
+    else:
+      folium.Marker([ latitud , longitud ], popup=htmlcode, icon=folium.Icon(color="blue", icon="cloud"), tooltip="Haga click").add_to(mapObj)
+
+  maphtml = mapObj._repr_html_()
+  return maphtml
 
 if __name__ == "__main__":
   app.run(debug=True, port=8000)

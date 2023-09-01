@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import colors from '../../styles/colors';
 import BarChart from './barChart';
 import Button from '../global/button';
+import { sendRequest } from '../../utilities/sendRequest';
 
 const DataContainer = ({ country, localidad, handleBack }) => {
   const chartRef = useRef(null);
@@ -14,6 +15,21 @@ const DataContainer = ({ country, localidad, handleBack }) => {
     }
   }, [chartRef]);
 
+  const handleDownload = async () => {
+    const res = await sendRequest(`descargarmapa`, {
+      nombre_pais: country.pais,
+      nombre_localidad: localidad.nombre
+    }, "POST", true);
+    const htmlContent = await res.text();
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'mapa.html';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
   return (
     <Container>
       <BackButton onClick={handleBack}><i className="fa-solid fa-xmark"></i></BackButton>
@@ -21,7 +37,7 @@ const DataContainer = ({ country, localidad, handleBack }) => {
       <p>{country.pais}</p>
       <BarChart ref={chartRef} pines={localidad.pines} />
       <div className='buttons'>
-        <Button size="little" disabled type="primary">Descargar mapa</Button>
+        <Button size="little" onClick={handleDownload} type="primary">Descargar mapa</Button>
         <Button htmlElement="a" size="little" type="primary" download href={downloadChart}>Descargar gráfica</Button>
         <Button size="little" disabled type="primary">Más reportes</Button>
       </div>

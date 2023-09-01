@@ -34,7 +34,7 @@ const SelectsContainer = ({ country, setCountry, localidad, setLocalidad, handle
           ))}
         </Select>
       </div>
-      <Button disabled={!localidad} onClick={handleViewMap} type="secondary">Ver mapa</Button>
+      <Button disabled={!localidad} onClick={handleViewMap} type="primary">Ver mapa</Button>
     </Container>
   )
 }
