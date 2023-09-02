@@ -42,7 +42,7 @@ const StyledA = styled.a`
   min-height: ${props => props.size === "little" ? "40px" : "58px"};
   white-space: nowrap;
   padding: ${props => props.size === "little" ? "0 10px" : !props.width && "0 41px"};
-  background-color: ${props => props.type === "primary" ? colors.primary500 : colors.white};
+  background-color: ${props => props.bg || (props.type === "primary" ? colors.primary500 : props.type === "secondary" ? colors.tertiary400 : colors.white)};
   color: ${props => props.type === "primary" ? colors.white : colors.primary500};
   border: none;
   font-family: 'DM Sans';

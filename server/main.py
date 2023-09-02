@@ -165,16 +165,16 @@ def descargarmapa():
     """
 
     htmlcode = f"""{styles}<table>
-    <tr><th>País:</th><td>{ nombre_pais }</td></tr>
-    <tr><th>Localidad:</th><td>{ nombre_localidad }</td></tr>
-    <tr><th>Enfermedad:</th><td>{ enfermedad }</td></tr>
-    <tr><th>Fecha:</th><td>{ fecha }</td></tr>
+    <tr><th>País</th><td>{ nombre_pais }</td></tr>
+    <tr><th>Localidad</th><td>{ nombre_localidad }</td></tr>
+    <tr><th>Enfermedad</th><td>{ enfermedad }</td></tr>
+    <tr><th>Fecha</th><td>{ fecha }</td></tr>
     </table>"""
 
     if (enfermedad == 'Mancha Bacteriana'):
       folium.Marker([ latitud , longitud ], popup=htmlcode, icon=folium.Icon(color="red", icon="cloud"), tooltip="Haga click").add_to(mapObj)
     else:
-      folium.Marker([ latitud , longitud ], popup=htmlcode, icon=folium.Icon(color="blue", icon="cloud"), tooltip="Haga click").add_to(mapObj)
+      folium.Marker([ latitud , longitud ], popup=htmlcode, icon=folium.Icon(color="orange", icon="cloud"), tooltip="Haga click").add_to(mapObj)
 
   maphtml = mapObj._repr_html_()
   return maphtml

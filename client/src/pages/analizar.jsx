@@ -81,7 +81,7 @@ const Analizar = () => {
                 <input onChange={e => setImage(e.target.files[0])} accept='.jpg' id="inputfile" type='file' />
               </div>
             </InputContainer>
-            <Button onClick={handleClick} disabled={!image || loading} type="primary" width="147px">
+            <Button onClick={handleClick} disabled={!image || loading} type="secondary" width="147px">
               {loading ? <Loader /> : "Subir foto"}
             </Button>
           </FormContainer>

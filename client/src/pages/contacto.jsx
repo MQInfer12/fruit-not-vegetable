@@ -103,7 +103,7 @@ const Contacto = () => {
           error={errors.mensaje}
           trigger={sended}
         />
-        <Button disabled={loading} onClick={handleClick} type="primary" max>{loading ? "Enviando..." : "Enviar"}</Button>
+        <Button disabled={loading} onClick={handleClick} type="secondary" max>{loading ? "Enviando..." : "Enviar"}</Button>
       </Form>
       <RightContainer>
         <RightInfo>

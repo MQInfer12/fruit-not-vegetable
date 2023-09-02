@@ -72,7 +72,7 @@ const MapDiv = styled.div`
   height: 90%;
   overflow: hidden;
   position: relative;
-  border: 8px solid ${colors.primary500};
+  border: 8px solid ${colors.primary400};
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
 
   & > div:first-child {
@@ -99,7 +99,7 @@ const OverlappingBG = styled.div`
 
 const OverlappingModal = styled.div`
   width: 100%;
-  border-left: 4px solid ${colors.primary500};
+  border-left: 4px solid ${colors.primary400};
   background-color: ${colors.primary200};
   transform: translateX(${props => !props.selected ? "-4px" : props.open ? "calc(100% - 400px)" : "100%"});
   transition: transform 0.5s ease;

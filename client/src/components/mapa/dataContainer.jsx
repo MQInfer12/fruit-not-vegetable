@@ -38,8 +38,15 @@ const DataContainer = ({ country, localidad, handleBack }) => {
       <BarChart ref={chartRef} pines={localidad.pines} />
       <div className='buttons'>
         <Button size="little" onClick={handleDownload} type="primary">Descargar mapa</Button>
-        <Button htmlElement="a" size="little" type="primary" download href={downloadChart}>Descargar gráfica</Button>
-        <Button size="little" disabled type="primary">Más reportes</Button>
+        <Button 
+          bg={colors.tertiary300} 
+          htmlElement="a" 
+          size="little" 
+          type="primary" 
+          download="gráfica.png"
+          href={downloadChart}
+        >Descargar gráfica</Button>
+        <Button bg={colors.tertiary500} size="little" disabled type="primary">Más reportes</Button>
       </div>
     </Container> 
   )

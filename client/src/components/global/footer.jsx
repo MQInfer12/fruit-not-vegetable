@@ -26,7 +26,7 @@ const Footer = () => {
             <p>Av. Villarroel</p>
             <p>Cochabamba, Bolivia</p>
             <p>info@tecnopolis.ai</p>
-            <p>+59176407344</p>
+            <p>+59172244087</p>
           </div>
         </div>
         <div>
@@ -35,7 +35,7 @@ const Footer = () => {
             <div>
               <div><StyledLink onClick={() => navigate("/")}><i className="fa-solid fa-chevron-right"></i>Inicio</StyledLink></div>
               <div><StyledLink onClick={() => navigate("/analizar")}><i className="fa-solid fa-chevron-right"></i>Analizar Imagen</StyledLink></div>
-              <div><StyledLink onClick={() => navigate("/mapa")}><i className="fa-solid fa-chevron-right"></i>Mapa</StyledLink></div>
+              <div><StyledLink onClick={() => navigate("/mapa")}><i className="fa-solid fa-chevron-right"></i>Mapa Enfermedades</StyledLink></div>
               <div><StyledLink onClick={() => navigate("/objetivo")}><i className="fa-solid fa-chevron-right"></i>Objetivo</StyledLink></div>
               <div><StyledLink onClick={() => navigate("/instrucciones")}><i className="fa-solid fa-chevron-right"></i>Instrucciones</StyledLink></div>
             </div>

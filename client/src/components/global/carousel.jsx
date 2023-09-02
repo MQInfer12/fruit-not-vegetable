@@ -3,11 +3,11 @@ import colors from '../../styles/colors';
 import { styled } from 'styled-components';
 import { useInterval } from '../../hooks/useInterval';
 
-const Carousel = ({ data, component, borderWidth }) => {
+const Carousel = ({ data, component, borderWidth, borderColor = colors.primary500 }) => {
   const { active, changeActive } = useInterval(6000, data.length);
 
   return (
-    <CarouselContainer borderWidth={borderWidth}>
+    <CarouselContainer borderWidth={borderWidth} borderColor={borderColor}>
       {data.map((value, i) => (
         <CarouselItem key={i} active={i === active}>
           {component(value, i)}
@@ -25,7 +25,7 @@ const Carousel = ({ data, component, borderWidth }) => {
 }
 
 const CarouselContainer = styled.div`
-  border: ${props => props.borderWidth}px solid ${colors.primary500};
+  border: ${props => props.borderWidth}px solid ${props => props.borderColor};
   width: 100%;
   height: 100%;
   position: relative;
