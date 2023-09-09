@@ -36,6 +36,7 @@ const NewInstrucciones = () => {
             </CarouselItem>
           )}
           borderWidth={8}
+          borderColor={colors.primary400}
         />
       </CarouselContainer>
     </Container>

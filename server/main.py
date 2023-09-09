@@ -10,9 +10,14 @@ from datetime import date
 import os
 import folium
 
+from flask_sqlalchemy import SQLAlchemy   # ORM para base de datos MySQL
+
 #LIBRERIAS PARA DETECCION
-""" from skimage.io import imread
-from keras.models import load_model
+from skimage.io import imread
+""" import torch
+from matplotlib import pyplot as plt
+from matplotlib.patches import Rectangle """
+""" from keras.models import load_model
 import numpy as np
 from mrcnn.config import Config """
 
@@ -26,6 +31,10 @@ app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USERNAME"] = 'serginho61@gmail.com'
 app.config["MAIL_PASSWORD"] = 'bfmmvotlxgjmdqzo'
 mail.init_app(app)
+
+app.config.from_pyfile('config.py')
+db = SQLAlchemy(app)
+from models import Publicidades, Usuarios
 
 @app.route('/')
 def index():
@@ -129,13 +138,7 @@ def analizar():
   filename = "foto_hoja.jpg"
   foto.save(os.path.join(app.root_path, "static", "upload", filename))
 
-  """ imagen = imread(os.path.join(app.root_path, "static", "upload", filename))
-
-  model = load_model(os.path.join(app.root_path, "modelo", "modelo_deteccion", "modelo_deteccion.h5"))
-
-  result = model.predict(np.expand_dims(imagen, axis=0))
-
-  print(result) """
+  imagen = imread(os.path.join(app.root_path, "static", "upload", filename))
 
   return jsonify({
     "prediccion": "Mancha bacteriana",
@@ -178,6 +181,11 @@ def descargarmapa():
 
   maphtml = mapObj._repr_html_()
   return maphtml
+
+@app.route('/listar_publicidad_general')
+def listar_publicidad_general():
+    lista = Publicidades.query.order_by(Publicidades.id)
+    return render_template('listar_publicidad_general.html',titulo= 'Publicidad General', publicidades=lista)
 
 if __name__ == "__main__":
   app.run(debug=True, port=8000)
