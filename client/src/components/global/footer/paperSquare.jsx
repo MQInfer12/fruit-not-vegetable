@@ -3,9 +3,9 @@ import { styled } from 'styled-components';
 import Pin from '../../../assets/pin.png';
 import ModalContainer from '../modalContainer';
 
-const PaperSquare = ({ color, inclinacion, children, onClick, active, size = 160 }) => {
+const PaperSquare = ({ color, inclinacion, children, onClick, active, size = 160, padding = 60 }) => {
   return (
-    <PaperContainer size={size}>
+    <PaperContainer size={size} padding={padding}>
       {
         active ? 
         <ModalContainer close={onClick}>
@@ -41,7 +41,7 @@ const PaperContainer = styled.div`
   max-height: ${props => props.size}px;
   width: ${props => props.size}px;
   height: ${props => props.size}px;
-  margin: 0 60px;
+  margin: 0 ${props => props.padding}px;
 
   @media screen and (max-width: 600px) {
     margin: 0 30px;

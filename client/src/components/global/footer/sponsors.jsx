@@ -4,8 +4,11 @@ import { styled } from 'styled-components'
 import colors from '../../../styles/colors'
 import SponsorPaper from './sponsorPaper'
 import { getRandomInt } from '../../../utilities/getRandomInt'
+import { usePublicidad } from '../../../context/publicidad'
 
-const Sponsors = ({ sponsorData }) => {
+const Sponsors = ({ size, padding }) => {
+  const { publicidades: sponsorData } = usePublicidad();
+
   const getInitialSponsorData = () => {
     const diff = sponsorData.length % 5;
     if(diff > 0) {
@@ -36,6 +39,8 @@ const Sponsors = ({ sponsorData }) => {
             onClick={() => Object.keys(value).length !== 3 && changeActive(i)}
             active={active === i}
             value={value}
+            size={size}
+            padding={padding}
           />
         ))}
       </div>
@@ -46,6 +51,8 @@ const Sponsors = ({ sponsorData }) => {
             onClick={() => Object.keys(value).length !== 3 && changeActive(i)}
             active={active === (data.length + i)}
             value={value}
+            size={size}
+            padding={padding}
           />
         ))}
       </div>

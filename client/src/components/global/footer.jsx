@@ -6,15 +6,17 @@ import { useNavigate } from 'react-router-dom'
 import Sponsors from './footer/sponsors'
 import Logo from '../../assets/logotext-white.png'
 import Legals from './footer/legals'
+import { usePublicidad } from '../../context/publicidad'
 
-const Footer = ({ sponsors }) => {
+const Footer = () => {
   const navigate = useNavigate();
+  const { publicidades } = usePublicidad();
 
   return (
     <StyledFooter>
       <FloatingContainer>
         <h2>Tenemos la <span>solución</span> para tu <span>cultivo</span></h2>
-        {sponsors && <Sponsors sponsorData={sponsors} />}
+        {publicidades && <Sponsors />}
       </FloatingContainer>
       <ColumnsContainer>
         <div>

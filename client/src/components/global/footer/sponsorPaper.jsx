@@ -4,7 +4,7 @@ import { styled } from 'styled-components'
 import PaperSquare from './paperSquare'
 import colors from '../../../styles/colors'
 
-const SponsorPaper = ({ value, onClick, active, size = 160 }) => {
+const SponsorPaper = ({ value, onClick, active, size = 160, padding = 60 }) => {
   return (
     <PaperSquare 
       onClick={onClick}
@@ -12,6 +12,7 @@ const SponsorPaper = ({ value, onClick, active, size = 160 }) => {
       color={value.color} 
       inclinacion={value.inclinacion}
       size={size}
+      padding={padding}
     >
       {
         Object.keys(value).length === 3 ?

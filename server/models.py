@@ -28,8 +28,8 @@ class PublicidadesSchema(ma.Schema):
     class Meta:
         fields = ("id", "codigo_pais", "pais", "ciudad", "empresa", "contacto", "cargo", "direccion", "telefono", "correo", "web", "descripcion", "fecha_registro", "tipo_propaganda", "cobertura")
 
-publicidad_schema = PublicidadesSchema(strict=True)
-publicidades_schema = PublicidadesSchema(strict=True, many=True)
+publicidad_schema = PublicidadesSchema()
+publicidades_schema = PublicidadesSchema(many=True)
 
 class Usuarios(db.Model):
     nickname = db.Column(db.String(8), primary_key=True)
@@ -43,5 +43,5 @@ class UsuariosSchema(ma.Schema):
     class Meta:
         fields = ("nickname", "nombre", "clave")
 
-usuario_schema = UsuariosSchema(strict=True)
-usuarios_schema = UsuariosSchema(strict=True, many=True)
+usuario_schema = UsuariosSchema()
+usuarios_schema = UsuariosSchema(many=True)

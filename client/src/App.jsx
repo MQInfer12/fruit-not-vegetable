@@ -12,9 +12,18 @@ import NewInstrucciones from "./pages/newInstrucciones"
 import { useGet } from "./hooks/useGet"
 import Login from "./pages/login"
 import Register from "./pages/register"
+import { useEffect } from "react"
+import { usePublicidad } from "./context/publicidad"
 
 function App() {
   const { data } = useGet('myip');
+  const { setPublicidades } = usePublicidad();
+
+  useEffect(() => {
+    if(data) {
+      setPublicidades(data.data);
+    }
+  }, [data]);
 
   return (
     <HashRouter>
@@ -31,7 +40,7 @@ function App() {
         <Route path="register" element={<Register />} />
       </Routes>
       <Love />
-      <Footer sponsors={data.data} />
+      <Footer />
     </HashRouter>
   )
 }

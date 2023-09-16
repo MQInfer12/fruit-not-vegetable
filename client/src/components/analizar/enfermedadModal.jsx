@@ -1,32 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ModalContainer from '../global/modalContainer'
 import { styled } from 'styled-components'
 import colors from '../../styles/colors'
 import PrevencionMancha from './data/manchaBacteriana/prevencion';
 import SintomasMancha from './data/manchaBacteriana/sintomas';
 import TratamientoMancha from './data/manchaBacteriana/tratamiento';
-import Sponsor1 from '../../assets/sponsor1.png';
-import Sponsor2 from '../../assets/sponsor2.png';
-import Sponsor3 from '../../assets/sponsor3.png';
-import { getRandomInt } from '../../utilities/getRandomInt';
-import SponsorPaper from '../global/footer/sponsorPaper';
-import Button from '../global/button';
+import { usePublicidad } from '../../context/publicidad';
+import Sponsors from '../global/footer/sponsors';
 
 const EnfermedadModal = ({ close, enfermedad, page }) => {
-  const [active, setActive] = useState();
-  const [sponsors] = useState([{
-    img: Sponsor1,
-    inclinacion: getRandomInt(-6, 7),
-    color: colors.pastel1
-  },{
-    img: Sponsor2,
-    inclinacion: getRandomInt(-6, 7),
-    color: colors.pastel2
-  },{
-    img: Sponsor3,
-    inclinacion: getRandomInt(-6, 7),
-    color: colors.pastel3
-  }])
+  const { publicidades: sponsorData } = usePublicidad();
 
   const data = {
     "manchaBacteriana": {
@@ -52,17 +35,7 @@ const EnfermedadModal = ({ close, enfermedad, page }) => {
         <Info id="info">
           {data[enfermedad][page]}
         </Info>
-        <SponsorsContainer>
-          {sponsors.map((value, i) => (
-            <SponsorPaper 
-              key={i}
-              value={value}
-              onClick={() => setActive(active === i ? null : i)}
-              active={active === i}
-              size={120}
-            />
-          ))}
-        </SponsorsContainer>
+        {sponsorData && <Sponsors size={120} padding={32} />}
       </Container>
     </ModalContainer>
   )
