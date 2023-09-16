@@ -10,8 +10,6 @@ from datetime import date
 import os
 import folium
 
-from flask_sqlalchemy import SQLAlchemy   # ORM para base de datos MySQL
-
 #LIBRERIAS PARA DETECCION
 from skimage.io import imread
 """ import torch
@@ -33,8 +31,9 @@ app.config["MAIL_PASSWORD"] = 'bfmmvotlxgjmdqzo'
 mail.init_app(app)
 
 app.config.from_pyfile('config.py')
-db = SQLAlchemy(app)
-from models import Publicidades, Usuarios
+from models import db, ma, Publicidades, Usuarios
+db.init_app(app)
+ma.init_app(app)
 
 @app.route('/')
 def index():
@@ -121,12 +120,16 @@ def myip():
     file_path = os.path.join(app.root_path, "static", "texts", "ips.txt")
     with open(file_path, 'a') as file:
       file.write("Ingreso desde: " + ip_address + ", " + datos_nuevo_registro["pais"] + ", " + datos_nuevo_registro["localidad"] + ", " + datos_nuevo_registro["fecha"] + "\n")
-    
+
+    publicidades = Publicidades.query.join(Publicidades.codigo_pais == details.country.lower()).order_by(Publicidades.id)
     return jsonify({
-      "message": "Se agrego un nuevo registro satisfactoriamente"
+      "message": "Se agrego un nuevo registro satisfactoriamente",
+      "data": publicidades
     })
+  publicidades = Publicidades.query.order_by(Publicidades.id)
   return jsonify({
-    "error": "No se pudo obtener tus datos de localidad"
+    "error": "No se pudo obtener tus datos de localidad",
+    "data": publicidades
   })
 
 @app.route('/analizar', methods = ["POST"])

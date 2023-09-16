@@ -1,4 +1,8 @@
-from main import db
+from flask_sqlalchemy import SQLAlchemy   # ORM para base de datos MySQL
+from flask_marshmallow import Marshmallow
+
+db = SQLAlchemy()
+ma = Marshmallow()
 
 class Publicidades(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -20,6 +24,12 @@ class Publicidades(db.Model):
     def __repr__(self):
         return '<Name %r>' % self.name
 
+class PublicidadesSchema(ma.Schema):
+    class Meta:
+        fields = ("id", "codigo_pais", "pais", "ciudad", "empresa", "contacto", "cargo", "direccion", "telefono", "correo", "web", "descripcion", "fecha_registro", "tipo_propaganda", "cobertura")
+
+publicidad_schema = PublicidadesSchema(strict=True)
+publicidades_schema = PublicidadesSchema(strict=True, many=True)
 
 class Usuarios(db.Model):
     nickname = db.Column(db.String(8), primary_key=True)
@@ -28,3 +38,10 @@ class Usuarios(db.Model):
 
     def __repr__(self):
         return '<Name %r>' % self.name
+    
+class UsuariosSchema(ma.Schema):
+    class Meta:
+        fields = ("nickname", "nombre", "clave")
+
+usuario_schema = UsuariosSchema(strict=True)
+usuarios_schema = UsuariosSchema(strict=True, many=True)

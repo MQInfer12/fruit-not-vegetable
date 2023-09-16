@@ -7,14 +7,14 @@ import Sponsors from './footer/sponsors'
 import Logo from '../../assets/logotext-white.png'
 import Legals from './footer/legals'
 
-const Footer = () => {
+const Footer = ({ sponsors }) => {
   const navigate = useNavigate();
 
   return (
     <StyledFooter>
       <FloatingContainer>
         <h2>Tenemos la <span>solución</span> para tu <span>cultivo</span></h2>
-        <Sponsors />
+        {sponsors && <Sponsors sponsorData={sponsors} />}
       </FloatingContainer>
       <ColumnsContainer>
         <div>

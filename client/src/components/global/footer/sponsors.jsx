@@ -1,48 +1,39 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import Sponsor1 from '../../../assets/sponsor1.png'
-import Sponsor2 from '../../../assets/sponsor2.png'
-import Sponsor3 from '../../../assets/sponsor3.png'
-import Sponsor4 from '../../../assets/sponsor4.png'
-import Sponsor5 from '../../../assets/sponsor5.png'
 import { styled } from 'styled-components'
 import colors from '../../../styles/colors'
 import SponsorPaper from './sponsorPaper'
 import { getRandomInt } from '../../../utilities/getRandomInt'
 
-const Sponsors = () => {
-  const [data] = useState([{
-    img: Sponsor1,
-    inclinacion: getRandomInt(-6, 7),
-    color: colors.pastel1
-  },{
-    img: Sponsor2,
-    inclinacion: getRandomInt(-6, 7),
-    color: colors.pastel2
-  },{
-    img: Sponsor3,
-    inclinacion: getRandomInt(-6, 7),
-    color: colors.pastel3
-  },{
-    img: Sponsor4,
-    inclinacion: getRandomInt(-6, 7),
-    color: colors.pastel4
-  },{
-    img: Sponsor5,
-    inclinacion: getRandomInt(-6, 7),
-    color: colors.pastel5
-  }]);
+const Sponsors = ({ sponsorData }) => {
+  const getInitialSponsorData = () => {
+    const diff = sponsorData.length % 5;
+    if(diff > 0) {
+      for(let i = 0; i < 5 - (diff); i++) {
+        sponsorData.push(null);
+      }
+    }
+    return sponsorData.map((sponsor, i) => ({
+      ...sponsor,
+      inclinacion: getRandomInt(-6, 7),
+      color: colors[`pastel${(i % 5) + 1}`],
+      img: Sponsor1
+    }));
+  }
+
+  const [data] = useState(getInitialSponsorData());
   const [active, setActive] = useState(null);
   const changeActive = (number) => {
     setActive(active === number ? null : number);
   }
 
   return (
-    <Container active={active} width={data.length * 360}>
+    <Container active={active !== null} width={data.length * 360} speed={data.length * 6}>
       <div id='sponsors-animation'>
         {data.map((value, i) => (
           <SponsorPaper 
             key={i}
-            onClick={() => changeActive(i)}
+            onClick={() => Object.keys(value).length !== 3 && changeActive(i)}
             active={active === i}
             value={value}
           />
@@ -52,7 +43,7 @@ const Sponsors = () => {
         {data.map((value, i) => (
           <SponsorPaper 
             key={data.length + i}
-            onClick={() => changeActive(data.length + i)}
+            onClick={() => Object.keys(value).length !== 3 && changeActive(i)}
             active={active === (data.length + i)}
             value={value}
           />
@@ -75,7 +66,7 @@ const Container = styled.div`
     align-items: center;
     white-space: nowrap;
     align-items: center;
-    animation: move 30s linear infinite;
+    animation: move ${props => props.speed}s linear infinite;
     animation-play-state: ${props => props.active ? "paused" : ""};
     
     @keyframes move {

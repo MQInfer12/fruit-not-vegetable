@@ -31,7 +31,7 @@ function App() {
         <Route path="register" element={<Register />} />
       </Routes>
       <Love />
-      <Footer />
+      <Footer sponsors={data.data} />
     </HashRouter>
   )
 }

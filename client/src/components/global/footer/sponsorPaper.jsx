@@ -2,6 +2,7 @@ import React from 'react'
 import PaperOpen from './paperOpen'
 import { styled } from 'styled-components'
 import PaperSquare from './paperSquare'
+import colors from '../../../styles/colors'
 
 const SponsorPaper = ({ value, onClick, active, size = 160 }) => {
   return (
@@ -12,8 +13,11 @@ const SponsorPaper = ({ value, onClick, active, size = 160 }) => {
       inclinacion={value.inclinacion}
       size={size}
     >
-      {active ?
-        <PaperOpen img={value.img}></PaperOpen> :
+      {
+        Object.keys(value).length === 3 ?
+        <P>Publicite aquí</P>
+        : active ?
+        <PaperOpen value={value}></PaperOpen> :
         <Img src={value.img} />
       }
     </PaperSquare>
@@ -27,3 +31,13 @@ const Img = styled.img`
   max-height: 80%;
   object-fit: cover;
 `;
+
+const P = styled.p`
+  color: ${colors.primary400};
+  font-weight: 600;
+  font-size: 16px;
+  width: 100%;
+  white-space: pre-wrap;
+  text-align: center;
+  user-select: none;
+`

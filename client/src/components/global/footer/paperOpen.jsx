@@ -2,29 +2,29 @@ import React from 'react'
 import { styled } from 'styled-components';
 import colors from '../../../styles/colors';
 
-const PaperOpen = ({ img }) => {
+const PaperOpen = ({ value }) => {
   return (
     <Container>
       <div className='img-container'>
-        <Img src={img} />
+        <Img src={value.img} />
       </div>
-      <h3>Visita nuestra <a href="https://www.youtube.com/" target='_blank'>página web</a></h3>
+      <h3>Visita nuestra <a href={"https://" + value.web} target='_blank'>página web</a></h3>
       <div className='data'>
         <div className='data-row'>
           <i className="fa-solid fa-phone"></i>
-          <p>+59176439418</p>
+          <p>{value.telefono}</p>
         </div>
         <div className='data-row'>
           <i className="fa-solid fa-envelope"></i>
-          <p>test@example.com</p>
+          <p>{value.correo}</p>
         </div>
         <div className='data-row'>
           <i className="fa-solid fa-map-pin"></i>
-          <p>Calle Los Ángeles, esq. América y Libertadores</p>
+          <p>{value.direccion}</p>
         </div>
         <div className='data-row'>
           <i className="fa-solid fa-map-location-dot"></i>
-          <p>Cochabamba - Bolivia</p>
+          <p>{value.ciudad} - {value.pais}</p>
         </div>
       </div>
     </Container>
