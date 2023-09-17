@@ -94,7 +94,7 @@ publicidad = [
       ('co', 'Colombia', 'Medellín', 'SaBio', 'Andrea Echavarría', 'gerente propietaria','no especifica dirección', '+57 317 3181727','info@sabio.com.co', 'www.sabio.com.co', 'Beneficios de un Suelo Sano - Sustitución y disminución de agroquímicos. Valorización del producto y acceso a nuevos mercados.Cultivos más productivos y sanos. Regeneración: Una Sola Salud.', fecha_hoy, 'E', 'I' ),
       ('bo', 'Bolivia', 'Cochabamba', 'AGRECOL Andes', 'Sin Nombre', 'atención al cliente','Pasaje "F", No. 2858 Urb. El Profesional', '+591 4 4423636', 'info@agrecolandes.org', 'www.agrecolandes.org', 'Asesoramiento en implementación de de parcelas agroforestales, prácticas agroecológicas, sistemas de micro riego y sello ecológico SPG.', fecha_hoy, 'G', 'N'),
       ('cl', 'Chile', 'Rancagua', 'HortiCrece', 'Sin Nombre', 'asistencia técnica', 'Avenida Membrillar 50, 3er piso', '+56 9 6234 9340', 'comunicaciones@horticrece.cl', 'www.horticrece.cl', 'El programa estratégico regional de Corfo O"Higgins, es un esfuerzo público-privado para mejorar la competitividad de la horticultura regional, trabajando de forma conjunta para poner en marcha una serie de acciones que nos permitan cerrar las brechas competitivas y tecnológicas.', fecha_hoy, 'E', 'I'),
-      ]
+]
 cursor.executemany(publicidad_sql, publicidad)
 
 cursor.execute('select * from MarcianoQuantico$plataformaDT.publicidades')

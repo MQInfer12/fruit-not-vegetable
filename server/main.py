@@ -1,7 +1,7 @@
 
 # A very simple Flask Hello World app for you to get started with...
 
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, send_file
 from flask_cors import CORS
 from flask_mail import Mail, Message
 import pandas as pd
@@ -9,6 +9,7 @@ import ipinfo
 from datetime import date
 import os
 import folium
+from sqlalchemy import or_
 
 #LIBRERIAS PARA DETECCION
 from skimage.io import imread
@@ -31,13 +32,18 @@ app.config["MAIL_PASSWORD"] = 'bfmmvotlxgjmdqzo'
 mail.init_app(app)
 
 app.config.from_pyfile('config.py')
-from models import db, ma, Publicidades, Usuarios
+from models import db, ma, Publicidades, publicidades_schema
 db.init_app(app)
 ma.init_app(app)
 
 @app.route('/')
 def index():
   return render_template('index.html')
+
+@app.route('/logo/<string:nombre_foto>')
+def logo(nombre_foto):
+  img_path = os.path.join(app.root_path, "static", "images", nombre_foto + ".png")
+  return send_file(img_path, mimetype="image/png")
 
 @app.route('/correo', methods=["POST"])
 def correo():
@@ -121,15 +127,28 @@ def myip():
     with open(file_path, 'a') as file:
       file.write("Ingreso desde: " + ip_address + ", " + datos_nuevo_registro["pais"] + ", " + datos_nuevo_registro["localidad"] + ", " + datos_nuevo_registro["fecha"] + "\n")
 
-    publicidades = Publicidades.query.join(Publicidades.codigo_pais == details.country.lower()).order_by(Publicidades.id)
+    general = Publicidades.query.filter(Publicidades.tipo_propaganda != "E").filter(or_(Publicidades.codigo_pais == details.country.lower(), Publicidades.cobertura == "I")).order_by(Publicidades.id).all()
+    all_general = publicidades_schema.dump(general)
+    especifica = Publicidades.query.filter(Publicidades.tipo_propaganda != "G").filter(or_(Publicidades.codigo_pais == details.country.lower(), Publicidades.cobertura == "I")).order_by(Publicidades.id).all()
+    all_especifica = publicidades_schema.dump(especifica)
+
     return jsonify({
       "message": "Se agrego un nuevo registro satisfactoriamente",
-      "data": publicidades
+      "data": {
+        "general": all_general,
+        "especifica": all_especifica
+      }
     })
-  publicidades = Publicidades.query.order_by(Publicidades.id)
+  general = Publicidades.query.order_by(Publicidades.id)
+  all_general = publicidades_schema.dump(general)
+  especifica = Publicidades.query.order_by(Publicidades.id)
+  all_especifica = publicidades_schema.dump(especifica)
   return jsonify({
     "error": "No se pudo obtener tus datos de localidad",
-    "data": publicidades
+    "data": {
+        "general": all_general,
+        "especifica": all_especifica
+    }
   })
 
 @app.route('/analizar', methods = ["POST"])

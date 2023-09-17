@@ -9,7 +9,7 @@ import { usePublicidad } from '../../context/publicidad';
 import Sponsors from '../global/footer/sponsors';
 
 const EnfermedadModal = ({ close, enfermedad, page }) => {
-  const { publicidades: sponsorData } = usePublicidad();
+  const { publicidadEspecifica } = usePublicidad();
 
   const data = {
     "manchaBacteriana": {
@@ -35,7 +35,7 @@ const EnfermedadModal = ({ close, enfermedad, page }) => {
         <Info id="info">
           {data[enfermedad][page]}
         </Info>
-        {sponsorData && <Sponsors size={120} padding={32} />}
+        {publicidadEspecifica && <Sponsors size={120} padding={32} tipo='E' />}
       </Container>
     </ModalContainer>
   )

@@ -3,8 +3,10 @@ import PaperOpen from './paperOpen'
 import { styled } from 'styled-components'
 import PaperSquare from './paperSquare'
 import colors from '../../../styles/colors'
+import PubliciteAqui from '../../../assets/publiciteAqui.png'
 
 const SponsorPaper = ({ value, onClick, active, size = 160, padding = 60 }) => {
+  console.log(value.codigo_pais + value.id);
   return (
     <PaperSquare 
       onClick={onClick}
@@ -16,10 +18,10 @@ const SponsorPaper = ({ value, onClick, active, size = 160, padding = 60 }) => {
     >
       {
         Object.keys(value).length === 3 ?
-        <P>Publicite aquí</P>
+        <Img src={PubliciteAqui} />
         : active ?
         <PaperOpen value={value}></PaperOpen> :
-        <Img src={value.img} />
+        <Img src={`${import.meta.env.VITE_BACKEND}logo/${value.codigo_pais}${value.id}`} />
       }
     </PaperSquare>
   )

@@ -6,9 +6,12 @@ const PaperOpen = ({ value }) => {
   return (
     <Container>
       <div className='img-container'>
-        <Img src={value.img} />
+        <Img src={`${import.meta.env.VITE_BACKEND}logo/${value.codigo_pais}${value.id}`} />
       </div>
-      <h3>Visita nuestra <a href={"https://" + value.web} target='_blank'>página web</a></h3>
+      <div className='titles-container'>
+        <b>{value.empresa}</b>
+        <h3>Visita nuestra <a href={"https://" + value.web} target='_blank'>página web</a></h3>
+      </div>
       <div className='data'>
         <div className='data-row'>
           <i className="fa-solid fa-phone"></i>
@@ -50,6 +53,12 @@ const Container = styled.div`
     width: 100%;
   }
 
+  & .titles-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   & .data {
     display: flex;
     flex-direction: column;
@@ -77,6 +86,12 @@ const Container = styled.div`
     opacity: 0.5;
     text-align: justify;
     font-size: 1.1rem;
+    font-weight: 600;
+  }
+  & b {
+    opacity: 0.8;
+    text-align: justify;
+    font-size: 1.3rem;
     font-weight: 600;
   }
 

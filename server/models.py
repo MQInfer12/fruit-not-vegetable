@@ -38,7 +38,7 @@ class Usuarios(db.Model):
 
     def __repr__(self):
         return '<Name %r>' % self.name
-    
+
 class UsuariosSchema(ma.Schema):
     class Meta:
         fields = ("nickname", "nombre", "clave")

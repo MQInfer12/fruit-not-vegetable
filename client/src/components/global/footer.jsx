@@ -10,13 +10,13 @@ import { usePublicidad } from '../../context/publicidad'
 
 const Footer = () => {
   const navigate = useNavigate();
-  const { publicidades } = usePublicidad();
+  const { publicidadGeneral } = usePublicidad();
 
   return (
     <StyledFooter>
       <FloatingContainer>
         <h2>Tenemos la <span>solución</span> para tu <span>cultivo</span></h2>
-        {publicidades && <Sponsors />}
+        {publicidadGeneral && <Sponsors />}
       </FloatingContainer>
       <ColumnsContainer>
         <div>

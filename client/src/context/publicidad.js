@@ -1,6 +1,8 @@
 import { create } from "zustand";
 
 export const usePublicidad = create((set) => ({
-  publicidades: null,
-  setPublicidades: (publicidades) => set(old => ({...old, publicidades }))
+  publicidadGeneral: null,
+  publicidadEspecifica: null,
+  setPublicidadGeneral: (publicidadGeneral) => set(old => ({...old, publicidadGeneral })),
+  setPublicidadEspecifica: (publicidadEspecifica) => set(old => ({...old, publicidadEspecifica }))
 }))

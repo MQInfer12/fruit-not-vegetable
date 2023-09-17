@@ -6,8 +6,9 @@ import SponsorPaper from './sponsorPaper'
 import { getRandomInt } from '../../../utilities/getRandomInt'
 import { usePublicidad } from '../../../context/publicidad'
 
-const Sponsors = ({ size, padding }) => {
-  const { publicidades: sponsorData } = usePublicidad();
+const Sponsors = ({ size, padding, tipo = "G" }) => {
+  const { publicidadGeneral, publicidadEspecifica } = usePublicidad();
+  const sponsorData = tipo === "G" ? publicidadGeneral : publicidadEspecifica;
 
   const getInitialSponsorData = () => {
     const diff = sponsorData.length % 5;

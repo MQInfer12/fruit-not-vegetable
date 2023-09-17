@@ -14,16 +14,20 @@ import Login from "./pages/login"
 import Register from "./pages/register"
 import { useEffect } from "react"
 import { usePublicidad } from "./context/publicidad"
+import PublicidadData from './utilities/publicidadData.json'
 
 function App() {
-  const { data } = useGet('myip');
-  const { setPublicidades } = usePublicidad();
+  const { data: res } = useGet('myip');
+  const { setPublicidadGeneral, setPublicidadEspecifica } = usePublicidad();
+
+  console.log(res);
 
   useEffect(() => {
-    if(data) {
-      setPublicidades(data.data);
+    if(res) {
+      setPublicidadGeneral(res.data?.general);
+      setPublicidadEspecifica(res.data?.especifica);
     }
-  }, [data]);
+  }, [res]);
 
   return (
     <HashRouter>
