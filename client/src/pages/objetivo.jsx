@@ -41,7 +41,7 @@ const Objetivo = () => {
         <h3>Nuestro objetivo</h3>
         <div>
           <p><span><i>Doctor Tomatto</i></span> es una aplicación de Inteligencia Artificial (basada en Aprendizaje Profundo y Visión por Computadora) que detecta y clasifica enfermedades que se dan en la hoja, recibe fotos de las HOJAS DE LA PLANTA del tomate en formato JPG.</p>
-          <p>Las enfermedades que detecta y clasifica son: 1).- Mancha bacteriana 2).-Tizón temprano 3).- Hoja sana. Proporciona recomendaciones para la prevención y/o tratamiento de las enfermedades detectadas. Se recomienda solo subir fotos de hojas de tomate que estén en el formato JPG.</p>
+          <p>Las enfermedades que detecta y clasifica son: 1).- Mancha bacteriana 2).-Tizón temprano 3).- Hoja sana. Proporciona síntomas y recomendaciones para la prevención y/o tratamiento de las enfermedades detectadas. Se recomienda solo subir fotos de hojas de tomate que estén en el formato JPG.</p>
         </div>
       </RightContainer>
     </Container>

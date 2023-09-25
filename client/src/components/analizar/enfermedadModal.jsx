@@ -2,22 +2,12 @@ import React from 'react'
 import ModalContainer from '../global/modalContainer'
 import { styled } from 'styled-components'
 import colors from '../../styles/colors'
-import PrevencionMancha from './data/manchaBacteriana/prevencion';
-import SintomasMancha from './data/manchaBacteriana/sintomas';
-import TratamientoMancha from './data/manchaBacteriana/tratamiento';
 import { usePublicidad } from '../../context/publicidad';
 import Sponsors from '../global/footer/sponsors';
+import { enfermedadData } from './enfermedadData';
 
 const EnfermedadModal = ({ close, enfermedad, page }) => {
   const { publicidadEspecifica } = usePublicidad();
-
-  const data = {
-    "manchaBacteriana": {
-      "sintomas": <SintomasMancha />,
-      "prevencion": <PrevencionMancha />,
-      "tratamiento": <TratamientoMancha />
-    }
-  }
 
   return (
     <ModalContainer close={close}>
@@ -33,7 +23,7 @@ const EnfermedadModal = ({ close, enfermedad, page }) => {
           }
         </h3>
         <Info id="info">
-          {data[enfermedad][page]}
+          {enfermedadData[enfermedad][page]}
         </Info>
         {publicidadEspecifica && <Sponsors size={120} padding={32} tipo='E' />}
       </Container>

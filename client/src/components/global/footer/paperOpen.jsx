@@ -10,7 +10,7 @@ const PaperOpen = ({ value }) => {
       </div>
       <div className='titles-container'>
         <b>{value.empresa}</b>
-        <h3>Visita nuestra <a href={"https://" + value.web} target='_blank'>página web</a></h3>
+        <h3>Visite nuestra <a href={"https://" + value.web} target='_blank'>página web</a></h3>
       </div>
       <div className='data'>
         <div className='data-row'>

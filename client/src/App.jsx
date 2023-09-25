@@ -20,8 +20,6 @@ function App() {
   const { data: res } = useGet('myip');
   const { setPublicidadGeneral, setPublicidadEspecifica } = usePublicidad();
 
-  console.log(res);
-
   useEffect(() => {
     if(res) {
       setPublicidadGeneral(res.data?.general);

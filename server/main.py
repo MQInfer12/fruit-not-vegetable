@@ -12,13 +12,18 @@ import folium
 from sqlalchemy import or_
 
 #LIBRERIAS PARA DETECCION
-from skimage.io import imread
-""" import torch
+from mrcnn.config import Config
+from mrcnn.model import mold_image
+from numpy import expand_dims
 from matplotlib import pyplot as plt
-from matplotlib.patches import Rectangle """
-""" from keras.models import load_model
+from matplotlib.patches import Rectangle
+from skimage.io import imread
+from mrcnn.model import MaskRCNN
+#LIBERIAS CLASIFICACION
+import cv2
+from keras.models import load_model
 import numpy as np
-from mrcnn.config import Config """
+from keras.applications.imagenet_utils import preprocess_input
 
 app = Flask(__name__, static_folder="assets")
 CORS(app)
@@ -43,6 +48,11 @@ def index():
 @app.route('/logo/<string:nombre_foto>')
 def logo(nombre_foto):
   img_path = os.path.join(app.root_path, "static", "images", nombre_foto + ".png")
+  return send_file(img_path, mimetype="image/png")
+
+@app.route('/output/<string:nombre_foto>')
+def foto(nombre_foto):
+  img_path = os.path.join(app.root_path, "static", "output", nombre_foto + ".jpg")
   return send_file(img_path, mimetype="image/png")
 
 @app.route('/correo', methods=["POST"])
@@ -151,22 +161,6 @@ def myip():
     }
   })
 
-@app.route('/analizar', methods = ["POST"])
-def analizar():
-  foto = request.files.get("file")
-  if not foto:
-    return jsonify({"message": "Error al encontrar el archivo"})
-  
-  filename = "foto_hoja.jpg"
-  foto.save(os.path.join(app.root_path, "static", "upload", filename))
-
-  imagen = imread(os.path.join(app.root_path, "static", "upload", filename))
-
-  return jsonify({
-    "prediccion": "Mancha bacteriana",
-    "porcentaje": "58.0%"
-  })
-
 @app.route('/descargarmapa', methods=['POST'])
 def descargarmapa():
   nombre_pais = request.json["nombre_pais"]
@@ -208,6 +202,124 @@ def descargarmapa():
 def listar_publicidad_general():
     lista = Publicidades.query.order_by(Publicidades.id)
     return render_template('listar_publicidad_general.html',titulo= 'Publicidad General', publicidades=lista)
+
+@app.route('/analizar', methods = ["POST"])
+def analizar():
+  foto = request.files.get("file")
+  if not foto:
+    return jsonify({"message": "Error al encontrar el archivo"})
+  
+  filename = "foto_hoja.jpg"
+  foto.save(os.path.join(app.root_path, "static", "upload", filename))
+
+  global probabilidad
+  global etiqueta
+
+  class ConfiguracionesHojas(Config):
+    NAME = "configuraciones_hojas"
+    NUM_CLASSES = 1 + 2
+    GPU_COUNT = 1
+    IMAGES_PER_GPU = 1
+    DETECTION_MAX_INSTANCES = 1
+
+  def detectar_objeto(imagen, modelo, cfg, nombre_archivo):
+    lista_clase_deteccion = ['BG','HojaTomate','NoHojaTomate']
+    global datos
+    imagen_centrada = mold_image(imagen, cfg)
+    muestra = expand_dims(imagen_centrada, 0)
+    datos = modelo.detect(muestra, verbose=0)[0]
+
+    plt.imshow(imagen, aspect = 'auto')
+
+    ejes = plt.gca()
+    global probabilidad
+    global etiqueta
+    for caja in datos['rois']:
+      y1, x1, y2, x2 = caja
+      ancho, altura = x2 - x1, y2 - y1
+      rectangulo = Rectangle((x1, y1), ancho, altura, fill=True, alpha=0.3, color='red')
+      ejes.add_patch(rectangulo)
+      probabilidad =float(datos['scores'])
+      indice_clase = int(datos['class_ids'])
+      etiqueta = lista_clase_deteccion[indice_clase]
+      ejes.text(x1+5, y1+20, lista_clase_deteccion[indice_clase] +': ' + str(round(probabilidad*100,1))+'%')
+      plt.axis('off')
+      plt.savefig(os.path.join(app.root_path, "static", "output", nombre_archivo), bbox_inches='tight',pad_inches = 0)
+    plt.show()
+    print('probabilidad de deteccion =',probabilidad,' etiqueta =',etiqueta)
+
+  imagen = imread(os.path.join(app.root_path, "static", "upload", filename))
+
+  cfg = ConfiguracionesHojas()
+
+  modelo = MaskRCNN(mode='inference', model_dir=os.path.join(app.root_path, "modelo_testeando"), config=cfg)
+  modelo.load_weights(os.path.join(app.root_path, "modelo", "modelo_deteccion", "modelo_deteccion.h5"), by_name=True)
+
+  detectar_objeto(imagen, modelo, cfg, filename)
+
+  print('probabilidad deteccion =', probabilidad, 'etiqueta =', etiqueta)
+
+  probabilidadPrecision = 0.70
+  if probabilidad < probabilidadPrecision or etiqueta != 'HojaTomate':
+    return jsonify({
+      "error": "La probabilidad es menor a 70%",
+      "data": {
+        "porcentaje": probabilidad
+      }
+    })
+
+  probabilidad_clasificacion = -1
+  nombre_area_detectada = 'Area' + filename
+  img = cv2.imread(os.path.join(app.root_path, "static", "upload", filename),cv2.IMREAD_UNCHANGED)
+
+  x = datos['rois'][0][0]
+  y = datos['rois'][0][1]
+  w = datos['rois'][0][2]
+  h = datos['rois'][0][3]
+  crop_img = img[x:w, y:h]
+  cv2.imwrite(os.path.join(app.root_path, "static", "output", nombre_area_detectada), crop_img)
+
+  names = ['TOMATE MANCHA BACTERIANA','TOMATE SANO','TOMATE TIZON TEMPRAMO']
+  modelt = load_model(os.path.join(app.root_path, "modelo", "modelo_clasificacion", "modelo_clasificacion.h5"))
+
+  img = cv2.imread(os.path.join(app.root_path, "static", "output", nombre_area_detectada))
+
+  width = 224
+  height = 224
+  dim = (width, height)
+  imaget = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+  xt = np.asarray(imaget)
+  xt = preprocess_input(xt)
+  xt = np.expand_dims(xt,axis=0)
+  preds = modelt.predict(xt)
+
+  print('preds[0]:',preds[0])
+  print(names[np.argmax(preds)],preds[0][np.argmax(preds)]*100.0,'%')
+  plt.imshow(cv2.cvtColor(np.asarray(imaget),cv2.COLOR_BGR2RGB))
+  plt.axis('off')
+  plt.show()
+
+  probabilidad_clasificacion = preds[0][np.argmax(preds)]
+  if probabilidad_clasificacion == -1:
+    return jsonify({
+      "error": "La probabilidad es menor a -100%",
+      "data": {
+        "porcentaje": probabilidad_clasificacion
+      }
+    })
+  
+  probabilidad = -1.00
+  etiqueta=''
+  answer = np.argmax(preds[0])
+  enfermedades = ["Mancha Bacteriana", "Tomate Sano", "Tizon Temprano"]
+
+  return jsonify({
+    "message": "Clasificación correcta",
+    "data": {
+      "prediccion": enfermedades[answer],
+      "porcentaje": probabilidad_clasificacion * 100
+    }
+  })
 
 if __name__ == "__main__":
   app.run(debug=True, port=8000)

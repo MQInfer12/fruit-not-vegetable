@@ -37,7 +37,7 @@ const Sponsors = ({ size, padding, tipo = "G" }) => {
         {data.map((value, i) => (
           <SponsorPaper 
             key={i}
-            onClick={() => Object.keys(value).length !== 3 && changeActive(i)}
+            onClick={() => changeActive(i)}
             active={active === i}
             value={value}
             size={size}
@@ -49,7 +49,7 @@ const Sponsors = ({ size, padding, tipo = "G" }) => {
         {data.map((value, i) => (
           <SponsorPaper 
             key={data.length + i}
-            onClick={() => Object.keys(value).length !== 3 && changeActive(i)}
+            onClick={() => changeActive(data.length + i)}
             active={active === (data.length + i)}
             value={value}
             size={size}

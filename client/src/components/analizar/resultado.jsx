@@ -1,24 +1,24 @@
 import React, { useState } from 'react'
 import { styled } from 'styled-components';
 import colors from '../../styles/colors';
-import ManchaBacteriana from '../../assets/fotoManchaBacteriana.jpg'
 import Button from '../global/button';
 import EnfermedadModal from './enfermedadModal';
 import ZoomImage from './zoomImage';
 import Carousel from '../global/carousel';
+import { enfermedadData } from './enfermedadData';
 
 const Resultado = ({ data, preview }) => {
-  const enfermedad = "manchaBacteriana";
+  const enfermedad = data.prediccion;
   const [page, setPage] = useState(null);
-  
+
   const carouselData = [{
     src: preview,
     label: "Foto subida"
   }, {
-    src: preview,
+    src: `${import.meta.env.VITE_BACKEND}output/foto_hoja`,
     label: "Detección de la hoja"
   }, {
-    src: preview,
+    src: `${import.meta.env.VITE_BACKEND}output/Areafoto_hoja`,
     label: "Área hoja detectada"
   }]
 
@@ -26,9 +26,9 @@ const Resultado = ({ data, preview }) => {
     <Container>
       <DiagnosticoContainer>
         <h2>Predicción</h2>
-        <p className='prediccion'>{data.prediccion} {data.porcentaje}</p>
+        <p className='prediccion'>{data.prediccion} {data.porcentaje}%</p>
         <div className='images-container'>
-          <ZoomImage src={ManchaBacteriana} />
+          <ZoomImage src={enfermedadData[enfermedad].foto} />
           <div>
             <Carousel 
               data={carouselData}
@@ -40,9 +40,9 @@ const Resultado = ({ data, preview }) => {
           </div>
         </div>
         <div className='buttons-container'>
-          <Button bg={colors.pastel3} width="200px" type="primary" onClick={() => setPage("sintomas")}>Síntomas</Button>
-          <Button bg={colors.tertiary300} width="200px" type="primary" onClick={() => setPage("prevencion")}>Prevención</Button>
-          <Button bg={colors.tertiary500} width="200px" type="primary" onClick={() => setPage("tratamiento")}>Tratamiento</Button>
+          <Button disabled={enfermedad === "Tomate Sano"} bg={colors.pastel3} width="200px" type="primary" onClick={() => setPage("sintomas")}>Síntomas</Button>
+          <Button disabled={enfermedad === "Tomate Sano"} bg={colors.tertiary300} width="200px" type="primary" onClick={() => setPage("prevencion")}>Prevención</Button>
+          <Button disabled={enfermedad === "Tomate Sano"} bg={colors.tertiary500} width="200px" type="primary" onClick={() => setPage("tratamiento")}>Tratamiento</Button>
         </div>
       </DiagnosticoContainer>
       {

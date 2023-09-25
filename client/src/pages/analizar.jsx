@@ -7,7 +7,6 @@ import useWidth from '../hooks/useWidth';
 import { useBackground } from '../context/background';
 import Loader from '../components/global/loader';
 import Resultado from '../components/analizar/resultado';
-import data from '../utilities/result.json';
 import ResultadoError from '../components/analizar/resultadoError';
 import { sendRequest } from '../utilities/sendRequest';
 
@@ -51,8 +50,8 @@ const Analizar = () => {
   }
 
   if(result) {
-    if(result.prediccion != "error") {
-      return <Resultado data={result} preview={preview} />
+    if(!result.error) { 
+      return <Resultado data={result.data} preview={preview} />
     } else {
       return <ResultadoError reset={reset} preview={preview} />
     }
