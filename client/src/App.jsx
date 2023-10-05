@@ -14,7 +14,8 @@ import Login from "./pages/login"
 import Register from "./pages/register"
 import { useEffect } from "react"
 import { usePublicidad } from "./context/publicidad"
-import PublicidadData from './utilities/publicidadData.json'
+import CrudPublicidad from "./pages/crudPublicidad"
+import FormPublicidad from "./pages/formPublicidad"
 
 function App() {
   const { data: res } = useGet('myip');
@@ -40,6 +41,9 @@ function App() {
         <Route path="contacto" element={<Contacto />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="crud/publicidad" element={<CrudPublicidad />} />
+        <Route path="crud/publicidad/agregar" element={<FormPublicidad />} />
+        <Route path="crud/publicidad/editar/:id" element={<FormPublicidad />} />
       </Routes>
       <Love />
       <Footer />

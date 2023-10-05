@@ -6,7 +6,6 @@ import colors from '../../../styles/colors'
 import PubliciteAqui from '../../../assets/publiciteAqui.png'
 
 const SponsorPaper = ({ value, onClick, active, size = 160, padding = 60 }) => {
-  console.log(value.codigo_pais + value.id);
   return (
     <PaperSquare 
       onClick={onClick}

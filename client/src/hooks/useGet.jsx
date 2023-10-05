@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const useGet = (route, initialState = []) => {
+export const useGet = (route, initialState = [], send = true) => {
   const [data, setData] = useState(initialState);
   const [loading, setLoading] = useState(false);
 
@@ -15,7 +15,9 @@ export const useGet = (route, initialState = []) => {
   }
 
   useEffect(() => {
-    getData();
+    if(send) {
+      getData();
+    }
   }, []);
 
   return { data, loading, getData };

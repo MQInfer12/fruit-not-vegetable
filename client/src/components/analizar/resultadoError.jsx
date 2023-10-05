@@ -10,7 +10,7 @@ const ResultadoError = ({ preview, reset }) => {
         <h2>¡Error!</h2>
         <p>La foto subida no corresponde a una hoja de tomate o tiene una probabilidad {"< 70%"}</p>
         <img src={preview} />
-        <Button type="primary" onClick={reset}>Subir otra imagen</Button>
+        <Button type="secondary" onClick={reset}>Subir otra imagen</Button>
       </DiagnosticoContainer>
     </Container>
   )
@@ -51,7 +51,7 @@ const DiagnosticoContainer = styled.div`
   min-width: 400px;
   padding: 8px 32px 20px;
   background-color: ${colors.primary300};
-  gap: 32px;
+  gap: 16px;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
 
   @media screen and (max-height: 700px) {
@@ -68,6 +68,14 @@ const DiagnosticoContainer = styled.div`
     color: ${colors.primary500};
     font-weight: 600;
     font-family: 'Chillax';
+  }
+
+  & > p {
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    background-color: ${colors.tertiary600};
+    color: ${colors.white};
+    font-weight: 600;
   }
 
   & img {

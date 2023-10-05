@@ -1,0 +1,53 @@
+[
+  {
+    "cargo": "gerente propietaria",
+    "ciudad": "Medell\u00edn",
+    "cobertura": "I",
+    "codigo_pais": "co",
+    "contacto": "Andrea Echavarr\u00eda",
+    "correo": "info@sabio.com.co",
+    "descripcion": "Beneficios de un Suelo Sano - Sustituci\u00f3n y disminuci\u00f3n de agroqu\u00edmicos. Valorizaci\u00f3n del producto y acceso a nuevos mercados.Cultivos m\u00e1s productivos y sanos. Regeneraci\u00f3n: Una Sola Salud.",
+    "direccion": "no especifica direcci\u00f3n",
+    "empresa": "SaBio",
+    "fecha_registro": "2023-09-16",
+    "id": 1,
+    "pais": "Colombia",
+    "telefono": "+57 317 3181727",
+    "tipo_propaganda": "M",
+    "web": "www.sabio.com.co"
+  },
+  {
+    "cargo": "atenci\u00f3n al cliente",
+    "ciudad": "Cochabamba",
+    "cobertura": "N",
+    "codigo_pais": "bo",
+    "contacto": "Sin Nombre",
+    "correo": "info@agrecolandes.org",
+    "descripcion": "Asesoramiento en implementaci\u00f3n de de parcelas agroforestales, pr\u00e1cticas agroecol\u00f3gicas, sistemas de micro riego y sello ecol\u00f3gico SPG.",
+    "direccion": "Pasaje \"F\", No. 2858 Urb. El Profesional",
+    "empresa": "AGRECOL Andes",
+    "fecha_registro": "2023-09-16",
+    "id": 2,
+    "pais": "Bolivia",
+    "telefono": "+591 4 4423636",
+    "tipo_propaganda": "G",
+    "web": "www.agrecolandes.org"
+  },
+  {
+    "cargo": "asistencia t\u00e9cnica",
+    "ciudad": "Rancagua",
+    "cobertura": "I",
+    "codigo_pais": "cl",
+    "contacto": "Sin Nombre",
+    "correo": "comunicaciones@horticrece.cl",
+    "descripcion": "El programa estrat\u00e9gico regional de Corfo O\"Higgins, es un esfuerzo p\u00fablico-privado para mejorar la competitividad de la horticultura regional, trabajando de forma conjunta para poner en marcha una serie de acciones que nos permitan cerrar las brechas competitivas y tecnol\u00f3gicas.",
+    "direccion": "Avenida Membrillar 50, 3er piso",
+    "empresa": "HortiCrece",
+    "fecha_registro": "2023-09-16",
+    "id": 3,
+    "pais": "Chile",
+    "telefono": "+56 9 6234 9340",
+    "tipo_propaganda": "E",
+    "web": "www.horticrece.cl"
+  }
+]
