@@ -37,7 +37,7 @@ app.config["MAIL_PASSWORD"] = 'bfmmvotlxgjmdqzo'
 mail.init_app(app)
 
 app.config.from_pyfile('config.py')
-from models import db, ma, Publicidades, publicidades_schema
+from models import db, ma, Publicidades, publicidades_schema, publicidad_schema
 db.init_app(app)
 ma.init_app(app)
 
@@ -58,9 +58,9 @@ def foto(nombre_foto):
 @app.route('/correo', methods=["POST"])
 def correo():
   msg = Message("Mensaje desde Doctor Tomatto", sender='serginho61@gmail.com', recipients=['serginho61@gmail.com'])
-  content = """ 
+  content = """
   <html>
-    <b>Nombre:</b> {0} <br> 
+    <b>Nombre:</b> {0} <br>
     <b>Email:</b> {1} <br>
     <b>Whatsapp/Telegram:</b> {2} <br>
     <b>Mensaje:</b> {3}
@@ -80,7 +80,7 @@ def mapa():
     print(row)
     pais = [value for value in data if value["pais"] == row[1]]
     if len(pais) == 0:
-      data.append({ 
+      data.append({
         "pais": row[1],
         "localidades": [{
           "nombre": row[2],
@@ -137,6 +137,7 @@ def myip():
     with open(file_path, 'a') as file:
       file.write("Ingreso desde: " + ip_address + ", " + datos_nuevo_registro["pais"] + ", " + datos_nuevo_registro["localidad"] + ", " + datos_nuevo_registro["fecha"] + "\n")
 
+    #publicidades = Publicidades.query.filter(Publicidades.codigo_pais == details.country.lower()).order_by(Publicidades.id).all()
     general = Publicidades.query.filter(Publicidades.tipo_propaganda != "E").filter(or_(Publicidades.codigo_pais == details.country.lower(), Publicidades.cobertura == "I")).order_by(Publicidades.id).all()
     all_general = publicidades_schema.dump(general)
     especifica = Publicidades.query.filter(Publicidades.tipo_propaganda != "G").filter(or_(Publicidades.codigo_pais == details.country.lower(), Publicidades.cobertura == "I")).order_by(Publicidades.id).all()
@@ -200,15 +201,95 @@ def descargarmapa():
 
 @app.route('/listar_publicidad_general')
 def listar_publicidad_general():
-    lista = Publicidades.query.order_by(Publicidades.id)
+    lista = Publicidades.query.filter(Publicidades.tipo_propaganda != 'E').order_by(Publicidades.id).all()
     return render_template('listar_publicidad_general.html',titulo= 'Publicidad General', publicidades=lista)
+
+@app.route('/publicidad')
+def get_publicidades():
+    lista = Publicidades.query.order_by(Publicidades.id).all()
+    dumped = publicidades_schema.dump(lista)
+    return jsonify(dumped)
+
+@app.route('/publicidad/<id>')
+def get_publicidad(id):
+    publicidad = Publicidades.query.get(id)
+    return publicidad_schema.jsonify(publicidad)
+
+@app.route('/publicidad', methods = ["POST"])
+def create_publicidad():
+    codigo_pais = request.form['codigo_pais']
+    pais = request.form['pais']
+    ciudad = request.form['ciudad']
+    empresa = request.form['empresa']
+    contacto = request.form['contacto']
+    cargo = request.form['cargo']
+    direccion = request.form['direccion']
+    telefono = request.form['telefono']
+    correo = request.form['correo']
+    web = request.form['web']
+    fecha_registro = date.today()
+    descripcion = request.form['descripcion']
+    tipo_propaganda = request.form['tipo_propaganda']
+    cobertura = request.form['cobertura']
+
+    new_publicidad = Publicidades(codigo_pais, pais, ciudad, empresa, contacto, cargo, direccion, telefono, correo, web, descripcion, fecha_registro, tipo_propaganda, cobertura);
+    db.session.add(new_publicidad)
+    db.session.commit()
+
+    foto = request.files.get('foto')
+    if foto:
+      filename = codigo_pais + str(new_publicidad.id) + ".png"
+      foto.save(os.path.join(app.root_path, "static", "images", filename))
+
+    return publicidad_schema.jsonify(new_publicidad)
+
+@app.route('/publicidad/<id>', methods = ["PUT"])
+def update_publicidad(id):
+    publicidad = Publicidades.query.get(id)
+
+    if (request.form['codigo_pais'] != publicidad.codigo_pais):
+        old_path = os.path.join(app.root_path, "static", "images", publicidad.codigo_pais + str(id) + ".png")
+        new_path = os.path.join(app.root_path, "static", "images", request.form['codigo_pais'] + str(id) + ".png")
+        os.rename(old_path, new_path)
+
+    foto = request.files.get('foto')
+    if foto:
+      filename = request.form['codigo_pais'] + str(id) + ".png"
+      foto.save(os.path.join(app.root_path, "static", "images", filename))
+
+    publicidad.codigo_pais = request.form['codigo_pais']
+    publicidad.pais = request.form['pais']
+    publicidad.ciudad = request.form['ciudad']
+    publicidad.empresa = request.form['empresa']
+    publicidad.contacto = request.form['contacto']
+    publicidad.cargo = request.form['cargo']
+    publicidad.direccion = request.form['direccion']
+    publicidad.telefono = request.form['telefono']
+    publicidad.correo = request.form['correo']
+    publicidad.web = request.form['web']
+    publicidad.descripcion = request.form['descripcion']
+    publicidad.tipo_propaganda = request.form['tipo_propaganda']
+    publicidad.cobertura = request.form['cobertura']
+
+    db.session.commit()
+    return publicidad_schema.jsonify(publicidad)
+
+@app.route('/publicidad/<id>', methods = ["DELETE"])
+def delete_publicidad(id):
+    publicidad = Publicidades.query.get(id)
+    db.session.delete(publicidad)
+    db.session.commit()
+
+    os.remove(os.path.join(app.root_path, "static", "images", publicidad.codigo_pais + str(publicidad.id) + ".png"))
+
+    return publicidad_schema.jsonify(publicidad)
 
 @app.route('/analizar', methods = ["POST"])
 def analizar():
   foto = request.files.get("file")
   if not foto:
     return jsonify({"message": "Error al encontrar el archivo"})
-  
+
   filename = "foto_hoja.jpg"
   foto.save(os.path.join(app.root_path, "static", "upload", filename))
 
@@ -307,19 +388,44 @@ def analizar():
         "porcentaje": probabilidad_clasificacion
       }
     })
-  
+
   probabilidad = -1.00
   etiqueta=''
   answer = np.argmax(preds[0])
   enfermedades = ["Mancha Bacteriana", "Tomate Sano", "Tizon Temprano"]
 
+  def grabar_data_enfermedades(datos_nuevo_registro):
+    datos =pd.read_csv(os.path.join(app.root_path, "static", "data", "data_enfermedades.csv"), index_col=0)
+    df = pd.DataFrame(datos)
+    df2 = pd.DataFrame(datos_nuevo_registro, index=[0])
+    df = pd.concat([df, df2], ignore_index=True)
+    df.to_csv(os.path.join(app.root_path, "static", "data", "data_enfermedades.csv"), index=True)
+
+  ipinfo_access_token = '001c2d1b9002e8'
+  handler = ipinfo.getHandler(ipinfo_access_token)
+  ip_address = request.headers.get('X-Forwarded-For', request.remote_addr)
+  details = handler.getDetails(ip_address)
+  try:
+    print(f'Your city is: {details.city}')
+  except AttributeError:
+    print('Error: IP Privada, no se puede extraer datos GPS')
+  else:
+    fecha = date.today().strftime('%Y-%m-%d')
+    datos_nuevo_registro = {
+      #"codigo pais": details.country,
+      "pais": details.country_name,
+      "localidad": details.city,
+      "enfermedad": enfermedades[answer],
+      "fecha": fecha,
+      "latitud": details.latitude,
+      "longitud": details.longitude
+    }
+    grabar_data_enfermedades(datos_nuevo_registro)
+
   return jsonify({
     "message": "Clasificación correcta",
     "data": {
       "prediccion": enfermedades[answer],
-      "porcentaje": probabilidad_clasificacion * 100
+      "porcentaje": "%.2f" % round(probabilidad_clasificacion * 100, 2)
     }
   })
-
-if __name__ == "__main__":
-  app.run(debug=True, port=8000)

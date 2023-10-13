@@ -7,7 +7,7 @@ const ResultadoError = ({ preview, reset }) => {
   return (
     <Container>
       <DiagnosticoContainer>
-        <h2>¡Error!</h2>
+        {/* <h2>¡Error!</h2> */}
         <p>La foto subida no corresponde a una hoja de tomate o tiene una probabilidad {"< 70%"}</p>
         <img src={preview} />
         <Button type="secondary" onClick={reset}>Subir otra imagen</Button>
@@ -49,7 +49,7 @@ const DiagnosticoContainer = styled.div`
   flex-direction: column;
   align-items: center;
   min-width: 400px;
-  padding: 8px 32px 20px;
+  padding: 20px 32px 20px;
   background-color: ${colors.primary300};
   gap: 16px;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
@@ -79,7 +79,7 @@ const DiagnosticoContainer = styled.div`
   }
 
   & img {
-    max-height: 300px;
+    max-height: 350px;
     border: 4px solid ${colors.primary500};
   }
 `;

@@ -52,7 +52,7 @@ const Container = styled.section`
 const FormContainer = styled.form`
   padding: 40px;
   background-color: ${colors.primary200};
-  border: 8px solid ${colors.primary500};
+  border: 8px solid ${colors.primary400};
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
   gap: 24px;
   display: flex;
