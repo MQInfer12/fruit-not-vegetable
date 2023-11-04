@@ -7,11 +7,13 @@ import colors from '../../styles/colors'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import { useBackground } from '../../context/background'
 import { useState } from 'react'
+import { useUser } from '../../context/user'
 
 const Navbar = () => {
   const { color } = useBackground();
   const [openLinks, setOpenLinks] = useState(false);
   const location = useLocation();
+  const { user } = useUser();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -29,7 +31,10 @@ const Navbar = () => {
         <Ul bg={color} open={openLinks}>
           <li><StyledLink to="/">Inicio</StyledLink></li>
           <li><StyledLink to="/analizar">Analizar Imagen</StyledLink></li>
-          <li><StyledLink to="/mapa">Mapa Enfermedades</StyledLink></li>
+          {
+            (user && user.rol.includes("m")) &&
+            <li><StyledLink to="/mapa">Mapa Enfermedades</StyledLink></li>
+          }
           <li><StyledLink to="/objetivo">Objetivo</StyledLink></li>
           {/* <li><StyledLink to="/credito">Crédito</StyledLink></li> */}
           <li><StyledLink to="/instrucciones">Instrucciones</StyledLink></li>

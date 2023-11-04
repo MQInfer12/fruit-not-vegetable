@@ -16,6 +16,9 @@ import { useEffect } from "react"
 import { usePublicidad } from "./context/publicidad"
 import CrudPublicidad from "./pages/crudPublicidad"
 import FormPublicidad from "./pages/formPublicidad"
+import CrudUsuario from "./pages/crudUsuario"
+import FormUsuario from "./pages/formUsuario"
+import ProtectedRoute from "./components/guard/protectedRoute"
 
 function App() {
   const { data: res } = useGet('myip');
@@ -33,8 +36,20 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="" element={<Index />} />
-        <Route path="analizar" element={<Analizar />} />
-        <Route path="mapa" element={<Mapa />} />
+        <Route path="analizar" 
+          element={
+            <ProtectedRoute rol="a">
+              <Analizar />
+            </ProtectedRoute>
+          } 
+        />
+        <Route path="mapa" 
+          element={
+            <ProtectedRoute rol="m">
+              <Mapa />
+            </ProtectedRoute>
+          } 
+        />
         <Route path="objetivo" element={<Objetivo />} />
         <Route path="credito" element={<Credito />} />
         <Route path="instrucciones" element={<NewInstrucciones />} />
@@ -44,6 +59,9 @@ function App() {
         <Route path="crud/publicidad" element={<CrudPublicidad />} />
         <Route path="crud/publicidad/agregar" element={<FormPublicidad />} />
         <Route path="crud/publicidad/editar/:id" element={<FormPublicidad />} />
+        <Route path="crud/usuario" element={<CrudUsuario />} />
+        <Route path="crud/usuario/agregar" element={<FormUsuario />} />
+        <Route path="crud/usuario/editar/:id" element={<FormUsuario />} />
       </Routes>
       <Love />
       <Footer />

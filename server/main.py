@@ -10,6 +10,7 @@ from datetime import date
 import os
 import folium
 from sqlalchemy import or_
+from flask_bcrypt import Bcrypt
 
 #LIBRERIAS PARA DETECCION
 from mrcnn.config import Config
@@ -27,6 +28,7 @@ from keras.applications.imagenet_utils import preprocess_input
 
 app = Flask(__name__, static_folder="assets")
 CORS(app)
+bcrypt = Bcrypt(app)
 
 mail = Mail()
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
@@ -37,7 +39,7 @@ app.config["MAIL_PASSWORD"] = 'bfmmvotlxgjmdqzo'
 mail.init_app(app)
 
 app.config.from_pyfile('config.py')
-from models import db, ma, Publicidades, publicidades_schema, publicidad_schema
+from models import db, ma, Publicidades, publicidades_schema, publicidad_schema, Usuarios, usuarios_schema, usuario_schema
 db.init_app(app)
 ma.init_app(app)
 
@@ -203,6 +205,53 @@ def descargarmapa():
 def listar_publicidad_general():
     lista = Publicidades.query.filter(Publicidades.tipo_propaganda != 'E').order_by(Publicidades.id).all()
     return render_template('listar_publicidad_general.html',titulo= 'Publicidad General', publicidades=lista)
+
+@app.route('/usuario')
+def litar_usuarios():
+    lista = Usuarios.query.all()
+    dumped = usuarios_schema.dump(lista)
+    return jsonify(dumped)
+
+@app.route('/usuario/<email>')
+def litar_usuario(email):
+    usuario = Usuarios.query.get(email)
+    return usuario_schema.jsonify(usuario)
+
+@app.route('/usuario', methods = ["POST"])
+def create_usuario():
+    email = request.json['email']
+    nombre = request.json['nombre']
+    clave = request.json['clave']
+    rol = request.json['rol']
+    pais = request.json['pais']
+    ciudad = request.json['ciudad']
+
+    new_usuario = Usuarios(email, nombre, bcrypt.generate_password_hash(clave), rol, pais, ciudad);
+    db.session.add(new_usuario)
+    db.session.commit()
+
+    return usuario_schema.jsonify(new_usuario)
+
+@app.route('/usuario/<email>', methods = ["PUT"])
+def update_usuario(email):
+    usuario = Usuarios.query.get(email)
+
+    usuario.email = request.json['email']
+    usuario.nombre = request.json['nombre']
+    usuario.rol = request.json['rol']
+    usuario.pais = request.json['pais']
+    usuario.ciudad = request.json['ciudad']
+
+    db.session.commit()
+    return usuario_schema.jsonify(usuario)
+
+@app.route('/usuario/<email>', methods = ["DELETE"])
+def delete_usuario(email):
+    usuario = Usuarios.query.get(email)
+    db.session.delete(usuario)
+    db.session.commit()
+
+    return usuario_schema.jsonify(usuario)
 
 @app.route('/publicidad')
 def get_publicidades():
@@ -429,3 +478,19 @@ def analizar():
       "porcentaje": "%.2f" % round(probabilidad_clasificacion * 100, 2)
     }
   })
+
+@app.route('/login', methods=["POST"])
+def login():
+    usuario = Usuarios.query.filter_by(email = request.json["email"]).first()
+    if(usuario):
+        clave = bcrypt.check_password_hash(usuario.clave, request.json["password"])
+        if usuario and clave:
+            return usuario_schema.jsonify(usuario)
+        else:
+            return jsonify({
+                "error": "Revisa si los datos son correctos"
+            })
+    else:
+        return jsonify({
+            "error": "Revisa si los datos son correctos"
+        })

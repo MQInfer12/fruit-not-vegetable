@@ -7,9 +7,11 @@ import Sponsors from './footer/sponsors'
 import Logo from '../../assets/logotext-white.png'
 import Legals from './footer/legals'
 import { usePublicidad } from '../../context/publicidad'
+import { useUser } from '../../context/user'
 
 const Footer = () => {
   const navigate = useNavigate();
+  const { user } = useUser();
   const { publicidadGeneral } = usePublicidad();
 
   return (
@@ -37,7 +39,10 @@ const Footer = () => {
             <div>
               <div><StyledLink onClick={() => navigate("/")}><i className="fa-solid fa-chevron-right"></i>Inicio</StyledLink></div>
               <div><StyledLink onClick={() => navigate("/analizar")}><i className="fa-solid fa-chevron-right"></i>Analizar Imagen</StyledLink></div>
-              <div><StyledLink onClick={() => navigate("/mapa")}><i className="fa-solid fa-chevron-right"></i>Mapa Enfermedades</StyledLink></div>
+              {
+                (user && user.rol.includes("m")) &&
+                <div><StyledLink onClick={() => navigate("/mapa")}><i className="fa-solid fa-chevron-right"></i>Mapa Enfermedades</StyledLink></div>
+              }
               <div><StyledLink onClick={() => navigate("/objetivo")}><i className="fa-solid fa-chevron-right"></i>Objetivo</StyledLink></div>
               <div><StyledLink onClick={() => navigate("/instrucciones")}><i className="fa-solid fa-chevron-right"></i>Instrucciones</StyledLink></div>
             </div>

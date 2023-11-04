@@ -21,6 +21,22 @@ class Publicidades(db.Model):
     tipo_propaganda = db.Column(db.String(1), nullable=False)
     cobertura = db.Column(db.String(1), nullable=False)
 
+    def __init__(self, codigo_pais, pais, ciudad, empresa, contacto, cargo, direccion, telefono, correo, web, descripcion, fecha_registro, tipo_propaganda, cobertura):
+        self.codigo_pais = codigo_pais
+        self.pais = pais
+        self.ciudad = ciudad
+        self.empresa = empresa
+        self.contacto = contacto
+        self.cargo = cargo
+        self.direccion = direccion
+        self.telefono = telefono
+        self.correo = correo
+        self.web = web
+        self.descripcion = descripcion
+        self.fecha_registro = fecha_registro
+        self.tipo_propaganda = tipo_propaganda
+        self.cobertura = cobertura
+
     def __repr__(self):
         return '<Name %r>' % self.name
 
@@ -32,16 +48,27 @@ publicidad_schema = PublicidadesSchema()
 publicidades_schema = PublicidadesSchema(many=True)
 
 class Usuarios(db.Model):
-    nickname = db.Column(db.String(8), primary_key=True)
+    email = db.Column(db.String(50), primary_key=True)
     nombre = db.Column(db.String(20), nullable=False)
     clave = db.Column(db.String(100), nullable=False)
+    rol = db.Column(db.String(10), nullable=False)
+    pais = db.Column(db.String(50), nullable=False)
+    ciudad = db.Column(db.String(50), nullable=False)
+
+    def __init__(self, email, nombre, clave, rol, pais, ciudad):
+        self.email = email
+        self.nombre = nombre
+        self.clave = clave
+        self.rol = rol
+        self.pais = pais
+        self.ciudad = ciudad
 
     def __repr__(self):
         return '<Name %r>' % self.name
 
 class UsuariosSchema(ma.Schema):
     class Meta:
-        fields = ("nickname", "nombre", "clave")
+        fields = ("email", "nombre", "clave", "rol", "pais", "ciudad")
 
 usuario_schema = UsuariosSchema()
 usuarios_schema = UsuariosSchema(many=True)

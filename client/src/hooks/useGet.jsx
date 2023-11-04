@@ -17,7 +17,7 @@ export const useGet = (route, initialState = [], send = true) => {
   useEffect(() => {
     if(send) {
       getData();
-    }
+    } 
   }, []);
 
   return { data, loading, getData };

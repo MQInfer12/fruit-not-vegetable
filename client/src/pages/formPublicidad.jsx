@@ -86,13 +86,16 @@ const FormPublicidad = () => {
       <h2>{id ? "Editar" : "Añadir"} publicidad</h2>
       <Button onClick={() => navigate('/crud/publicidad')} type="secondary">Volver</Button>
       {
-        !data ? 
+        loading ? 
         <p>Cargando...</p> : 
         <FormContainer>
-          <InputFileContainer>
-            <img src={id ? (preview || `${import.meta.env.VITE_BACKEND}logo/${data.codigo_pais}${data.id}?v=${new Date().getTime()}`) : (form.foto ? preview : Incognita)} />
-            <input type="file" onChange={(e) => setForm(old => ({...old, foto: e.target.files[0] }))} />
-          </InputFileContainer>
+          {
+            data &&
+            <InputFileContainer>
+              <img src={id ? (preview || `${import.meta.env.VITE_BACKEND}logo/${data.codigo_pais}${data.id}?v=${new Date().getTime()}`) : (form.foto ? preview : Incognita)} />
+              <input type="file" onChange={(e) => setForm(old => ({...old, foto: e.target.files[0] }))} />
+            </InputFileContainer>
+          }
           <InputText 
             text="Código de país"
             value={form.codigo_pais}
