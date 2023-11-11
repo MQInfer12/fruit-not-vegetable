@@ -50,7 +50,7 @@ const Contacto = () => {
       setSended(true);
       Swal.fire({
         title: "Error al enviar",
-        text: "Comprueba que no existan errores en el formulario",
+        text: "Compruebe que no existan errores en el formulario",
         icon: "error"
       })
       return;
@@ -112,7 +112,7 @@ const Contacto = () => {
             <p>Contáctenos para saber cómo utilizar los beneficios de Doctor Tomatto en su organización, o si lo prefiere, envíenos un correo electrónico.</p>
           </div>
           <div className='icons-container'>
-            <InfoIconContainer active={active === 0}><i className="fa-solid fa-phone"></i><p>+59176407344</p></InfoIconContainer>
+            <InfoIconContainer active={active === 0}><i className="fa-solid fa-phone"></i><p>+59172244087</p></InfoIconContainer>
             <InfoIconContainer active={active === 1}><i className="fa-solid fa-envelope"></i><p>info@tecnopolis.ai</p></InfoIconContainer>
             <InfoIconContainer active={active === 2}><i className="fa-solid fa-map-pin"></i><p>Cochabamba, Bolivia</p></InfoIconContainer>
           </div>

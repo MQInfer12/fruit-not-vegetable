@@ -17,7 +17,7 @@ const Footer = () => {
   return (
     <StyledFooter>
       <FloatingContainer>
-        <h2>Tenemos la <span>solución</span> para tu <span>cultivo</span></h2>
+        <h2>Tenemos la <span>solución</span> para su <span>cultivo</span></h2>
         {publicidadGeneral && <Sponsors />}
       </FloatingContainer>
       <ColumnsContainer>

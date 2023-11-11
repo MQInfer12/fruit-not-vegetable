@@ -35,7 +35,7 @@ const DataContainer = ({ country, localidad, handleBack }) => {
       <BackButton onClick={handleBack}><i className="fa-solid fa-xmark"></i></BackButton>
       <h2>{localidad.nombre}</h2>
       <p>{country.pais}</p>
-      <BarChart ref={chartRef} pines={localidad.pines} />
+      <BarChart ref={chartRef} pines={localidad.pines.filter(pin => pin.enfermedad !== "Tomate Sano")} />
       <div className='buttons'>
         <Button bg={colors.pastel3} size="little" onClick={handleDownload} type="primary">Descargar mapa</Button>
         <Button 

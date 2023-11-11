@@ -9,6 +9,7 @@ import Loader from '../components/global/loader';
 import Resultado from '../components/analizar/resultado';
 import ResultadoError from '../components/analizar/resultadoError';
 import { sendRequest } from '../utilities/sendRequest';
+import Swal from 'sweetalert2';
 
 const Analizar = () => {
   const width = useWidth();
@@ -38,8 +39,17 @@ const Analizar = () => {
     const form = new FormData();
     form.append("file", image);
     form.append("type", tipo);
-    const res = await sendRequest("analizar", form);
-    setResult(res);
+    const res = await sendRequest("analizar", form, "POST", true);
+    if(res.ok) {
+      const resJson = await res.json();
+      setResult(resJson);
+    } else {
+      Swal.fire({
+        title: "¡Ups! algo salió mal",
+        text: "Vuelva a intentarlo",
+        icon: "error"
+      })
+    }
     setLoading(false);
   }
 
@@ -51,7 +61,8 @@ const Analizar = () => {
 
   if(result) {
     if(!result.error) { 
-      return <Resultado data={result.data} preview={preview} />
+      console.log(result);
+      return <Resultado reset={reset} data={result.data} preview={preview} />
     } else {
       return <ResultadoError reset={reset} preview={preview} />
     }

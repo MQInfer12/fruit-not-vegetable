@@ -20,8 +20,13 @@ const Mapa = ({ localidad, country }) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {localidad.pines.map((pin, i) => (
-        <CustomMarker key={i} pin={pin} country={country} localidad={localidad.nombre} />
+      {localidad.pines.filter(pin => pin.enfermedad !== "Tomate Sano").map((pin, i) => (
+        <CustomMarker 
+          key={i} 
+          pin={pin} 
+          country={country} 
+          localidad={localidad.nombre} 
+        />
       ))}
     </MapContainer>
   )

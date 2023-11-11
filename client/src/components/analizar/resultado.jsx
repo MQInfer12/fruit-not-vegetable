@@ -7,7 +7,7 @@ import ZoomImage from './zoomImage';
 import Carousel from '../global/carousel';
 import { enfermedadData } from './enfermedadData';
 
-const Resultado = ({ data, preview }) => {
+const Resultado = ({ data, preview, reset }) => {
   const enfermedad = data.prediccion;
   const [page, setPage] = useState(null);
 
@@ -25,6 +25,7 @@ const Resultado = ({ data, preview }) => {
   return (
     <Container>
       <DiagnosticoContainer>
+      <BackButton onClick={reset}><i className="fa-solid fa-xmark"></i></BackButton>
         <h2>Predicción</h2>
         <p className='prediccion'>{data.prediccion} {data.porcentaje}%</p>
         <div className='images-container'>
@@ -89,6 +90,7 @@ const DiagnosticoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   min-width: 400px;
   padding: 8px 32px 20px;
   background-color: ${colors.primary300};
@@ -158,5 +160,27 @@ const DiagnosticoContainer = styled.div`
     @media screen and (max-width: 930px) {
       flex-direction: column;
     }
+  }
+`;
+
+const BackButton = styled.button`
+  border: none;
+  background-color: transparent;
+  color: ${colors.primary500};
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: scale 0.3s;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  position: absolute;
+  top: 12px;
+  right: 32px;
+
+  &:hover {
+    scale: 1.2;
   }
 `;
