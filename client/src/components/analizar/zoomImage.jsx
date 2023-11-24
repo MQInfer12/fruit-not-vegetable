@@ -3,12 +3,12 @@ import { styled } from 'styled-components'
 import ModalContainer from '../global/modalContainer';
 import colors from '../../styles/colors';
 
-const ZoomImage = ({ src, label }) => {
+const ZoomImage = ({ src, label, borderRadius = 0, border = 0, size }) => {
   const [active, setActive] = useState(false);
 
   return (
     <>
-    <Container>
+    <Container border={border} borderRadius={borderRadius}>
       <Img src={src} onClick={() => setActive(true)} />
       {label && <PlantLabel>{label}</PlantLabel>}
     </Container>
@@ -30,9 +30,12 @@ const ZoomImage = ({ src, label }) => {
 export default ZoomImage
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+  width: ${props => props.size ? props.size + "px" : "100%"};
+  height: ${props => props.size ? props.size + "px" : "100%"};
   position: relative;
+  border: ${props => props.border + "px solid " + colors.primary500};
+  border-radius: ${props => props.borderRadius + "px"};
+  overflow: hidden;
 `;
 
 const Img = styled.img`

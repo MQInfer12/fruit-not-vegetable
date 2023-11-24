@@ -8,12 +8,14 @@ import { NavLink, Link, useLocation } from 'react-router-dom'
 import { useBackground } from '../../context/background'
 import { useState } from 'react'
 import { useUser } from '../../context/user'
+import { useCart } from '../../context/cart'
 
 const Navbar = () => {
   const { color } = useBackground();
   const [openLinks, setOpenLinks] = useState(false);
   const location = useLocation();
   const { user } = useUser();
+  const { setOpen } = useCart();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,19 +33,22 @@ const Navbar = () => {
         <Ul bg={color} open={openLinks}>
           <li><StyledLink to="/">Inicio</StyledLink></li>
           <li><StyledLink to="/analizar">Analizar Imagen</StyledLink></li>
-          {
+          <li><StyledLink to="/mapa">Mapa Enfermedades</StyledLink></li>
+          {/* {
             (user && user.rol.includes("m")) &&
             <li><StyledLink to="/mapa">Mapa Enfermedades</StyledLink></li>
-          }
+          } */}
           <li><StyledLink to="/objetivo">Objetivo</StyledLink></li>
           {/* <li><StyledLink to="/credito">Crédito</StyledLink></li> */}
           <li><StyledLink to="/instrucciones">Instrucciones</StyledLink></li>
           <li><StyledLink to="/contacto">Contacto</StyledLink></li>
         </Ul>
         <IconContainer>
-          <IconLink className="fa-solid fa-magnifying-glass" />
           <IconLink className="fa-regular fa-user" to="/login" />
-          <IconLink className="fa-solid fa-cart-shopping" />
+          {/* {
+            user && 
+            <IconLink onClick={() => setOpen(true)} className="fa-solid fa-cart-shopping" />
+          } */}
           <BurgerButton onClick={() => setOpenLinks(!openLinks)}>
             {openLinks ? <i className="fa-solid fa-xmark"></i> : <i className="fa-solid fa-bars"></i>}
           </BurgerButton>

@@ -5,7 +5,6 @@ import { styled } from 'styled-components';
 import InputText from '../components/contact/inputText';
 import Button from '../components/global/button';
 import DTLogo from '../assets/logo.png';
-import DTText from '../assets/text-green.png';
 import { Link } from 'react-router-dom';
 import { sendRequest } from '../utilities/sendRequest';
 import Swal from 'sweetalert2';
@@ -75,13 +74,24 @@ const Login = () => {
             onChange={e => setForm(old => ({...old, password: e.target.value}))}
             type='password'
           />
-          <Button type="secondary" onClick={handleSend} >Iniciar sesión</Button>
-          <p>¿Aún no tienes cuenta? <StyledLink to="/register">Regístrate</StyledLink></p>
+          <Button type="secondary" onClick={handleSend} >Inicie sesión</Button>
+          <p>¿Aún no tiene cuenta? <StyledLink to="/register">Regístrese</StyledLink></p>
         </FormContainer>
         :
         <WelcomeContainer>
           <h2>¡Bienvenido {user.nombre}!</h2>
-          <Button onClick={logout} type="secondary">Cerrar sesión</Button>
+          <p>Muchas gracias por utilizar <b>Doctor Tomatto</b>, disfrute de las funcionalidades que le ofrecemos</p>
+          <div>
+            {
+              user.rol.includes("a") &&
+              <Link to ="/analizar">Analice sus hojas de tomate</Link>
+            }
+            {
+              user.rol.includes("m") &&
+              <Link to ="/mapa">Vea el mapa de enfermedades</Link>
+            }
+          </div>
+          <Button onClick={logout} type="secondary">Cierre sesión</Button>
         </WelcomeContainer>
       }
     </Container>
@@ -100,6 +110,7 @@ const Container = styled.section`
 
 const WelcomeContainer = styled.div`
   padding: 40px;
+  width: 360px;
   background-color: ${colors.primary200};
   border: 8px solid ${colors.primary400};
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
@@ -121,7 +132,25 @@ const WelcomeContainer = styled.div`
 
   & > p {
     font-size: 14px;
-    text-align: center;
+    text-align: center;  
+    line-height: 24px;
+    & > b {
+      color: ${colors.primary500};
+    }
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  & a {
+    color: ${colors.tertiary300};
+    transition: color 0.3s;
+    &:hover {
+      color: ${colors.tertiary600};
+    }
   }
 `;
 
