@@ -148,6 +148,7 @@ const WelcomeContainer = styled.div`
   & a {
     color: ${colors.tertiary300};
     transition: color 0.3s;
+    text-align: center;
     &:hover {
       color: ${colors.tertiary600};
     }

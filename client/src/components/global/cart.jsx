@@ -5,20 +5,40 @@ import Method from './cart/method'
 import Items from './cart/items'
 import { useBackground } from '../../context/background'
 import Pay from './cart/pay'
+import NewMethod from './cart/newMethod'
+import CartData from '../../utilities/cartData'
+import HandIcon from './cart/handIcon'
 
 const Cart = ({ goBack, showItems, registerForm }) => {
   const [page, setPage] = useState(0);
-  const [item, setItem] = useState(null);
+  const [items, setItems] = useState([]);
   const { color } = useBackground();
 
   const addItem = (id) => {
-    setItem(id);
+    if(!items.includes(id)) {
+      setItems([...items, id]);
+    } else {
+      setItems(items.filter(i => i!== id));
+    }
   }
 
+  const total = items.reduce((suma, item) => {
+    const realItem = CartData.find(i => i.id === item);
+    return suma + realItem?.precio;
+  }, 0);
+  const realItemsDisables = items.map(item => CartData.find(i => i.id === item).disables).flat();
+  const disableds = [...new Set(realItemsDisables)];
   return (
-    <Container bg={color}>
+    <Container bg={color} next={page === 1}>
       {
-        page === 0 ?
+        showItems.length === 0 ?
+        <IconContainer>
+          <HandIcon 
+            text="¡Muchas gracias por adquirir los productos de Doctor Tomatto!"
+            icon="fa-regular fa-face-laugh-beam"
+          />
+        </IconContainer>
+        :
         <>
         <div className='items'>
           <div className='title'>
@@ -26,23 +46,33 @@ const Cart = ({ goBack, showItems, registerForm }) => {
             <h2>Carrito</h2>
           </div>
           <Items 
-            itemSelected={item}
+            itemsSelected={items}
             addItem={addItem}
             showItems={showItems}
+            disableds={disableds}
           />
         </div>
-        <Method 
-          itemId={item}
-          setItem={setItem}
+        <NewMethod 
+          items={items}
+          setItems={setItems}
+          total={total}
           setPage={setPage}
+          page={page}
         />
-        </> :
         <Pay 
+          key={total}
           registerForm={registerForm}
-          itemId={item}
+          items={items}
+          total={total}
           setPage={setPage}
         />
+        </>
       }
+      {/* <Method 
+        itemId={item}
+        setItem={setItem}
+        setPage={setPage}
+      /> */}
     </Container>
   )
 }
@@ -50,16 +80,19 @@ const Cart = ({ goBack, showItems, registerForm }) => {
 export default Cart
 
 const Container = styled.div`
+  width: 920px;
   height: 480px;
   background-color: ${colors.primary300};
   border: 4px solid ${props => props.bg === colors.primary500 ? colors.primary400 : colors.primary500};
   transition: transform 0.3s;
   display: flex;
   padding: 24px 0 24px;
-  gap: 24px;
+  overflow: hidden;
+  gap: 12px;
+
   & > .items {
-    width: 450px;
-    height: 100%;
+    min-width: 450px;
+    min-height: 100%;
     & > .title {
       padding-left: 24px;
       display: flex;
@@ -72,6 +105,10 @@ const Container = styled.div`
         font-family: 'Chillax';
       }
     }
+  }
+  & > div {
+    transition: transform 0.3s;
+    transform: ${props => props.next ? "translateX(-462px)" : "translateX(0)"};
   }
 `;
 
@@ -91,4 +128,12 @@ const BackButton = styled.button`
   &:hover {
     scale: 1.2;
   }
+`;
+
+const IconContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

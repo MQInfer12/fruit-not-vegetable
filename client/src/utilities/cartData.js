@@ -5,6 +5,7 @@ import ComboImg from '../assets/cart/combo.png'
 const CartData = [
   {
     id: "a",
+    disables: ["am"],
     name: "Analizar imagen",
     description: "Analice fotos de su hoja de tomate según su enfermedad o plaga y reciba información acerca de sus síntomas, prevenciones y tratamiento adecuados.",
     precio: 2,
@@ -12,6 +13,7 @@ const CartData = [
   },
   {
     id: "m",
+    disables: ["am"],
     name: "Mapa enfermedades",
     description: "Reciba información geoespacial, gráficos detallados y reportes de enfermedades cercanas a su área de cultivo.",
     precio: 4,
@@ -19,6 +21,7 @@ const CartData = [
   },
   {
     id: "am",
+    disables: ["a", "m"],
     name: "Analizar imagen + Mapa enfermedades",
     description: "Analice fotos de su hoja de tomate, reciba recomendaciones, información geoespacial, gráficos detallados y reportes de enfermedades cercanas a su área de cultivo.",
     precio: 5,

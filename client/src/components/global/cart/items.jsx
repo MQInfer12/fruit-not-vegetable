@@ -5,11 +5,12 @@ import colors from '../../../styles/colors';
 import ZoomImage from '../../analizar/zoomImage';
 import Button from '../button';
 
-const Items = ({ itemSelected, addItem, showItems }) => {
+const Items = ({ itemsSelected, addItem, showItems, disableds }) => {
   return (
     <TopContainer>
       <ItemsContainer>
-        {CartData.filter(item => showItems.includes(item.id)).map(item => (
+        {
+          CartData.filter(item => showItems.includes(item.id)).map(item => (
           <ItemCard key={item.id}>
             <div className='img-container'>
               <ZoomImage 
@@ -19,18 +20,27 @@ const Items = ({ itemSelected, addItem, showItems }) => {
             </div>
             <div className='data-container'>
               <div className='data'>
-                <b>{item.name}</b>
-                <small>{item.description}</small>
-                <p>Precio: {item.precio} US$</p>
+                <b title={item.name}>{item.name}</b>
+                <small title={item.description}>{item.description}</small>
+                <p>Precio: $us {item.precio}</p>
               </div>
-              <Button 
-                disabled={itemSelected === item.id}
-                onClick={() => addItem(item.id)}
-                size="little"
-                type="secondary"
-              >
-                {itemSelected === item.id ? "Seleccionado" : "Seleccionar"}
-              </Button>
+              {
+                !itemsSelected.includes(item.id) ?
+                <Button 
+                  onClick={() => addItem(item.id)}
+                  size="little"
+                  type="secondary"
+                  disabled={disableds.includes(item.id)}
+                >
+                  {itemsSelected.includes(item.id) ? "Seleccionado" : "Seleccionar"}
+                </Button> :
+                <IconsContainer>
+                  <i className="fa-regular fa-square-check"></i>
+                  <Button size="little" type="secondary" onClick={() => addItem(item.id)}>
+                    <i className="fa-solid fa-trash"></i>
+                  </Button>
+                </IconsContainer>
+              }
             </div>
           </ItemCard>
         ))}
@@ -120,5 +130,18 @@ const ItemCard = styled.div`
         align-self: flex-end;
       }
     }
+  }
+`;
+
+const IconsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  align-self: flex-end;
+  & > i {
+    color: ${colors.primary500};
+  }
+  & > button {
+    width: 40px;
   }
 `;

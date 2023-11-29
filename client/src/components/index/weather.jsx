@@ -41,7 +41,6 @@ const Weather = () => {
     Mist: "Nieblina",
     Smoke: "Humo",
     Haze: "Bruma",
-    Dust: "Polvo",
     Fog: "Niebla",
     Sand: "Areniscas",
     Dust: "Polvaredas",
@@ -201,7 +200,7 @@ const TopContainer = styled.div`
         flex-direction: column;
         align-items: center;
         & > h2 {
-          color: ${colors.primary500};
+          color: ${colors.primary300};
           font-weight: 600;
           font-family: 'Chillax';
           font-size: ${props => props.open ? "2rem" : "1.4rem"};
@@ -222,7 +221,7 @@ const ExpandIcon = styled.i`
   left: -4px;
   font-size: 16px;
   transform: rotate(45deg);
-  color: ${colors.primary500};
+  color: ${colors.primary300};
 `;
 
 const BottomContainer = styled.div`
@@ -240,7 +239,7 @@ const BottomContainer = styled.div`
       width: 32px;
       text-align: center;
       font-size: 24px;
-      color: ${colors.primary500};
+      color: ${colors.primary300};
     }
     & > div {
       display: flex;
@@ -251,7 +250,7 @@ const BottomContainer = styled.div`
       }
       & > b {
         font-size: 0.7rem;
-        color: ${colors.primary500};
+        color: ${colors.primary300};
       }
     }
   }

@@ -4,7 +4,7 @@ import Logo from '../../assets/logo.png'
 import TextWhite from '../../assets/text-white.png'
 import TextGreen from '../../assets/text-green.png'
 import colors from '../../styles/colors'
-import { NavLink, Link, useLocation } from 'react-router-dom'
+import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom'
 import { useBackground } from '../../context/background'
 import { useState } from 'react'
 import { useUser } from '../../context/user'
@@ -15,7 +15,6 @@ const Navbar = () => {
   const [openLinks, setOpenLinks] = useState(false);
   const location = useLocation();
   const { user } = useUser();
-  const { setOpen } = useCart();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -44,11 +43,11 @@ const Navbar = () => {
           <li><StyledLink to="/contacto">Contacto</StyledLink></li>
         </Ul>
         <IconContainer>
-          <IconLink className="fa-regular fa-user" to="/login" />
-          {/* {
+          {
             user && 
-            <IconLink onClick={() => setOpen(true)} className="fa-solid fa-cart-shopping" />
-          } */}
+            <IconLink to="/cart" className="fa-solid fa-cart-shopping" />
+          }
+          <IconLink className="fa-regular fa-user" to="/login" />
           <BurgerButton onClick={() => setOpenLinks(!openLinks)}>
             {openLinks ? <i className="fa-solid fa-xmark"></i> : <i className="fa-solid fa-bars"></i>}
           </BurgerButton>

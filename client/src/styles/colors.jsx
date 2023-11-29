@@ -27,7 +27,8 @@ const colors = {
   pastel2: "#f3de2c",
   pastel3: "#6eeb83",
   pastel4: "#f1c884",
-  pastel5: "#f26a4f"
+  pastel5: "#f26a4f",
+  blue: "#405a95"
 }
 
 export default colors

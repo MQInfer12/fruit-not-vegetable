@@ -2,14 +2,24 @@ import React from 'react'
 import styled from 'styled-components';
 import colors from '../../../styles/colors';
 
-const HandIcon = () => {
+const HandIcon = ({ 
+  text = "Seleccione los productos que desea adquirir",
+  icon
+}) => {
   return (
-    <Container>
+    <Container other={!!icon}>
       <IconsContainer>
-        <i className="fa-regular fa-square"></i>
-        <i className="fa-solid fa-hand-pointer"></i>
+        {
+          icon ?
+          <i className={icon}></i>
+          :
+          <>
+          <i className="move fa-regular fa-square"></i>
+          <i className="dontmove fa-solid fa-hand-pointer"></i>
+          </>
+        }
       </IconsContainer>
-      <p>Selecciona un producto para comprar</p>
+      <p>{text}</p>
     </Container>
   )
 }
@@ -22,7 +32,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
-  gap: 5rem;
+  gap: ${props => props.other ? "8px" : "5rem"};
 
   & > p {
     max-width: 60%;
@@ -35,9 +45,9 @@ const Container = styled.div`
 const IconsContainer = styled.div`
   position: relative;
   font-size: 10rem;
+  color: ${colors.primary500};
 
-  & > i:first-child {
-    color: ${colors.primary500};
+  & > .move {
     animation: move 5s linear infinite;
 
     @keyframes move {
@@ -53,7 +63,7 @@ const IconsContainer = styled.div`
     }
   }
 
-  & > i:last-child {
+  & > .dontmove {
     color: ${colors.primary600};
     position: absolute;
     top: 45%;

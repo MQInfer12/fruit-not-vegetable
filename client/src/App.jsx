@@ -20,6 +20,8 @@ import CrudUsuario from "./pages/crudUsuario"
 import FormUsuario from "./pages/formUsuario"
 import ProtectedRoute from "./components/guard/protectedRoute"
 import { useUser } from "./context/user"
+import CartPage from "./pages/cart"
+import styled from "styled-components"
 
 function App() {
   const { data: res } = useGet('myip');
@@ -38,6 +40,7 @@ function App() {
   return (
     <HashRouter>
       <Navbar />
+      <Div>
       <Routes>
         <Route path="" element={<Index />} />
         <Route path="analizar" 
@@ -54,6 +57,13 @@ function App() {
             </ProtectedRoute>
           } 
         />
+        <Route path="cart" 
+          element={
+            <ProtectedRoute rol="">
+              <CartPage />
+            </ProtectedRoute>
+          } 
+        />
         <Route path="objetivo" element={<Objetivo />} />
         <Route path="credito" element={<Credito />} />
         <Route path="instrucciones" element={<NewInstrucciones />} />
@@ -67,6 +77,7 @@ function App() {
         <Route path="crud/usuario/agregar" element={<FormUsuario />} />
         <Route path="crud/usuario/editar/:id" element={<FormUsuario />} />
       </Routes>
+      </Div>
       <Love />
       <Footer />
     </HashRouter>
@@ -74,3 +85,7 @@ function App() {
 }
 
 export default App
+
+const Div = styled.div`
+  min-height: 100dvh;
+`;

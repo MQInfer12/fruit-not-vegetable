@@ -2,15 +2,13 @@ import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import colors from '../../../styles/colors'
 import { initPayPalButton } from '../../../utilities/initPaypal';
-import CartData from '../../../utilities/cartData';
 import Swal from 'sweetalert2';
 import { sendRequest } from '../../../utilities/sendRequest';
 import { useUser } from '../../../context/user';
 import { useNavigate } from 'react-router-dom';
 
-const Pay = ({ setPage, itemId, registerForm }) => {
+const Pay = ({ setPage, items, total, registerForm }) => {
   const paypalInitRef = useRef(false);
-  const item = CartData.find(i => i.id === itemId);
   const { user, setUser } = useUser();
   const navigate = useNavigate();
 
@@ -21,7 +19,7 @@ const Pay = ({ setPage, itemId, registerForm }) => {
           email: registerForm.email,
           nombre: registerForm.nombre,
           password: registerForm.password,
-          rol: itemId
+          rol: items.join("")
         });
         if(res) {
           setUser(res);
@@ -32,7 +30,7 @@ const Pay = ({ setPage, itemId, registerForm }) => {
           nombre: user.nombre,
           pais: user.pais,
           ciudad: user.ciudad,
-          rol: user.rol + itemId
+          rol: user.rol + items.join("")
         }, "PUT");
         if(res) {
           setUser(res);
@@ -46,7 +44,7 @@ const Pay = ({ setPage, itemId, registerForm }) => {
       });
     }
     if (!paypalInitRef.current) {
-      initPayPalButton(item?.precio, handleSuccess);
+      initPayPalButton(total, handleSuccess);
       paypalInitRef.current = true;
     }
   }, []);
@@ -58,7 +56,7 @@ const Pay = ({ setPage, itemId, registerForm }) => {
           <BackButton onClick={() => setPage(0)}><i className="fa-solid fa-chevron-left"></i></BackButton>
           <h2>Métodos de pago</h2>
         </div>
-        <h3>Total: {item?.precio} US$</h3>
+        {/* <h3>Total: {total} US$</h3> */}
         <div className='container'>
           <div id="paypal-button-container" />
         </div>
@@ -70,7 +68,7 @@ const Pay = ({ setPage, itemId, registerForm }) => {
 export default Pay
 
 const Container = styled.div`
-  width: 824px;
+  min-width: 450px;
   & > .items {
     width: 100%;
     height: 100%;
@@ -99,7 +97,8 @@ const Container = styled.div`
       }
     }
     & > .container {
-      width: 50%;
+      width: 100%;
+      padding: 0 24px;
     }
   }
 `;
