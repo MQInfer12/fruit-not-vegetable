@@ -10,9 +10,11 @@ import Resultado from '../components/analizar/resultado';
 import ResultadoError from '../components/analizar/resultadoError';
 import { sendRequest } from '../utilities/sendRequest';
 import Swal from 'sweetalert2';
+import { useUser } from '../context/user';
 
 const Analizar = () => {
   const width = useWidth();
+  const { user } = useUser();
   const { changeColor } = useBackground();
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -37,6 +39,8 @@ const Analizar = () => {
   const handleClick = async () => {
     setLoading(true);
     const form = new FormData();
+    form.append("pais_user", user.pais);
+    form.append("email_user", user.email);
     form.append("file", image);
     form.append("type", tipo);
     const res = await sendRequest("analizar", form, "POST", true);

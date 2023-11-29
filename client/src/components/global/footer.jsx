@@ -7,11 +7,9 @@ import Sponsors from './footer/sponsors'
 import Logo from '../../assets/logotext-white.png'
 import Legals from './footer/legals'
 import { usePublicidad } from '../../context/publicidad'
-import { useUser } from '../../context/user'
 
 const Footer = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
   const { publicidadGeneral } = usePublicidad();
 
   return (

@@ -58,7 +58,7 @@ const Container = styled.div`
   padding: 24px 0 24px;
   gap: 24px;
   & > .items {
-    width: 350px;
+    width: 450px;
     height: 100%;
     & > .title {
       padding-left: 24px;

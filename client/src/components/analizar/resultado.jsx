@@ -6,19 +6,22 @@ import EnfermedadModal from './enfermedadModal';
 import ZoomImage from './zoomImage';
 import Carousel from '../global/carousel';
 import { enfermedadData } from './enfermedadData';
+import { useUser } from '../../context/user';
 
 const Resultado = ({ data, preview, reset }) => {
   const enfermedad = data.prediccion;
   const [page, setPage] = useState(null);
+  const { user } = useUser();
 
+  const filename = `${user.pais}_${user.email}`;
   const carouselData = [{
     src: preview,
     label: "Foto subida"
   }, {
-    src: `${import.meta.env.VITE_BACKEND}output/foto_hoja`,
+    src: `${import.meta.env.VITE_BACKEND}output/${filename}`,
     label: "Detección de la hoja"
   }, {
-    src: `${import.meta.env.VITE_BACKEND}output/Areafoto_hoja`,
+    src: `${import.meta.env.VITE_BACKEND}output/Area${filename}`,
     label: "Área hoja detectada"
   }]
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import Sponsor1 from '../../../assets/sponsor1.png'
 import { styled } from 'styled-components'
 import colors from '../../../styles/colors'
@@ -10,7 +10,7 @@ const Sponsors = ({ size, padding, tipo = "G" }) => {
   const { publicidadGeneral, publicidadEspecifica } = usePublicidad();
   const sponsorData = tipo === "G" ? publicidadGeneral : publicidadEspecifica;
 
-  const getInitialSponsorData = () => {
+  const getInitialSponsorData = useCallback(() => {
     const diff = sponsorData.length % 5;
     if(diff > 0) {
       for(let i = 0; i < 5 - (diff); i++) {
@@ -23,10 +23,11 @@ const Sponsors = ({ size, padding, tipo = "G" }) => {
       color: colors[`pastel${(i % 5) + 1}`],
       img: Sponsor1
     }));
-  }
+  }, []);
 
   const [data] = useState(getInitialSponsorData());
   const [active, setActive] = useState(null);
+
   const changeActive = (number) => {
     setActive(active === number ? null : number);
   }
@@ -74,10 +75,10 @@ const Container = styled.div`
     align-items: center;
     white-space: nowrap;
     align-items: center;
-    animation: move ${props => props.speed}s linear infinite;
+    animation: movefooter ${props => props.speed}s linear infinite;
     animation-play-state: ${props => props.active ? "paused" : ""};
     
-    @keyframes move {
+    @keyframes movefooter {
       from {
         transform: translateX(0);
       }

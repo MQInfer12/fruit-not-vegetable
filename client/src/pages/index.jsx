@@ -5,6 +5,7 @@ import Button from '../components/global/button'
 import DoctorTomatto from '../assets/logotext-white.png'
 import { useChangeBackground } from '../hooks/changeBackground'
 import { useNavigate } from 'react-router-dom'
+import Weather from '../components/index/weather'
 
 const Index = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Index = () => {
 
   return (
     <Container>
+      <Weather />
       <LeftInfoContainer>
         <Logo src={DoctorTomatto} />
         {/* <Title>Doctor Tomatto</Title> */}
@@ -34,6 +36,7 @@ const Container = styled.section`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  position: relative;
 
   @media screen and (max-width: 1300px) {
     width: 100%;

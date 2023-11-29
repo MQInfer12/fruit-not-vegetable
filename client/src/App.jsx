@@ -19,15 +19,19 @@ import FormPublicidad from "./pages/formPublicidad"
 import CrudUsuario from "./pages/crudUsuario"
 import FormUsuario from "./pages/formUsuario"
 import ProtectedRoute from "./components/guard/protectedRoute"
+import { useUser } from "./context/user"
 
 function App() {
   const { data: res } = useGet('myip');
+  const { setActualCity, setActualCoords } = useUser();
   const { setPublicidadGeneral, setPublicidadEspecifica } = usePublicidad();
 
   useEffect(() => {
     if(res) {
       setPublicidadGeneral(res.data?.general);
       setPublicidadEspecifica(res.data?.especifica);
+      setActualCity(res.data?.ciudad);
+      setActualCoords(res.data?.coords);
     }
   }, [res]);
 

@@ -75,3 +75,11 @@ html {
 .swal2-error [class^=swal2-x-mark-line] {
   background-color: #d1534f !important;
 }
+
+html::view-transition-old(weather-container),
+html::view-transition-new(weather-container),
+html::view-transition-old(weather-city),
+html::view-transition-new(weather-city) {
+  width: 100%;
+  height: 100%;
+}

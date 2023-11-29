@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export const sendRequest = async (route, body, method = "POST", returnRaw = false) => {
   try {
     const res = await fetch(`${import.meta.env.VITE_BACKEND}${route}`, {
@@ -16,6 +18,10 @@ export const sendRequest = async (route, body, method = "POST", returnRaw = fals
       return resJson;
     }
   } catch(e) {
-    return e;
+    Swal.fire({
+      icon: "error",
+      title: "Ups...",
+      text: "Algo salió mal... intentelo de nuevo."
+    });
   }
 }
