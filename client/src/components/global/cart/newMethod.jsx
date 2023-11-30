@@ -13,6 +13,11 @@ const NewMethod = ({ items, setItems, total, setPage, page }) => {
 
   return (
     <Container>
+    <div className='title'>
+      <BackButton onClick={() => setPage(0)}><i className="fa-solid fa-chevron-left"></i></BackButton>
+      <h2>Detalle</h2>
+      <div className='next' style={{ width: 24 }} />
+    </div>
     {
       items.length ?
       <BlueContainer> 
@@ -33,8 +38,8 @@ const NewMethod = ({ items, setItems, total, setPage, page }) => {
             <Button 
               size="little" 
               type="primary" 
-              onClick={() => setPage(page === 0 ? 1 : 0)}
-            >{page === 0 ? "Realizar pago" : "Seguir comprando"}</Button>
+              onClick={() => setPage(page !== 0 ? 1 : 0)}
+            >{page !== 1 ? "Realizar pago" : "Seguir comprando"}</Button>
           </div>
           <img src={MetodosPago} />
         </BottomContainer>
@@ -54,6 +59,29 @@ const Container = styled.div`
   flex-direction: column;
   gap: 24px;
   overflow: auto;
+
+  @media screen and (max-width: 1006px) {
+    min-height: 472px;
+    padding: 24px 24px;
+    min-width: 0;
+  }
+
+  & > .title {
+    align-items: center;
+    gap: 8px;
+    display: none;
+    @media screen and (max-width: 1006px) {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+    & > h2 {
+      color: ${colors.primary500};
+      font-size: 1.4rem;
+      font-weight: 600;
+      font-family: 'Chillax';
+    }
+  }
 `;
 
 const BlueContainer = styled.div`
@@ -66,6 +94,12 @@ const BlueContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   animation: appearCartDetails 0.3s;
+  gap: 24px;
+
+  @media screen and (max-width: 1006px) {
+    overflow: auto;
+    padding: 12px;
+  }
 
   @keyframes appearCartDetails {
     from {
@@ -111,5 +145,26 @@ const BottomContainer = styled.div`
   & > div {
     display: flex;
     justify-content: space-evenly;
+    @media screen and (max-width: 1006px) {
+      justify-content: space-between;
+    }
+  }
+`;
+
+const BackButton = styled.button`
+  border: none;
+  background-color: transparent;
+  color: ${colors.primary500};
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: scale 0.3s;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    scale: 1.2;
   }
 `;

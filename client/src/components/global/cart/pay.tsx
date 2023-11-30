@@ -7,7 +7,7 @@ import { sendRequest } from '../../../utilities/sendRequest';
 import { useUser } from '../../../context/user';
 import { useNavigate } from 'react-router-dom';
 
-const Pay = ({ setPage, items, total, registerForm }) => {
+const Pay = ({ setPage, items, total, registerForm, page }) => {
   const paypalInitRef = useRef(false);
   const { user, setUser } = useUser();
   const navigate = useNavigate();
@@ -53,8 +53,9 @@ const Pay = ({ setPage, items, total, registerForm }) => {
     <Container>
       <div className='items'>
         <div className='title'>
-          <BackButton onClick={() => setPage(0)}><i className="fa-solid fa-chevron-left"></i></BackButton>
+          <BackButton onClick={() => setPage(2)}><i className="fa-solid fa-chevron-left"></i></BackButton>
           <h2>Métodos de pago</h2>
+          <div className='next' style={{ width: 24 }} />
         </div>
         {/* <h3>Total: {total} US$</h3> */}
         <div className='container'>
@@ -69,6 +70,13 @@ export default Pay
 
 const Container = styled.div`
   min-width: 450px;
+
+  @media screen and (max-width: 1006px) {
+    min-width: 0;
+    min-height: 472px;
+    padding: 24px 0;
+  }
+
   & > .items {
     width: 100%;
     height: 100%;
@@ -89,11 +97,22 @@ const Container = styled.div`
       align-items: center;
       gap: 8px;
       align-self: flex-start;
+      @media screen and (max-width: 1006px) {
+        padding-right: 24px;
+        width: 100%;
+        justify-content: space-between;
+      }
       & > h2 {
         color: ${colors.primary500};
         font-size: 1.4rem;
         font-weight: 600;
         font-family: 'Chillax';
+      }
+      & > .next {
+        display: none;
+        @media screen and (max-width: 1006px) {
+          display: block;
+        }
       }
     }
     & > .container {

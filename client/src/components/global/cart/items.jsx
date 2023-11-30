@@ -79,11 +79,20 @@ const ItemCard = styled.div`
   border-radius: 8px;
   height: max-content;
 
+  @media screen and (max-width: 490px) {
+    flex-direction: column;
+  }
+
   & > .img-container {
     min-height: 172px;
     min-width: 120px;
     height: 172px;
     width: 120px;
+    @media screen and (max-width: 490px) {
+      height: 100px;
+      min-height: 100px;
+      width: 100%;
+    }
   }
 
   & > .data-container {

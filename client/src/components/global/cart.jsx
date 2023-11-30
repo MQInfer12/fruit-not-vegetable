@@ -17,6 +17,7 @@ const Cart = ({ goBack, showItems, registerForm }) => {
   const addItem = (id) => {
     if(!items.includes(id)) {
       setItems([...items, id]);
+      setPage(2);
     } else {
       setItems(items.filter(i => i!== id));
     }
@@ -29,7 +30,7 @@ const Cart = ({ goBack, showItems, registerForm }) => {
   const realItemsDisables = items.map(item => CartData.find(i => i.id === item).disables).flat();
   const disableds = [...new Set(realItemsDisables)];
   return (
-    <Container bg={color} next={page === 1}>
+    <Container bg={color} page={page}>
       {
         showItems.length === 0 ?
         <IconContainer>
@@ -44,6 +45,7 @@ const Cart = ({ goBack, showItems, registerForm }) => {
           <div className='title'>
             {goBack && <BackButton onClick={goBack}><i className="fa-solid fa-chevron-left"></i></BackButton>}
             <h2>Carrito</h2>
+            <BackButton onClick={() => setPage(2)}><i className="next fa-solid fa-chevron-right"></i></BackButton>
           </div>
           <Items 
             itemsSelected={items}
@@ -65,6 +67,7 @@ const Cart = ({ goBack, showItems, registerForm }) => {
           items={items}
           total={total}
           setPage={setPage}
+          page={page}
         />
         </>
       }
@@ -90,25 +93,51 @@ const Container = styled.div`
   overflow: hidden;
   gap: 12px;
 
+  @media screen and (max-width: 1006px) {
+    flex-direction: column;
+    gap: 0;
+  }
+
   & > .items {
     min-width: 450px;
-    min-height: 100%;
+    height: 100%;
+
+    @media screen and (max-width: 1006px) {
+      min-height: 436px;
+      min-width: 0;
+    }
+
     & > .title {
       padding-left: 24px;
       display: flex;
       align-items: center;
       gap: 8px;
+      @media screen and (max-width: 1006px) {
+        padding-right: 24px;
+        width: 100%;
+        justify-content: space-between;
+      }
       & > h2 {
         color: ${colors.primary500};
         font-size: 1.4rem;
         font-weight: 600;
         font-family: 'Chillax';
       }
+      & > .next {
+        display: none;
+        @media screen and (max-width: 1006px) {
+          display: block;
+        }
+      }
     }
   }
+  
   & > div {
     transition: transform 0.3s;
-    transform: ${props => props.next ? "translateX(-462px)" : "translateX(0)"};
+    transform: ${props => props.page === 1 ? "translateX(-462px)" : "translateX(0)"};
+    @media screen and (max-width: 1006px) {
+      transform: ${props => props.page === 2 ? "translateY(-460px)" : props.page === 1 ? "translateY(-932px)" : "translateY(0)"};
+    }
   }
 `;
 
