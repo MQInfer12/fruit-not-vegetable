@@ -3,8 +3,8 @@ import colors from '../../styles/colors';
 import { styled } from 'styled-components';
 import { useInterval } from '../../hooks/useInterval';
 
-const Carousel = ({ data, component, borderWidth, borderColor = colors.primary500 }) => {
-  const { active, changeActive } = useInterval(6000, data.length);
+const Carousel = ({ data, component, borderWidth, borderColor = colors.primary500, interval = 6000 }) => {
+  const { active, changeActive } = useInterval(interval, data.length);
 
   return (
     <CarouselContainer borderWidth={borderWidth} borderColor={borderColor}>

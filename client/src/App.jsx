@@ -22,6 +22,9 @@ import ProtectedRoute from "./components/guard/protectedRoute"
 import { useUser } from "./context/user"
 import CartPage from "./pages/cart"
 import styled from "styled-components"
+import Blog from "./pages/blog"
+import Blog1 from "./pages/blogs/entries/blog1"
+import colors from "./styles/colors"
 
 function App() {
   const { data: res } = useGet('myip');
@@ -41,45 +44,52 @@ function App() {
     <HashRouter>
       <Navbar />
       <Div>
-      <Routes>
-        <Route path="" element={<Index />} />
-        <Route path="analizar" 
-          element={
-            <ProtectedRoute rol="a">
-              <Analizar />
-            </ProtectedRoute>
-          } 
-        />
-        <Route path="mapa" 
-          element={
-            <ProtectedRoute rol="m">
-              <Mapa />
-            </ProtectedRoute>
-          } 
-        />
-        <Route path="cart" 
-          element={
-            <ProtectedRoute rol="">
-              <CartPage />
-            </ProtectedRoute>
-          } 
-        />
-        <Route path="objetivo" element={<Objetivo />} />
-        <Route path="credito" element={<Credito />} />
-        <Route path="instrucciones" element={<NewInstrucciones />} />
-        <Route path="contacto" element={<Contacto />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="crud/publicidad" element={<CrudPublicidad />} />
-        <Route path="crud/publicidad/agregar" element={<FormPublicidad />} />
-        <Route path="crud/publicidad/editar/:id" element={<FormPublicidad />} />
-        <Route path="crud/usuario" element={<CrudUsuario />} />
-        <Route path="crud/usuario/agregar" element={<FormUsuario />} />
-        <Route path="crud/usuario/editar/:id" element={<FormUsuario />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="analizar" 
+            element={
+              <ProtectedRoute rol="a">
+                <Analizar />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="mapa" 
+            element={
+              <ProtectedRoute rol="m">
+                <Mapa />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="cart" 
+            element={
+              <ProtectedRoute rol="">
+                <CartPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="objetivo" element={<Objetivo />} />
+          <Route path="credito" element={<Credito />} />
+          <Route path="contacto" element={<Contacto />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="crud/publicidad" element={<CrudPublicidad />} />
+          <Route path="crud/publicidad/agregar" element={<FormPublicidad />} />
+          <Route path="crud/publicidad/editar/:id" element={<FormPublicidad />} />
+          <Route path="crud/usuario" element={<CrudUsuario />} />
+          <Route path="crud/usuario/agregar" element={<FormUsuario />} />
+          <Route path="crud/usuario/editar/:id" element={<FormUsuario />} />
+          <Route path="blog/">
+            <Route path="" element={<Blog />} />
+            <Route path="instrucciones" element={<NewInstrucciones />} />
+            <Route path="1" element={<Blog1 />} />
+          </Route>
+        </Routes>
       </Div>
       <Love />
       <Footer />
+      <ChatButton>
+        <i className="fa-solid fa-message"></i>
+      </ChatButton>
     </HashRouter>
   )
 }
@@ -88,4 +98,25 @@ export default App
 
 const Div = styled.div`
   min-height: 100dvh;
+`;
+
+const ChatButton = styled.button`
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  border-radius: 30%;
+  color: ${colors.primary500};
+  background-color: ${colors.primary300};
+  border: 2px solid ${colors.primary500};
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 `;

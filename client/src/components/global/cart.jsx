@@ -45,7 +45,7 @@ const Cart = ({ goBack, showItems, registerForm }) => {
           <div className='title'>
             {goBack && <BackButton onClick={goBack}><i className="fa-solid fa-chevron-left"></i></BackButton>}
             <h2>Carrito</h2>
-            <BackButton onClick={() => setPage(2)}><i className="next fa-solid fa-chevron-right"></i></BackButton>
+            <BackButton className='next' onClick={() => setPage(2)}><i className="fa-solid fa-chevron-right"></i></BackButton>
           </div>
           <Items 
             itemsSelected={items}

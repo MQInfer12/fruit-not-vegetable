@@ -1,9 +1,12 @@
 import React from 'react'
 import { styled } from 'styled-components';
 import colors from '../styles/colors';
-import Paso1 from '../assets/paso1.png'
-import Paso2 from '../assets/paso2.png'
-import Paso3 from '../assets/paso3.png'
+import Paso1 from '../assets/instrucciones/1.png'
+import Paso2 from '../assets/instrucciones/2.png'
+import Paso3 from '../assets/instrucciones/3.png'
+import Paso4 from '../assets/instrucciones/4.png'
+import Paso5 from '../assets/instrucciones/5.png'
+import Paso6 from '../assets/instrucciones/6.png'
 import { useChangeBackground } from '../hooks/changeBackground';
 import Carousel from '../components/global/carousel';
 
@@ -17,8 +20,17 @@ const NewInstrucciones = () => {
     text: "Seleccionar una foto JPG",
     img: Paso2
   },{
-    text: "Click al botón Subir Foto",
+    text: "Click al botón 'Subir foto'",
     img: Paso3
+  },{
+    text: "Revisar el diagnóstico",
+    img: Paso4
+  },{
+    text: "Observar un ejemplo de la enfermedad",
+    img: Paso6
+  },{
+    text: "Revisar los síntomas, prevención y tratamiento",
+    img: Paso5
   }];
 
   return (
