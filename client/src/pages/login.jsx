@@ -128,6 +128,7 @@ const WelcomeContainer = styled.div`
     font-size: 18px;
     font-weight: 700;
     color: ${colors.primary500};
+    text-align: center;
   }
 
   & > p {

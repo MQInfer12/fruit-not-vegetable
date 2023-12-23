@@ -1,56 +1,68 @@
-import React from 'react'
-import styled from 'styled-components';
-import HandIcon from './handIcon';
-import colors from '../../../styles/colors';
-import Button from '../button';
-import MetodosPago from '../../../assets/cart/metodospago.jpg'
+import React from "react";
+import styled from "styled-components";
+import HandIcon from "./handIcon";
+import colors from "../../../styles/colors";
+import Button from "../button";
+import MetodosPago from "../../../assets/cart/metodospago.jpg";
 
 const NewMethod = ({ items, setItems, total, setPage, page }) => {
   const cancel = () => {
     setItems([]);
     setPage(0);
-  }
+  };
 
   return (
     <Container>
-    <div className='title'>
-      <BackButton onClick={() => setPage(0)}><i className="fa-solid fa-chevron-left"></i></BackButton>
-      <h2>Detalle</h2>
-      <div className='next' style={{ width: 24 }} />
-    </div>
-    {
-      items.length ?
-      <BlueContainer> 
-        <TopContainer>
-          <div>
-            <p>Resumen</p>
-          </div>
-          <div>
-            <p>Total Items</p>
-            <p>{items.length}</p>
-          </div>
-          <b className='title'>Total a pagar</b>
-          <b className='total'>$us. {total}</b>
-        </TopContainer>
-        <BottomContainer>
-          <div>
-            <Button size="little" type="primary" onClick={cancel}>Cancelar</Button>
-            <Button 
-              size="little" 
-              type="primary" 
-              onClick={() => setPage(page !== 0 ? 1 : 0)}
-            >{page !== 1 ? "Realizar pago" : "Seguir comprando"}</Button>
-          </div>
-          <img src={MetodosPago} />
-        </BottomContainer>
-      </BlueContainer> :
-      <HandIcon />
-    }
+      <div className="title">
+        <BackButton onClick={() => setPage(0)}>
+          <i className="fa-solid fa-chevron-left"></i>
+        </BackButton>
+        <h2>Detalle</h2>
+        <div className="next" style={{ width: 24 }} />
+      </div>
+      {items.length ? (
+        <BlueContainer>
+          <TopContainer>
+            <div>
+              <p>Resumen</p>
+            </div>
+            <div>
+              <p>Total Items</p>
+              <p>{items.length}</p>
+            </div>
+            <b className="title">Total a pagar</b>
+            <b className="total">$us. {total.toFixed(2)}</b>
+          </TopContainer>
+          <BottomContainer>
+            <div>
+              <Button
+                size="little"
+                bg="#F89E1D"
+                type="secondary"
+                onClick={cancel}
+              >
+                Cancelar
+              </Button>
+              <Button
+                size="little"
+                bg="#F89E1D"
+                type="secondary"
+                onClick={() => setPage(page === 1 ? 0 : 1)}
+              >
+                {page === 1 ? "Seguir comprando" : "Realizar pago"}
+              </Button>
+            </div>
+            <img src={MetodosPago} />
+          </BottomContainer>
+        </BlueContainer>
+      ) : (
+        <HandIcon />
+      )}
     </Container>
-  )
-}
+  );
+};
 
-export default NewMethod
+export default NewMethod;
 
 const Container = styled.div`
   min-width: 450px;
@@ -79,7 +91,7 @@ const Container = styled.div`
       color: ${colors.primary500};
       font-size: 1.4rem;
       font-weight: 600;
-      font-family: 'Chillax';
+      font-family: "Chillax";
     }
   }
 `;
@@ -133,7 +145,7 @@ const TopContainer = styled.div`
   & > .total {
     font-size: 24px;
   }
-`
+`;
 
 const BottomContainer = styled.div`
   background-color: ${colors.white};

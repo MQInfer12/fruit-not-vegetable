@@ -2,15 +2,19 @@ import React from 'react'
 import ZoomImage from '../../../components/analizar/zoomImage'
 import styled from 'styled-components'
 
-const Image = ({ src, text, height = 400, width = 60 }) => {
+const Image = ({ src, text, height = 400, width = 60, video = false }) => {
   return (
     <Container height={height} width={width}>
       <div>
-        <ZoomImage 
-          alt="blog-picture" 
-          src={src} 
-          border={4}
-        />
+        {
+          video ?
+          <video src={src} controls /> :
+          <ZoomImage 
+            alt="blog-picture" 
+            src={src} 
+            border={4}
+          />
+        }
       </div>
       {text && <small>{text}</small>}
     </Container>
@@ -29,6 +33,10 @@ const Container = styled.div`
   & > div {
     width: 100%;
     height: ${props => props.height}px;
+  }
+  & video {
+    height: 100%;
+    width: 100%;
   }
   & > small {
     font-size: .8rem;

@@ -4,6 +4,8 @@ import CartData from '../../../utilities/cartData'
 import colors from '../../../styles/colors';
 import ZoomImage from '../../analizar/zoomImage';
 import Button from '../button';
+import IconCarrito1 from '../../../assets/cart/iconCarrito1.png';
+import IconCarrito2 from '../../../assets/cart/iconCarrito2.png';
 
 const Items = ({ itemsSelected, addItem, showItems, disableds }) => {
   return (
@@ -22,7 +24,7 @@ const Items = ({ itemsSelected, addItem, showItems, disableds }) => {
               <div className='data'>
                 <b title={item.name}>{item.name}</b>
                 <small title={item.description}>{item.description}</small>
-                <p>Precio: $us {item.precio}</p>
+                <p>Precio: $us {item.precio.toFixed(2)}</p>
               </div>
               {
                 !itemsSelected.includes(item.id) ?
@@ -35,10 +37,12 @@ const Items = ({ itemsSelected, addItem, showItems, disableds }) => {
                   {itemsSelected.includes(item.id) ? "Seleccionado" : "Seleccionar"}
                 </Button> :
                 <IconsContainer>
-                  <i className="fa-regular fa-square-check"></i>
-                  <Button size="little" type="secondary" onClick={() => addItem(item.id)}>
-                    <i className="fa-solid fa-trash"></i>
-                  </Button>
+                  <IconButton>
+                    <img src={IconCarrito1} />
+                  </IconButton>
+                  <IconButton className='button' onClick={() => addItem(item.id)}>
+                    <img src={IconCarrito2} />
+                  </IconButton>
                 </IconsContainer>
               }
             </div>
@@ -152,5 +156,25 @@ const IconsContainer = styled.div`
   }
   & > button {
     width: 40px;
+  }
+`;
+
+const IconButton = styled.button`
+  width: 40px;
+  height: 40px;
+  padding: 6px;
+  background-color: transparent;
+  border: 2.5px solid ${colors.tertiary400};
+  border-radius: 4px;
+  &.button {
+    cursor: pointer;
+    transition: opacity 0.3s;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  & > img {
+    width: 100%;
+    height: 100%;
   }
 `;
