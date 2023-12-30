@@ -35,6 +35,7 @@ const Cart = ({ goBack, showItems, registerForm }) => {
         showItems.length === 0 ?
         <IconContainer>
           <HandIcon 
+            type='secondary'
             text="¡Muchas gracias por adquirir los productos de Doctor Tomatto!"
             icon="fa-regular fa-face-laugh-beam"
           />

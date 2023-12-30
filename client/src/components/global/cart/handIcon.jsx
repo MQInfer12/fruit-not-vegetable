@@ -4,11 +4,12 @@ import colors from '../../../styles/colors';
 
 const HandIcon = ({ 
   text = "Seleccione los productos que desea adquirir",
-  icon
+  icon,
+  type = "primary"
 }) => {
   return (
     <Container other={!!icon}>
-      <IconsContainer>
+      <IconsContainer type={type}>
         {
           icon ?
           <i className={icon}></i>
@@ -45,7 +46,7 @@ const Container = styled.div`
 const IconsContainer = styled.div`
   position: relative;
   font-size: 10rem;
-  color: ${colors.primary500};
+  color: ${props => props.type === "primary" ? colors.primary500 : colors.tertiary400};
 
   & > .move {
     animation: move 5s linear infinite;

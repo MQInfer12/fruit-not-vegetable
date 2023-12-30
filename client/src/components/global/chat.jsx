@@ -10,7 +10,7 @@ const Chat = () => {
   return (
     <>
     <ChatButton onClick={() => setOpen(true)}>
-      <i className="fa-solid fa-message" />
+      <i className="fa-solid fa-video"></i>
     </ChatButton>
     {
       open &&

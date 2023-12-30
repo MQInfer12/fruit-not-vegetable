@@ -10,9 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "agora-rtc-react": "^2.0.0",
     "chart.js": "^4.3.0",
     "leaflet": "^1.9.4",
-    "pusher-js": "^8.4.0-rc2",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
