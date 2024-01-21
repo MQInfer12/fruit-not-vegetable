@@ -3,11 +3,8 @@ import styled from "styled-components";
 import colors from "../../../styles/colors";
 import AgoraRTC, {
   AgoraRTCProvider,
-  useJoin,
   useRTCClient,
-  useRemoteUsers,
 } from "agora-rtc-react";
-import Videos from "./videos";
 import Lobby from "./lobby";
 
 const ChatModal = ({ close }) => {

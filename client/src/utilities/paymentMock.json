@@ -1,0 +1,73 @@
+{
+  "id": "01060457D4383064J",
+  "intent": "CAPTURE",
+  "status": "COMPLETED",
+  "purchase_units": [
+    {
+      "reference_id": "default",
+      "amount": {
+        "currency_code": "USD",
+        "value": "4.00"
+      },
+      "payee": {
+        "email_address": "sb-der9g8314039@business.example.com",
+        "merchant_id": "E9K5K9LFHTHGS"
+      },
+      "soft_descriptor": "PAYPAL *TEST STORE",
+      "shipping": {
+        "name": {
+          "full_name": "John Doe"
+        },
+        "address": {
+          "address_line_1": "Free Trade Zone",
+          "admin_area_2": "La Paz",
+          "admin_area_1": "La Paz",
+          "postal_code": "12345",
+          "country_code": "BO"
+        }
+      },
+      "payments": {
+        "captures": [
+          {
+            "id": "5KB90471K8963014F",
+            "status": "COMPLETED",
+            "amount": {
+              "currency_code": "USD",
+              "value": "4.00"
+            },
+            "final_capture": true,
+            "seller_protection": {
+              "status": "ELIGIBLE",
+              "dispute_categories": [
+                "ITEM_NOT_RECEIVED",
+                "UNAUTHORIZED_TRANSACTION"
+              ]
+            },
+            "create_time": "2024-01-20T23:38:23Z",
+            "update_time": "2024-01-20T23:38:23Z"
+          }
+        ]
+      }
+    }
+  ],
+  "payer": {
+    "name": {
+      "given_name": "John",
+      "surname": "Doe"
+    },
+    "email_address": "sb-xsfn215309702@personal.example.com",
+    "payer_id": "RW4TN44M8W2KY",
+    "address": {
+      "country_code": "BO"
+    }
+  },
+  "create_time": "2024-01-20T23:36:41Z",
+  "update_time": "2024-01-20T23:38:23Z",
+  "links": [
+    {
+      "href": "https://api.sandbox.paypal.com/v2/checkout/orders/01060457D4383064J",
+      "rel": "self",
+      "method": "GET"
+    }
+  ]
+}

@@ -46,7 +46,7 @@ const Container = styled.div`
 const IconsContainer = styled.div`
   position: relative;
   font-size: 10rem;
-  color: ${props => props.type === "primary" ? colors.primary500 : colors.tertiary400};
+  color: ${props => props.type === "primary" ? colors.pastel3 : colors.tertiary400};
 
   & > .move {
     animation: move 5s linear infinite;
@@ -64,8 +64,11 @@ const IconsContainer = styled.div`
     }
   }
 
+  & > .move {
+    opacity: 0.7;
+  }
+
   & > .dontmove {
-    color: ${colors.primary600};
     position: absolute;
     top: 45%;
     left: 20%;
