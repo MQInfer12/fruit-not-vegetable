@@ -39,7 +39,7 @@ const Footer = () => {
               <div><StyledLink onClick={() => navigate("/analizar")}><i className="fa-solid fa-chevron-right"></i>Analizar Imagen</StyledLink></div>
               <div><StyledLink onClick={() => navigate("/mapa")}><i className="fa-solid fa-chevron-right"></i>Mapa Enfermedades</StyledLink></div>
               <div><StyledLink onClick={() => navigate("/objetivo")}><i className="fa-solid fa-chevron-right"></i>Objetivo</StyledLink></div>
-              <div><StyledLink onClick={() => navigate("/instrucciones")}><i className="fa-solid fa-chevron-right"></i>Instrucciones</StyledLink></div>
+              <div><StyledLink onClick={() => navigate("/blog")}><i className="fa-solid fa-chevron-right"></i>Blog</StyledLink></div>
             </div>
           </div>
         </div>
