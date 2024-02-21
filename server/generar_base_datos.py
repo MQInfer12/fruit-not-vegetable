@@ -11,8 +11,8 @@ fecha_hoy = datetime.date.today()
 print("Conectando...")
 try:
     conn = mysql.connector.connect(
-           host='MarcianoQuantico.mysql.pythonanywhere-services.com',
-           user='MarcianoQuantico',
+           host='doctortomatto.mysql.pythonanywhere-services.com',
+           user='doctortomatto',
            password='mysqlroot'
       )
 except mysql.connector.Error as err:
@@ -22,11 +22,11 @@ except mysql.connector.Error as err:
             print(err)
 
 cursor = conn.cursor()
-cursor.execute("DROP DATABASE IF EXISTS `MarcianoQuantico$plataformaDT`;")
+cursor.execute("DROP DATABASE IF EXISTS `doctortomatto$plataformaDT`;")
 
-cursor.execute("CREATE DATABASE `MarcianoQuantico$plataformaDT`;")
+cursor.execute("CREATE DATABASE `doctortomatto$plataformaDT`;")
 
-cursor.execute("USE `MarcianoQuantico$plataformaDT`;")
+cursor.execute("USE `doctortomattoo$plataformaDT`;")
 
 # creando las tablas
 TABLES = {}
@@ -82,7 +82,7 @@ usuarios = [
 ]
 cursor.executemany(usuario_sql, usuarios)
 
-cursor.execute('select * from MarcianoQuantico$plataformaDT.usuarios')
+cursor.execute('select * from doctortomatto$plataformaDT.usuarios')
 print(' -------------  Usuarios:  -------------')
 for user in cursor.fetchall():
     print(user[1])
@@ -91,13 +91,13 @@ for user in cursor.fetchall():
 publicidad_sql = 'INSERT INTO publicidades (codigo_pais, pais, ciudad, empresa, contacto, cargo, direccion, telefono, correo, web, descripcion, fecha_registro, tipo_propaganda, cobertura) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
 
 publicidad = [
-      ('co', 'Colombia', 'Medellín', 'SaBio', 'Andrea Echavarría', 'gerente propietaria','no especifica dirección', '+57 317 3181727','info@sabio.com.co', 'www.sabio.com.co', 'Beneficios de un Suelo Sano - Sustitución y disminución de agroquímicos. Valorización del producto y acceso a nuevos mercados.Cultivos más productivos y sanos. Regeneración: Una Sola Salud.', fecha_hoy, 'E', 'I' ),
+      ('co', 'Colombia', 'Medellín', 'SaBio', 'Andrea Echavarría', 'gerente propietaria','no especifica dirección', '+57 317 3181727','info@sabio.com.co', 'www.sabio.com.co', 'Beneficios de un Suelo Sano - Sustitución y disminución de agroquímicos. Valorización del producto y acceso a nuevos mercados.Cultivos más productivos y sanos. Regeneración: Una Sola Salud.', fecha_hoy, 'M', 'I' ),
       ('bo', 'Bolivia', 'Cochabamba', 'AGRECOL Andes', 'Sin Nombre', 'atención al cliente','Pasaje "F", No. 2858 Urb. El Profesional', '+591 4 4423636', 'info@agrecolandes.org', 'www.agrecolandes.org', 'Asesoramiento en implementación de de parcelas agroforestales, prácticas agroecológicas, sistemas de micro riego y sello ecológico SPG.', fecha_hoy, 'G', 'N'),
       ('cl', 'Chile', 'Rancagua', 'HortiCrece', 'Sin Nombre', 'asistencia técnica', 'Avenida Membrillar 50, 3er piso', '+56 9 6234 9340', 'comunicaciones@horticrece.cl', 'www.horticrece.cl', 'El programa estratégico regional de Corfo O"Higgins, es un esfuerzo público-privado para mejorar la competitividad de la horticultura regional, trabajando de forma conjunta para poner en marcha una serie de acciones que nos permitan cerrar las brechas competitivas y tecnológicas.', fecha_hoy, 'E', 'I'),
-]
+      ]
 cursor.executemany(publicidad_sql, publicidad)
 
-cursor.execute('select * from MarcianoQuantico$plataformaDT.publicidades')
+cursor.execute('select * from doctortomatto$plataformaDT.publicidades')
 print(' -------------  Publicidad General:  -------------')
 for publicidad in cursor.fetchall():
     print(publicidad[11])

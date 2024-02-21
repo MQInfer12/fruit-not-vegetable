@@ -1,6 +1,3 @@
-
-# A very simple Flask Hello World app for you to get started with...
-
 from flask import Flask, jsonify, request, render_template, send_file
 from flask_cors import CORS
 from flask_mail import Mail, Message
@@ -39,7 +36,7 @@ app.config["MAIL_PASSWORD"] = 'bfmmvotlxgjmdqzo'
 mail.init_app(app)
 
 app.config.from_pyfile('config.py')
-from models import db, ma, Publicidades, publicidades_schema, publicidad_schema, Usuarios, usuarios_schema, usuario_schema
+from models import db, ma, Publicidades, publicidades_schema, publicidad_schema, Usuarios, usuarios_schema, usuario_schema, Ordenes, ordenes_schema, orden_schema
 db.init_app(app)
 ma.init_app(app)
 
@@ -149,9 +146,12 @@ def myip():
       "message": "Se agrego un nuevo registro satisfactoriamente",
       "data": {
         "general": all_general,
-        "especifica": all_especifica
+        "especifica": all_especifica,
+        "ciudad": details.city,
+        "coords": [details.latitude, details.longitude]
       }
     })
+
   general = Publicidades.query.order_by(Publicidades.id)
   all_general = publicidades_schema.dump(general)
   especifica = Publicidades.query.order_by(Publicidades.id)
@@ -160,7 +160,9 @@ def myip():
     "error": "No se pudo obtener tus datos de localidad",
     "data": {
         "general": all_general,
-        "especifica": all_especifica
+        "especifica": all_especifica,
+        "ciudad": None,
+        "coords": None
     }
   })
 
@@ -206,6 +208,21 @@ def listar_publicidad_general():
     lista = Publicidades.query.filter(Publicidades.tipo_propaganda != 'E').order_by(Publicidades.id).all()
     return render_template('listar_publicidad_general.html',titulo= 'Publicidad General', publicidades=lista)
 
+@app.route('/checkmail', methods = ["POST"])
+def checkmail():
+    email = request.json['email']
+    usuario = Usuarios.query.get(email)
+    if usuario is None:
+        return jsonify({
+            "status": 1,
+            "message": "Correo válido"
+        })
+    else:
+        return jsonify({
+            "status": 2,
+            "message": "Este correo ya está registrado"
+        })
+
 @app.route('/usuario')
 def litar_usuarios():
     lista = Usuarios.query.all()
@@ -231,6 +248,125 @@ def create_usuario():
     db.session.commit()
 
     return usuario_schema.jsonify(new_usuario)
+
+@app.route('/register', methods = ["POST"])
+def register():
+    ipinfo_access_token = '001c2d1b9002e8'
+    handler = ipinfo.getHandler(ipinfo_access_token)
+    ip_address = request.headers.get('X-Forwarded-For', request.remote_addr)
+    details = handler.getDetails(ip_address)
+
+    country = "Sin especificar"
+    if details.country_name is not None:
+        country = details.country_name
+    city = "Sin especificar"
+    if details.city is not None:
+        city = details.city
+
+    email = request.json['email']
+    nombre = request.json['nombre']
+    clave = request.json['password']
+    rol = request.json['rol']
+
+    new_usuario = Usuarios(email, nombre, bcrypt.generate_password_hash(clave), rol, country, city);
+    db.session.add(new_usuario)
+
+    orderId = request.json['order']
+    orden_fecha = date.today()
+    total = request.json['total']
+    items = request.json['items']
+    descripcion = ", ".join(items)
+
+    new_orden = Ordenes(orderId, orden_fecha, total, nombre, email, descripcion, country, city, 'REGISTRO', '+591 7111111')
+    db.session.add(new_orden)
+
+    db.session.commit()
+
+    msg = Message("Mensaje desde Doctor Tomatto", sender='serginho61@gmail.com', recipients=[email])
+    content = """
+    <html>
+      <p>¡Muchas gracias por registrarte y realizar tu compra en Doctor Tomatto!</p>
+      <b>Número de orden:</b> {0} <br>
+      <b>Valor del importe:</b> {1} $us. <br>
+      <b>Productos adquiridos:</b> {2} <br>
+     </html>
+    """
+    msg.html = content.format(orderId, str(total), descripcion)
+    mail.send(msg)
+
+    #'sergio@tecnopolis.ai'
+    recipient = 'sergio@tecnopolis.ai'
+    msg = Message("Mensaje desde Doctor Tomatto", sender='serginho61@gmail.com', recipients=[recipient])
+    content = """
+    <html>
+      <p>¡Alguien nuevo se registró en Doctor Tomatto!</p>
+      <b>Datos de usuario:</b><br>
+      <b>Email:</b> {0} <br>
+      <b>Nombre:</b> {1} <br>
+      <b>País:</b> {2} <br>
+      <b>Ciudad:</b> {3} <br>
+      <br>
+      <b>Datos de compra:</b><br>
+      <b>Número de orden:</b> {4} <br>
+      <b>Valor del importe:</b> {5} $us. <br>
+      <b>Productos adquiridos:</b> {6} <br>
+     </html>
+    """
+    msg.html = content.format(email, nombre, country, city, orderId, str(total), descripcion)
+    mail.send(msg)
+
+    return usuario_schema.jsonify(new_usuario)
+
+@app.route('/purchase/<email>', methods = ["PUT"])
+def purchase_usuario(email):
+    usuario = Usuarios.query.get(email)
+
+    usuario.rol = request.json['rol']
+
+    orderId = request.json['order']
+    orden_fecha = date.today()
+    total = request.json['total']
+    items = request.json['items']
+    descripcion = ", ".join(items)
+
+    new_orden = Ordenes(orderId, orden_fecha, total, usuario.nombre, email, descripcion, usuario.pais, usuario.ciudad, 'COMPRA', '+591 7111111')
+    db.session.add(new_orden)
+
+    db.session.commit()
+
+    msg = Message("Mensaje desde Doctor Tomatto", sender='serginho61@gmail.com', recipients=[email])
+    content = """
+    <html>
+      <p>¡Muchas gracias por realizar tu compra en Doctor Tomatto!</p>
+      <b>Número de orden:</b> {0} <br>
+      <b>Valor del importe:</b> {1} $us. <br>
+      <b>Productos adquiridos:</b> {2} <br>
+    </html>
+    """
+    msg.html = content.format(orderId, str(total), descripcion)
+    mail.send(msg)
+
+    recipient = 'sergio@tecnopolis.ai'
+    msg = Message("Mensaje desde Doctor Tomatto", sender='serginho61@gmail.com', recipients=[recipient])
+    content = """
+    <html>
+      <p>¡Alguien compró en Doctor Tomatto!</p>
+      <b>Datos de usuario:</b><br>
+      <b>Email:</b> {0} <br>
+      <b>Nombre:</b> {1} <br>
+      <b>País:</b> {2} <br>
+      <b>Ciudad:</b> {3} <br>
+      <br>
+      <b>Datos de compra:</b><br>
+      <b>Número de orden:</b> {4} <br>
+      <b>Valor del importe:</b> {5} $us. <br>
+      <b>Productos adquiridos:</b> {6} <br>
+     </html>
+    """
+    msg.html = content.format(email, usuario.nombre, usuario.pais, usuario.ciudad, orderId, str(total), descripcion)
+    mail.send(msg)
+
+    return usuario_schema.jsonify(usuario)
 
 @app.route('/usuario/<email>', methods = ["PUT"])
 def update_usuario(email):
@@ -335,12 +471,16 @@ def delete_publicidad(id):
 
 @app.route('/analizar', methods = ["POST"])
 def analizar():
+  send_to = "serginho61@gmail.com"
+  email_user = request.form['email_user']
+  pais_user = request.form['pais_user']
   foto = request.files.get("file")
   if not foto:
     return jsonify({"message": "Error al encontrar el archivo"})
 
-  filename = "foto_hoja.jpg"
-  foto.save(os.path.join(app.root_path, "static", "upload", filename))
+  filename = pais_user + "_" + email_user + ".jpg"
+  imagepath = os.path.join(app.root_path, "static", "upload", filename)
+  foto.save(imagepath)
 
   global probabilidad
   global etiqueta
@@ -378,7 +518,7 @@ def analizar():
     plt.show()
     print('probabilidad de deteccion =',probabilidad,' etiqueta =',etiqueta)
 
-  imagen = imread(os.path.join(app.root_path, "static", "upload", filename))
+  imagen = imread(imagepath)
 
   cfg = ConfiguracionesHojas()
 
@@ -391,6 +531,19 @@ def analizar():
 
   probabilidadPrecision = 0.70
   if probabilidad < probabilidadPrecision or etiqueta != 'HojaTomate':
+
+    msg = Message("Predicción de Doctor Tomatto", sender='serginho61@gmail.com', recipients=[send_to])
+    content = """
+    <html>
+      <b>Detección:</b> No hoja de tomate <br>
+      <img src="cid:Myimage">
+    </html>
+    """
+    msg.html = content.format(probabilidad)
+    with app.open_resource(imagepath) as fp:
+      msg.attach(filename=filename, content_type='image/jpg', data=fp.read(), disposition='inline', headers=[['Content-ID','<Myimage>']])
+    mail.send(msg)
+
     return jsonify({
       "error": "La probabilidad es menor a 70%",
       "data": {
@@ -400,7 +553,7 @@ def analizar():
 
   probabilidad_clasificacion = -1
   nombre_area_detectada = 'Area' + filename
-  img = cv2.imread(os.path.join(app.root_path, "static", "upload", filename),cv2.IMREAD_UNCHANGED)
+  img = cv2.imread(imagepath,cv2.IMREAD_UNCHANGED)
 
   x = datos['rois'][0][0]
   y = datos['rois'][0][1]
@@ -471,11 +624,27 @@ def analizar():
     }
     grabar_data_enfermedades(datos_nuevo_registro)
 
+  prediccion = enfermedades[answer]
+  probabilidad = "%.2f" % round(probabilidad_clasificacion * 100, 2)
+
+  msg = Message("Predicción de Doctor Tomatto", sender='serginho61@gmail.com', recipients=[send_to])
+  content = """
+  <html>
+    <b>Detección:</b> {0} <br>
+    <b>Porcentaje:</b> {1}<br>
+    <img src="cid:Myimage">
+  </html>
+  """
+  msg.html = content.format(prediccion, probabilidad)
+  with app.open_resource(imagepath) as fp:
+    msg.attach(filename=filename, content_type='image/jpg', data=fp.read(), disposition='inline', headers=[['Content-ID','<Myimage>']])
+  mail.send(msg)
+
   return jsonify({
     "message": "Clasificación correcta",
     "data": {
-      "prediccion": enfermedades[answer],
-      "porcentaje": "%.2f" % round(probabilidad_clasificacion * 100, 2)
+      "prediccion": prediccion,
+      "porcentaje": probabilidad
     }
   })
 
@@ -488,9 +657,9 @@ def login():
             return usuario_schema.jsonify(usuario)
         else:
             return jsonify({
-                "error": "Revisa si los datos son correctos"
+                "error": "Revise si los datos son correctos"
             })
     else:
         return jsonify({
-            "error": "Revisa si los datos son correctos"
+            "error": "Revise si los datos son correctos"
         })

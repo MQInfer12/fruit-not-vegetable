@@ -13,8 +13,8 @@ fecha_hoy = datetime.date.today()
 print("Conectando...")
 try:
     conn = mysql.connector.connect(
-           host='MarcianoQuantico.mysql.pythonanywhere-services.com',
-           user='MarcianoQuantico',
+           host='doctortomatto.mysql.pythonanywhere-services.com',
+           user='doctortomatto',
            password='mysqlroot'
       )
 except mysql.connector.Error as err:
@@ -24,11 +24,11 @@ except mysql.connector.Error as err:
             print(err)
 
 cursor = conn.cursor()
-cursor.execute("DROP DATABASE IF EXISTS `MarcianoQuantico$plataformaDT`;")
+cursor.execute("DROP DATABASE IF EXISTS `doctortomatto$plataformaDT`;")
 
-cursor.execute("CREATE DATABASE `MarcianoQuantico$plataformaDT`;")
+cursor.execute("CREATE DATABASE `doctortomatto$plataformaDT`;")
 
-cursor.execute("USE `MarcianoQuantico$plataformaDT`;")
+cursor.execute("USE `doctortomatto$plataformaDT`;")
 
 # creando las tablas
 TABLES = {}
@@ -91,7 +91,7 @@ usuarios = [
 ]
 cursor.executemany(usuario_sql, usuarios)
 
-cursor.execute('select * from MarcianoQuantico$plataformaDT.usuarios')
+cursor.execute('select * from doctortomatto$plataformaDT.usuarios')
 print(' -------------  Usuarios:  -------------')
 for user in cursor.fetchall():
     print(user[1])
@@ -106,7 +106,7 @@ publicidad = [
       ]
 cursor.executemany(publicidad_sql, publicidad)
 
-cursor.execute('select * from MarcianoQuantico$plataformaDT.publicidades')
+cursor.execute('select * from doctortomatto$plataformaDT.publicidades')
 print(' -------------  Publicidad General:  -------------')
 for publicidad in cursor.fetchall():
     print(publicidad[11])

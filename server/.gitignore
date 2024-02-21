@@ -1,5 +1,4 @@
-modelo
-modelo_testeando
+*.h5
 helpers.py
 app.py
 guide

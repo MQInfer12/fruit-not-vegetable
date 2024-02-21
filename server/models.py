@@ -48,8 +48,8 @@ publicidad_schema = PublicidadesSchema()
 publicidades_schema = PublicidadesSchema(many=True)
 
 class Usuarios(db.Model):
-    email = db.Column(db.String(50), primary_key=True)
-    nombre = db.Column(db.String(20), nullable=False)
+    email = db.Column(db.String(80), primary_key=True)
+    nombre = db.Column(db.String(40), nullable=False)
     clave = db.Column(db.String(100), nullable=False)
     rol = db.Column(db.String(10), nullable=False)
     pais = db.Column(db.String(50), nullable=False)
@@ -72,3 +72,37 @@ class UsuariosSchema(ma.Schema):
 
 usuario_schema = UsuariosSchema()
 usuarios_schema = UsuariosSchema(many=True)
+
+class Ordenes(db.Model):
+    orden_id = db.Column(db.String(30), primary_key=True)
+    orden_fecha = db.Column(db.Date, nullable=False)
+    importe = db.Column(db.Float, nullable=False)
+    nombre = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    descripcion = db.Column(db.String(80), nullable=False)
+    pais = db.Column(db.String(50), nullable=False)
+    ciudad = db.Column(db.String(50), nullable=False)
+    estado = db.Column(db.String(50), nullable=False)
+    telefono = db.Column(db.String(20), nullable=False)
+
+    def __init__(self, orden_id, orden_fecha, importe, nombre, email, descripcion, pais, ciudad, estado, telefono):
+        self.orden_id = orden_id
+        self.orden_fecha = orden_fecha
+        self.importe = importe
+        self.nombre = nombre
+        self.email = email
+        self.descripcion = descripcion
+        self.pais = pais
+        self.ciudad = ciudad
+        self.estado = estado
+        self.telefono = telefono
+
+    def __repr__(self):
+        return '<Name %r>' % self.name
+
+class OrdenesSchema(ma.Schema):
+    class Meta:
+        fields = ("orden_id", "orden_fecha", "importe", "nombre", "email", "descripcion", "pais", "ciudad", "estado", "telefono")
+
+orden_schema = OrdenesSchema()
+ordenes_schema = OrdenesSchema(many=True)
