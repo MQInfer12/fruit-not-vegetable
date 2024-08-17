@@ -5,11 +5,12 @@ import colors from '../styles/colors';
 import Button from '../components/global/button';
 import { useGet } from '../hooks/useGet';
 import { useNavigate } from 'react-router-dom';
-import { sendRequest } from '../utilities/sendRequest';
 import Swal from 'sweetalert2';
+import { useRequest } from '../hooks/useRequest';
 
 const CrudPublicidad = () => {
   useChangeBackground(colors.primary200);
+  const sendRequest = useRequest();
   const navigate = useNavigate();
   const { data: PublicidadData , getData } = useGet('publicidad', null);
 

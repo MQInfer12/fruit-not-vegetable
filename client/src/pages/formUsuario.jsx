@@ -4,12 +4,13 @@ import { useChangeBackground } from '../hooks/changeBackground';
 import colors from '../styles/colors';
 import InputText from '../components/contact/inputText';
 import Button from '../components/global/button';
-import { sendRequest } from '../utilities/sendRequest';
 import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGet } from '../hooks/useGet';
+import { useRequest } from '../hooks/useRequest';
 
 const FormUsuario = () => {
+  const sendRequest = useRequest();
   useChangeBackground(colors.primary200);
   const navigate = useNavigate();
   const { id } = useParams();

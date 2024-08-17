@@ -9,9 +9,10 @@ import { Link, Navigate } from 'react-router-dom';
 import Cart from '../components/global/cart';
 import Swal from 'sweetalert2';
 import { useUser } from '../context/user';
-import { sendRequest } from '../utilities/sendRequest';
+import { useRequest } from '../hooks/useRequest';
 
 const Register = () => {
+  const sendRequest = useRequest();
   useChangeBackground(colors.primary500);
   const [cart, setCart] = useState(false);
   const [form, setForm] = useState({

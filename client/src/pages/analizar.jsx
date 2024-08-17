@@ -8,9 +8,9 @@ import { useBackground } from '../context/background';
 import Loader from '../components/global/loader';
 import Resultado from '../components/analizar/resultado';
 import ResultadoError from '../components/analizar/resultadoError';
-import { sendRequest } from '../utilities/sendRequest';
 import Swal from 'sweetalert2';
 import { useUser } from '../context/user';
+import { useRequest } from '../hooks/useRequest';
 
 const Analizar = () => {
   const width = useWidth();
@@ -21,6 +21,7 @@ const Analizar = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [tipo, setTipo] = useState("enfermedad");
+  const sendRequest = useRequest();
   
   useEffect(() => {
     changeColor(width > 560 ? colors.primary200 : colors.secondary500)

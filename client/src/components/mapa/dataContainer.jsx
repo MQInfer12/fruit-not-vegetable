@@ -3,11 +3,12 @@ import { styled } from 'styled-components';
 import colors from '../../styles/colors';
 import BarChart from './barChart';
 import Button from '../global/button';
-import { sendRequest } from '../../utilities/sendRequest';
+import { useRequest } from '../../hooks/useRequest';
 
 const DataContainer = ({ country, localidad, handleBack }) => {
   const chartRef = useRef(null);
   const [downloadChart, setDownloadChart] = useState("");
+  const sendRequest = useRequest();
 
   useEffect(() => {
     if(chartRef) {

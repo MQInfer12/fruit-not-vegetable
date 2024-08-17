@@ -1,104 +1,119 @@
-import React, { useState } from 'react'
-import { useChangeBackground } from '../hooks/changeBackground';
-import colors from '../styles/colors';
-import { styled } from 'styled-components';
-import InputText from '../components/contact/inputText';
-import Button from '../components/global/button';
-import DTLogo from '../assets/logo.png';
-import { Link } from 'react-router-dom';
-import { sendRequest } from '../utilities/sendRequest';
-import Swal from 'sweetalert2';
-import { useUser } from '../context/user';
+import React, { useState } from "react";
+import { useChangeBackground } from "../hooks/changeBackground";
+import colors from "../styles/colors";
+import { styled } from "styled-components";
+import InputText from "../components/contact/inputText";
+import Button from "../components/global/button";
+import DTLogo from "../assets/logo.png";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { useUser } from "../context/user";
+import { deleteAuthCookie, setAuthCookie } from "../utilities/authCookie";
+import { useRequest } from "../hooks/useRequest";
 
 const Login = () => {
+  const sendRequest = useRequest();
   useChangeBackground(colors.primary500);
   const { user, setUser } = useUser();
   const [form, setForm] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleSend = async (e) => {
     e.preventDefault();
-    const res = await sendRequest('login', form);
-    if(res) {
-      if(res.error) {
+    const res = await sendRequest("login", form);
+    if (res) {
+      if (res.error) {
         Swal.fire({
           title: "Error",
           text: res.error,
-          icon: "error"
+          icon: "error",
         });
         return;
       }
       Swal.fire({
         title: "¡Éxito!",
         text: "Inicio de sesión correcto",
-        icon: "success"
+        icon: "success",
       });
-      setUser(res);
+      setUser(res.usuario);
+      setAuthCookie(res.token);
       setForm({
         email: "",
-        password: ""
+        password: "",
       });
       return;
     }
-  }
+  };
 
   const logout = () => {
     setUser(null);
+    deleteAuthCookie();
     Swal.fire({
       title: "¡Éxito!",
       text: "Cierre de sesión correcto",
-      icon: "success"
+      icon: "success",
     });
-  }
+  };
 
   return (
     <Container>
-      {
-        !user ?
+      {!user ? (
         <FormContainer>
           <div>
             <Logo src={DTLogo} />
           </div>
-          <InputText 
+          <InputText
             error={false}
             text="Email"
             value={form.email}
-            onChange={e => setForm(old => ({...old, email: e.target.value}))}
+            onChange={(e) =>
+              setForm((old) => ({ ...old, email: e.target.value }))
+            }
           />
-          <InputText 
+          <InputText
             error={false}
             text="Contraseña"
             value={form.password}
-            onChange={e => setForm(old => ({...old, password: e.target.value}))}
-            type='password'
+            onChange={(e) =>
+              setForm((old) => ({ ...old, password: e.target.value }))
+            }
+            type="password"
           />
-          <Button type="secondary" onClick={handleSend} >Inicie sesión</Button>
-          <p>¿Aún no tiene cuenta? <StyledLink to="/register">Regístrese</StyledLink></p>
+          <Button type="secondary" onClick={handleSend}>
+            Inicie sesión
+          </Button>
+          <p>
+            ¿Aún no tiene cuenta?{" "}
+            <StyledLink to="/register">Regístrese</StyledLink>
+          </p>
         </FormContainer>
-        :
+      ) : (
         <WelcomeContainer>
           <h2>¡Bienvenido {user.nombre}!</h2>
-          <p>Muchas gracias por utilizar <b>Doctor Tomatto</b>, disfrute de las funcionalidades que le ofrecemos</p>
+          <p>
+            Muchas gracias por utilizar <b>Doctor Tomatto</b>, disfrute de las
+            funcionalidades que le ofrecemos
+          </p>
           <div>
-            {
-              user.rol.includes("a") &&
-              <Link to ="/analizar">Analice sus hojas de tomate</Link>
-            }
-            {
-              user.rol.includes("m") &&
-              <Link to ="/mapa">Vea el mapa de enfermedades</Link>
-            }
+            {user.rol.includes("a") && (
+              <Link to="/analizar">Analice sus hojas de tomate</Link>
+            )}
+            {user.rol.includes("m") && (
+              <Link to="/mapa">Vea el mapa de enfermedades</Link>
+            )}
           </div>
-          <Button onClick={logout} type="secondary">Cierre sesión</Button>
+          <Button onClick={logout} type="secondary">
+            Cierre sesión
+          </Button>
         </WelcomeContainer>
-      }
+      )}
     </Container>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
 
 const Container = styled.section`
   min-height: calc(100dvh - 32px);
@@ -113,7 +128,7 @@ const WelcomeContainer = styled.div`
   width: 360px;
   background-color: ${colors.primary200};
   border: 8px solid ${colors.primary400};
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
   gap: 24px;
   display: flex;
   flex-direction: column;
@@ -133,7 +148,7 @@ const WelcomeContainer = styled.div`
 
   & > p {
     font-size: 14px;
-    text-align: center;  
+    text-align: center;
     line-height: 24px;
     & > b {
       color: ${colors.primary500};
@@ -160,7 +175,7 @@ const FormContainer = styled.form`
   padding: 40px;
   background-color: ${colors.primary200};
   border: 8px solid ${colors.primary400};
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
   gap: 24px;
   display: flex;
   flex-direction: column;
@@ -191,7 +206,7 @@ const StyledLink = styled(Link)`
   &:hover {
     opacity: 0.7;
   }
-`
+`;
 
 const Logo = styled.img`
   width: 100px;

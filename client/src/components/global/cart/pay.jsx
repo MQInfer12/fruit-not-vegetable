@@ -3,15 +3,16 @@ import styled from "styled-components";
 import colors from "../../../styles/colors";
 import { initPayPalButton } from "../../../utilities/initPaypal";
 import Swal from "sweetalert2";
-import { sendRequest } from "../../../utilities/sendRequest";
 import { useUser } from "../../../context/user";
 import { useNavigate } from "react-router-dom";
 import CartData from "../../../utilities/cartData";
+import { useRequest } from "../../../hooks/useRequest";
 
 const Pay = ({ setPage, items, total, registerForm, page }) => {
   const paypalInitRef = useRef(false);
   const { user, setUser } = useUser();
   const navigate = useNavigate();
+  const sendRequest = useRequest();
 
   useEffect(() => {
     const handleSuccess = async (orderData) => {

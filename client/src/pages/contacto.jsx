@@ -4,13 +4,14 @@ import colors from '../styles/colors';
 import { useInterval } from '../hooks/useInterval';
 import Button from '../components/global/button';
 import { useChangeBackground } from '../hooks/changeBackground';
-import { sendRequest } from '../utilities/sendRequest';
 import InputText from '../components/contact/inputText';
 import Swal from 'sweetalert2';
+import { useRequest } from '../hooks/useRequest';
 
 const Contacto = () => {
   const { active } = useInterval(4000, 3);
   useChangeBackground(colors.primary200);
+  const sendRequest = useRequest();
 
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
